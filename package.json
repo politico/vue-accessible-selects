@@ -29,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/politico/vue-accessible-selects/issues"
   },
-  "homepage": "https://github.com/politico/vue-accessible-selects#readme"
+  "homepage": "https://github.com/politico/vue-accessible-selects#readme",
+  "devDependencies": {
+    "vue": "^2.6.12"
+  }
 }
