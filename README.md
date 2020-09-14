@@ -15,7 +15,7 @@ This entire repo is very much in an alpha state, and should currently be used on
 ```ts
 // In component
 
-import { SelectSingle, SelectMultiple, SelectOption } from '@politico/vue-accessible-selects'
+import { SelectSingle, SelectMulti, SelectOption } from '@politico/vue-accessible-selects'
 
 const sampleOptions: SelectOption[] = [{
 	label: 'One Option',
@@ -26,12 +26,12 @@ const sampleOptions: SelectOption[] = [{
 }]
 
 export default Vue.extend({
-	components: { SelectSingle, SelectMultiple },
+	components: { SelectSingle, SelectMulti },
 	data() {
 		return {
 			sampleOptions,
 			selectSingleValue: {} as SelectOption,
-			selectMultipleValues: [] as SelectOption[]
+			selectMultiValues: [] as SelectOption[]
 		}
 	},
 	methods: {
@@ -61,8 +61,8 @@ export default Vue.extend({
 	@select="handleSelectEvent"
 />
 
-<SelectMultiple
-	v-model="selectMultipleValues"
+<SelectMulti
+	v-model="selectMultiValues"
 	:options="sampleOptions"
 	label="My Multiple Select"
 	:labelIsVisible="true"

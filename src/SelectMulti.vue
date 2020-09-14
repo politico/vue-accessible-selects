@@ -23,7 +23,7 @@
 		inputValue: string
 	}
 
-	interface ISelectMultiple extends Vue {
+	interface ISelectMulti extends Vue {
 		$refs: {
 			inputRef: HTMLInputElement
 			listboxRef: HTMLElement
@@ -31,8 +31,8 @@
 		}
 	}
 
-	export default (Vue as VueConstructor<ISelectMultiple>).extend({
-		name: 'SelectMultiple',
+	export default (Vue as VueConstructor<ISelectMulti>).extend({
+		name: 'SelectMulti',
 		model: {
 			prop: 'values',
 			event: 'change'
