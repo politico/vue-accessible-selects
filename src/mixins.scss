@@ -1,22 +1,28 @@
-@mixin select {
-	// TODO: Determine if this gamma-specific value is necessary, or if we can rely on cVulcanGray-like colors
-	$gray80: hsl(0, 0%, 80%); // #ccc
-	
+// Define defaults & helper variables for internal use
+$default-primary-background-color: #ddd;
+$default-focus-background-color: #bbb;
+
+$default-selected-option-pill-color: #02598e;
+$default-selected-option-pill-background-color: #e7f6ff;
+
+
+
+@mixin select(
+	$primary-background-color: $default-primary-background-color,
+	$focus-background-color: $default-focus-background-color
+) {
 	// START All aesthetic CSS
-	$background-color: $cVulcanGray96;
-	$background-color-option-focus: $cVulcanGray91;
+	$shadow-color:  #ccc;
+	$focus-shadow-color: #222;
+
 	$border-width: 0;
 	$border-radius: 1.4em;
-
-	// Shadow around box when focused with keyboard. Disappears when dropdown is open
-	$focus-shadow: 0 0 1px 1px $cVulcanGray10;
 	$max-width: 100%;
-	$box-shadow: inset 0 -1px 0 0 $gray80;
 	$option-padding: 0.625em 1.25em 0.625em 1.25em;
 	$dropdown-overflow-y: auto;
+	$z-index-combo-menu: 100;
 	// END All aesthetic CSS
 
-	$z-index-combo-menu: 100;
 
 	*,
 	*::before,
@@ -34,47 +40,47 @@
 		display: block;
 		width: 100%;
 		min-height: calc(1.4em + 0.625em + 0.625em);
-    padding: 0.625em 2.5em 0.625em 1.25em;
-    position: relative;
+    	padding: 0.625em 2.5em 0.625em 1.25em;
+    	position: relative;
 		border: $border-width solid rgba(0, 0, 0, 0.5);
 		border-radius: $border-radius;
 		text-align: left;
 		font-size: 1em;
-		background-color: $background-color;
-		box-shadow: $box-shadow;
-    transition-duration: 0.2s;
+		background-color: $primary-background-color;
+		box-shadow: inset 0 -1px 0 0 $shadow-color;
+    	transition-duration: 0.2s;
     
-    // Downward v, with CSS
-    &::after {
-      $arrow-size: 8px;
+		// Downward v, with CSS
+		&::after {
+			$arrow-size: 8px;
 
-      content: '';
-      position: absolute;
-      top: 50%;
-      right: 20px;
-      display: block;
-      width: $arrow-size;
-      height: $arrow-size;
-      border-right: 2px solid rgba(0, 0, 0, 0.5);
-      border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-      transform: translateY(-85%) rotate(45deg);
-      transition: transform 0.2s ease;
-      pointer-events: none;
-    }
+			content: '';
+			position: absolute;
+			top: 50%;
+			right: 20px;
+			display: block;
+			width: $arrow-size;
+			height: $arrow-size;
+			border-right: 2px solid rgba(0, 0, 0, 0.5);
+			border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+			transform: translateY(-85%) rotate(45deg);
+			transition: transform 0.2s ease;
+			pointer-events: none;
+		}
 
-    &:focus {
-      outline: 5px solid transparent;
-      box-shadow: $focus-shadow;
-    }
+		&:focus {
+			outline: 5px solid transparent;
+			box-shadow: 0 0 1px 1px $focus-shadow-color;
+		}
   }
 
 	.combo-label {
 		display: block;
-    margin-bottom: 0.9em;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
+		margin-bottom: 0.9em;
+		font-size: 12px;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 1.5px;
 	}
 
 	.combo-menu {
@@ -87,7 +93,7 @@
 		border: $border-width solid rgba(0, 0, 0, 0.42);
 		border-radius: 0 0 $border-radius $border-radius;
 		overflow-y: $dropdown-overflow-y;
-		background-color: $background-color;
+		background-color: $primary-background-color;
 		visibility: hidden;
 		opacity: 0;
 	}
@@ -102,11 +108,11 @@
 		.combo-input {
 			&:focus {
 				box-shadow: none;
-      }
+      		}
       
-      &::after {
-        transform: translateY(-50%) rotate(225deg);
-      }
+			&::after {
+				transform: translateY(-50%) rotate(225deg);
+			}
 
 			border-radius: $border-radius $border-radius 0 0;
 			transition: border-radius 0.1s ease-in-out;
@@ -131,7 +137,7 @@
 
 	.combo-option.option-current,
 	.combo-option:hover {
-		background-color: $background-color-option-focus;
+		background-color: $focus-background-color;
 	}
 
 	.combo-option.option-selected {
@@ -152,10 +158,12 @@
 	}
 }
 
-@mixin select-multiple {
+@mixin select-multiple(
+	$selected-option-pill-color: $default-selected-option-pill-color,
+	$selected-option-pill-background-color: $default-selected-option-pill-background-color
+) {
 	// START All aesthetic CSS
-	$background-color: #e7f6ff;
-	$border: 1px solid #02598e;
+	$border: 1px solid $selected-option-pill-color;
 	$border-radius: 15px;
 	$color: #02598e;
 	// END All aesthetic CSS
@@ -172,7 +180,7 @@
 		margin-bottom: 5px;
 	}
 
-	.remove-option {
+	.selected-option-pill {
 		position: relative;
 		margin-right: 10px;
 		margin-bottom: 10px;
@@ -186,31 +194,31 @@
 		font-weight: bold;
 		line-height: 13px;
 		letter-spacing: 0.078125em;
-		background-color: $background-color;
-	}
+		background-color: $selected-option-pill-color;
 
-	.remove-option:focus {
-		border-color: $background-color;
-		outline: 3px solid transparent;
-		box-shadow: 0 0 3px 1px $color;
-	}
+		&:focus {
+			border-color: $selected-option-pill-color;
+			outline: 3px solid transparent;
+			box-shadow: 0 0 3px 1px $selected-option-pill-color;
+		}
 
-	.remove-option::before,
-	.remove-option::after {
-		content: '';
-		position: absolute;
-		top: 8px;
-		right: 1.5em;
-		width: 0;
-		height: 1em;
-		border-right: 2px solid $color;
-	}
+		&::before,
+		&::after {
+			content: '';
+			position: absolute;
+			top: 8px;
+			right: 1.5em;
+			width: 0;
+			height: 1em;
+			border-right: 2px solid $selected-option-pill-color;
+		}
 
-	.remove-option::before {
-		transform: translate(0, 0%) rotate(45deg);
-	}
+		&::before {
+			transform: translate(0, 0%) rotate(45deg);
+		}
 
-	.remove-option::after {
-		transform: translate(0, 0%) rotate(-45deg);
+		&::after {
+			transform: translate(0, 0%) rotate(-45deg);
+		}
 	}
 }

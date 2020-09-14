@@ -246,12 +246,12 @@
 			</div>
 		</div>
 		<ul :id="`${htmlId}-selected`" class="selected-options">
-			<span :id="`${htmlId}-remove`" style="display: none;">remove</span>
+			<span :id="`${htmlId}-selected-option-pills`" style="display: none;">remove</span>
 			<li v-for="(option, index) in selectedOptions" :key="option.value">
 				<button
-					class="remove-option"
+					class="selected-option-pill"
 					type="button"
-					:aria-describedby="`${htmlId}-remove`"
+					:aria-describedby="`${htmlId}-selected-option-pills`"
 					@click="removeOption(index)"
 				>
 					{{ option.label }}

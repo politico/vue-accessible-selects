@@ -10,12 +10,12 @@ This entire repo is very much in an alpha state, and should currently be used on
 * Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select 
 * Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-## Current Usage *(updated 8/25/20)*
+## Current Usage *(updated 9/14/20)*
 
 ```ts
-import { SelectOption } from './types'
-import SelectSingle from './SelectSingle.vue'
-import SelectMultiple from './SelectSingle.vue'
+// In component
+
+import { SelectSingle, SelectMultiple, SelectOption } from '@politico/vue-accessible-selects'
 
 const sampleOptions: SelectOption[] = [{
 	label: 'One Option',
@@ -71,4 +71,22 @@ export default Vue.extend({
 	@remove="handleRemoveEvent"
 	@searchChange="handleSearchChangeEvent"
 />
+```
+
+```scss
+// For now, we provide SCSS mixins to customize w/ colors
+// Soon, we'll add documentation for the primary classes to target, as well as a default .css file to include
+// So in a .scss file used by your project...
+
+// Using Webpack syntax: `~` indicates "look in the current working directory"
+@import '~@politico/vue-accessible-selects/dist/mixins.scss';
+
+@include select(
+	$primary-background-color: white,
+	$focus-background-color: green,
+)
+@include select-multi(
+	$selected-option-pill-color: blue,
+	$selected-option-pill-background-color: lightblue
+)
 ```
