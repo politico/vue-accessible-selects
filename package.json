@@ -1,0 +1,33 @@
+{
+  "name": "@politico/vue-accessible-selects",
+  "version": "0.0.1",
+  "description": "Select & Multi Select implementations for Vue, focused especially on implementing accessibility best practices",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"write some tests\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/politico/vue-accessible-selects.git"
+  },
+  "keywords": [
+    "select",
+    "multiselect",
+    "a11y",
+    "accessible",
+    "vue"
+  ],
+  "contributors": [
+    "Liz Davidson (https://github.com/ldavidson45)",
+    "Chris Guirreri (https://github.com/guirreri)",
+    "Jack Koppa (https://github.com/jackkoppa)",
+    "Hung-Su Nguyen (https://github.com/hungsu)",
+    "Evan Sanderson (https://github.com/EvanSanderson)",
+    "Ivan Shtyrliaev (https://github.com/ee923925github)"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/politico/vue-accessible-selects/issues"
+  },
+  "homepage": "https://github.com/politico/vue-accessible-selects#readme"
+}
