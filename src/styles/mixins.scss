@@ -27,6 +27,40 @@ $default-selected-option-pill-background-color: #e7f6ff;
 		display: block;
 		max-width: $max-width;
 
+		&.open {
+			.combo-menu {
+				visibility: visible;
+				opacity: 1;
+				transition: opacity 0.2s ease-in-out 0.04s, visibility 0.2s ease-in-out 0.04s;
+			}
+
+			.combo-input {
+				&:focus {
+					box-shadow: none;
+				}
+		
+				&::after {
+					transform: translateY(-50%) rotate(225deg);
+				}
+
+				border-radius: $border-radius $border-radius 0 0;
+				transition: border-radius 0.1s ease-in-out;
+			}
+		}
+		
+		// // TODO: Re-enable .disabled styles once class is implemented in each type of Select
+		// &.disabled {
+		// 	.combo-input {
+		// 		color: ???;
+		// 		background-color: ???;
+		// 		box-shadow: unset;
+		// 	}
+
+		// 	&::after {
+		// 		border-color: ???;
+		// 	}
+		// }
+
 		.combo-input {
 			display: block;
 			width: 100%;
@@ -87,39 +121,6 @@ $default-selected-option-pill-background-color: #e7f6ff;
 			background-color: $primary-background-color;
 			visibility: hidden;
 			opacity: 0;
-		}
-
-		.open {
-			.combo-menu {
-				visibility: visible;
-				opacity: 1;
-				transition: opacity 0.2s ease-in-out 0.04s, visibility 0.2s ease-in-out 0.04s;
-			}
-
-			.combo-input {
-				&:focus {
-					box-shadow: none;
-				}
-		
-				&::after {
-					transform: translateY(-50%) rotate(225deg);
-				}
-
-				border-radius: $border-radius $border-radius 0 0;
-				transition: border-radius 0.1s ease-in-out;
-			}
-		}
-
-		.disabled {
-			.combo-input {
-				color: $cVulcanGray56;
-				background-color: $cVulcanGray91;
-				box-shadow: unset;
-			}
-
-			&::after {
-				border-color: $cVulcanGray56;
-			}
 		}
 
 		.combo-option {
