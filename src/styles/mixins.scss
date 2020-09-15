@@ -1,0 +1,217 @@
+// Define defaults & helper variables for internal use
+$default-primary-background-color: #ddd;
+$default-focus-background-color: #bbb;
+
+$default-selected-option-pill-color: #02598e;
+$default-selected-option-pill-background-color: #e7f6ff;
+
+@mixin select(
+	$primary-background-color: $default-primary-background-color,
+	$focus-background-color: $default-focus-background-color
+) {
+	// START All aesthetic CSS
+	$shadow-color:  #ccc;
+	$focus-shadow-color: #222;
+
+	$border-width: 0;
+	$border-radius: 1.4em;
+	$max-width: 100%;
+	$option-padding: 0.625em 1.25em 0.625em 1.25em;
+	$dropdown-overflow-y: auto;
+	$z-index-combo-menu: 100;
+	// END All aesthetic CSS
+
+	.vue-accessible-select-single,
+	.vue-accessible-select-multi {
+		position: relative;
+		display: block;
+		max-width: $max-width;
+
+		.combo-input {
+			display: block;
+			width: 100%;
+			min-height: calc(1.4em + 0.625em + 0.625em);
+			padding: 0.625em 2.5em 0.625em 1.25em;
+			position: relative;
+			border: $border-width solid rgba(0, 0, 0, 0.5);
+			border-radius: $border-radius;
+			text-align: left;
+			font-size: 1em;
+			background-color: $primary-background-color;
+			box-shadow: inset 0 -1px 0 0 $shadow-color;
+			transition-duration: 0.2s;
+		
+			// Downward v, with CSS
+			&::after {
+				$arrow-size: 8px;
+
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: 20px;
+				display: block;
+				width: $arrow-size;
+				height: $arrow-size;
+				border-right: 2px solid rgba(0, 0, 0, 0.5);
+				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+				transform: translateY(-85%) rotate(45deg);
+				transition: transform 0.2s ease;
+				pointer-events: none;
+			}
+
+			&:focus {
+				outline: 5px solid transparent;
+				box-shadow: 0 0 1px 1px $focus-shadow-color;
+			}
+		}
+
+		.combo-label {
+			display: block;
+			margin-bottom: 0.9em;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+
+		.combo-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			z-index: $z-index-combo-menu;
+			width: 100%;
+			max-height: 300px;
+			border: $border-width solid rgba(0, 0, 0, 0.42);
+			border-radius: 0 0 $border-radius $border-radius;
+			overflow-y: $dropdown-overflow-y;
+			background-color: $primary-background-color;
+			visibility: hidden;
+			opacity: 0;
+		}
+
+		.open {
+			.combo-menu {
+				visibility: visible;
+				opacity: 1;
+				transition: opacity 0.2s ease-in-out 0.04s, visibility 0.2s ease-in-out 0.04s;
+			}
+
+			.combo-input {
+				&:focus {
+					box-shadow: none;
+				}
+		
+				&::after {
+					transform: translateY(-50%) rotate(225deg);
+				}
+
+				border-radius: $border-radius $border-radius 0 0;
+				transition: border-radius 0.1s ease-in-out;
+			}
+		}
+
+		.disabled {
+			.combo-input {
+				color: $cVulcanGray56;
+				background-color: $cVulcanGray91;
+				box-shadow: unset;
+			}
+
+			&::after {
+				border-color: $cVulcanGray56;
+			}
+		}
+
+		.combo-option {
+			padding: $option-padding;
+		}
+
+		.combo-option.option-current,
+		.combo-option:hover {
+			background-color: $focus-background-color;
+		}
+
+		.combo-option.option-selected {
+			position: relative;
+			padding-right: 30px;
+		}
+
+		.combo-option.option-selected::after {
+			content: '';
+			position: absolute;
+			top: 50%;
+			right: 15px;
+			width: 8px;
+			height: 16px;
+			border-right: 2px solid #000;
+			border-bottom: 2px solid #000;
+			transform: translate(0, -50%) rotate(45deg);
+		}
+	}
+}
+
+@mixin select-multi(
+	$selected-option-pill-color: $default-selected-option-pill-color,
+	$selected-option-pill-background-color: $default-selected-option-pill-background-color
+) {
+	// START All aesthetic CSS
+	$border: 1px solid $selected-option-pill-color;
+	$border-radius: 15px;
+	// END All aesthetic CSS
+
+	.vue-accessible-select-multi {
+		.selected-options {
+			max-width: 400px;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+		}
+
+		.selected-options li {
+			display: inline-block;
+			margin-bottom: 5px;
+		}
+
+		.selected-option-pill {
+			position: relative;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			padding: 6px 3em 6px 15px;
+			border: $border;
+			border-radius: $border-radius;
+			text-align: left;
+			text-transform: uppercase;
+			color: $selected-option-pill-color;
+			font-size: 10px;
+			font-weight: bold;
+			line-height: 13px;
+			letter-spacing: 0.078125em;
+			background-color: $selected-option-pill-color;
+
+			&:focus {
+				border-color: $selected-option-pill-color;
+				outline: 3px solid transparent;
+				box-shadow: 0 0 3px 1px $selected-option-pill-color;
+			}
+
+			&::before,
+			&::after {
+				content: '';
+				position: absolute;
+				top: 8px;
+				right: 1.5em;
+				width: 0;
+				height: 1em;
+				border-right: 2px solid $selected-option-pill-color;
+			}
+
+			&::before {
+				transform: translate(0, 0%) rotate(45deg);
+			}
+
+			&::after {
+				transform: translate(0, 0%) rotate(-45deg);
+			}
+		}
+	}
+}
