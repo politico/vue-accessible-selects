@@ -23,7 +23,7 @@
 		}
 	}
 
-	export default (Vue as VueConstructor<ISelectSingle>).extend({
+	export default /*#__PURE__*/(Vue as VueConstructor<ISelectSingle>).extend({
 		name: 'SelectSingle',
 		model: {
 			prop: 'value',
@@ -188,7 +188,7 @@
 	})
 </script>
 <template>
-	<div class="combo" :class="{ open }">
+	<div class="vue-accessible-select-single" :class="{ open }">
 		<label
 			:id="`${htmlId}-label`"
 			class="combo-label"
@@ -234,8 +234,3 @@
 		</div>
 	</div>
 </template>
-<style lang="scss" scoped>
-	@import './select-styles';
-
-	@include select();
-</style>
