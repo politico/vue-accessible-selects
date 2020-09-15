@@ -195,11 +195,11 @@
 </script>
 
 <template>
-	<div class="vue-accessible-select-multi">
+	<div class="vue-accessible-select-multi" :class="{ open }">
 		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 			{{ label }}
 		</label>
-		<div :class="{ combo: true, open }">
+		<div class="combo-wrapper">
 			<input
 				ref="inputRef"
 				:aria-activedescendant="activeId"
