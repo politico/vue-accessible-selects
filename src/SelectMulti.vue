@@ -31,7 +31,7 @@
 		}
 	}
 
-	export default (Vue as VueConstructor<ISelectMulti>).extend({
+	export default /*#__PURE__*/(Vue as VueConstructor<ISelectMulti>).extend({
 		name: 'SelectMulti',
 		model: {
 			prop: 'values',
@@ -195,7 +195,7 @@
 </script>
 
 <template>
-	<div>
+	<div class="vue-accessible-select-multi">
 		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 			{{ label }}
 		</label>
@@ -260,10 +260,3 @@
 		</ul>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-	@import './select-styles';
-
-	@include select();
-	@include select-multiple();
-</style>

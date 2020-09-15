@@ -5,7 +5,7 @@
 
 import { SelectOption } from './types'
 
-enum Keys {
+const enum Keys {
 	Backspace = 'Backspace',
 	Clear = 'Clear',
 	Down = 'ArrowDown',
@@ -22,7 +22,7 @@ enum Keys {
 	Up = 'ArrowUp'
 }
 
-export enum MenuActions {
+export const enum MenuActions {
 	Close,
 	CloseSelect,
 	First,

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    // Target es5 for syntax (IE 11), but expect Vue projects (i.e. Babel) to provide polyfills up to at least es2016
+		// See https://stackoverflow.com/a/57474312/4167438 for explanation
+		"target": "es5",
+		"lib": [
+			"ES2016",
+			"DOM"
+		],
+    "module": "ESNext",
+    "strict": true,
+    "noImplicitAny": true,
+    "esModuleInterop": true,
+    "outDir": "dist",
+    "declaration": true
+  },
+  "include": [
+    "src"
+  ]
+}
