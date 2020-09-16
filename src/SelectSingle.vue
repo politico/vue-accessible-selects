@@ -195,6 +195,7 @@
 			:class="{ 'sr-only': !labelIsVisible }"
 		>
 			{{ label }}
+			<span class="sr-only"> {{ value.label }}</span>
 		</label>
 		<!-- aria-expanded is `open ? 'true' : 'false'` rather than `open` because the latter results in no attribute -->
 		<div
