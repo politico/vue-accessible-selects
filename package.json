@@ -10,9 +10,9 @@
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
-    "test": "echo \"write some tests\"",
+    "test": "echo \"TODO: write basic specs\"",
     "build": "NODE_ENV=production rollup --config rollup.config.js && rm -rf dist/styles && cp -r src/styles dist/styles",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js"
   },
   "repository": {
@@ -40,6 +40,7 @@
   },
   "homepage": "https://github.com/politico/vue-accessible-selects#readme",
   "devDependencies": {
+    "agadoo": "^2.0.0",
     "rollup": "^2.26.11",
     "rollup-plugin-typescript2": "^0.27.2",
     "rollup-plugin-vue": "^5.1.9",
