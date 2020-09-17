@@ -31,6 +31,7 @@
 		}
 	}
 
+	// `PURE` designation to enable tree-shaking
 	export default /*#__PURE__*/(Vue as VueConstructor<ISelectMulti>).extend({
 		name: 'SelectMulti',
 		model: {

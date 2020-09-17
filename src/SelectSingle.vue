@@ -23,6 +23,7 @@
 		}
 	}
 
+	// `PURE` designation to enable tree-shaking
 	export default /*#__PURE__*/(Vue as VueConstructor<ISelectSingle>).extend({
 		name: 'SelectSingle',
 		model: {
