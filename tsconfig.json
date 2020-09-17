@@ -8,8 +8,6 @@
 			"DOM"
 		],
     "module": "ESNext",
-    "strict": true,
-    "noImplicitAny": true,
     "esModuleInterop": true,
     "outDir": "dist",
     "declaration": true
