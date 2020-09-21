@@ -14,7 +14,7 @@
     "build": "NODE_ENV=production rollup --config rollup.config.js && rm -rf dist/styles && cp -r src/styles dist/styles",
     "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js",
-    "storybook": "start-storybook -p 6006 --docs --debug-webpack",
+    "storybook": "start-storybook -p 6006 --docs",
     "build-storybook": "build-storybook --docs"
   },
   "repository": {
