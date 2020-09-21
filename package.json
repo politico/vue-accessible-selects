@@ -13,7 +13,9 @@
     "test": "echo \"TODO: write basic specs\"",
     "build": "NODE_ENV=production rollup --config rollup.config.js && rm -rf dist/styles && cp -r src/styles dist/styles",
     "prepublishOnly": "npm test && npm run build && npm run shake",
-    "shake": "agadoo dist/index.js"
+    "shake": "agadoo dist/index.js",
+    "storybook": "start-storybook -p 6006 --docs --debug-webpack",
+    "build-storybook": "build-storybook --docs"
   },
   "repository": {
     "type": "git",
@@ -40,15 +42,26 @@
   },
   "homepage": "https://github.com/politico/vue-accessible-selects#readme",
   "devDependencies": {
+    "@babel/core": "^7.11.6",
+    "@storybook/addon-actions": "^6.0.21",
+    "@storybook/addon-essentials": "^6.0.21",
+    "@storybook/addon-links": "^6.0.21",
+    "@storybook/vue": "^6.0.21",
     "agadoo": "^2.0.0",
+    "babel-loader": "^8.1.0",
+    "core-js": "^3.6.5",
+    "react-is": "^16.13.1",
     "rollup": "^2.26.11",
     "rollup-plugin-typescript2": "^0.27.2",
     "rollup-plugin-vue": "^5.1.9",
+    "sass-loader": "^10.0.2",
     "typescript": "^4.0.2",
     "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
     "vue-template-compiler": "^2.6.11"
   },
   "peerDependencies": {
     "vue": "2.x"
-  }
+  },
+  "dependencies": {}
 }

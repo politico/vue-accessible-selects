@@ -29,6 +29,12 @@ $spacer: 1.875rem; // 30px
 		display: block;
 		max-width: $max-width;
 
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+		}
+
 		&.open {
 			.combo-menu {
 				visibility: visible;
