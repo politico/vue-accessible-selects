@@ -1,5 +1,8 @@
 # vue-accessible-selects
 
+[![npm version](https://badge.fury.io/js/%40politico%2Fvue-accessible-selects.svg)](https://badge.fury.io/js/%40politico%2Fvue-accessible-selects)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dd8c8636-2b7a-4984-a031-712b57d9bfba/deploy-status)](https://app.netlify.com/sites/vue-accessible-selects/deploys)
+
 ## Current Development
 
 This entire repo is very much in an alpha state, and should currently be used only within internal Politico projects, as props / events / classes remain fluid. However, we are working towards a 1.0.0 release, and want to capture our relevant bugs fixed during that process.
