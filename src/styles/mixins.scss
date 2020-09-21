@@ -7,6 +7,25 @@ $default-selected-option-pill-background-color: #e7f6ff;
 
 $spacer: 1.875rem; // 30px
 
+@mixin utilities {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+		
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+}
+
 @mixin select(
 	$primary-background-color: $default-primary-background-color,
 	$focus-background-color: $default-focus-background-color
@@ -29,11 +48,7 @@ $spacer: 1.875rem; // 30px
 		display: block;
 		max-width: $max-width;
 
-		*,
-		*::before,
-		*::after {
-			box-sizing: border-box;
-		}
+		@include utilities();
 
 		&.open {
 			.combo-menu {
