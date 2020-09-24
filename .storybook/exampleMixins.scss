@@ -2,6 +2,8 @@
 
 @import '../src/styles/mixins';
 
-@include select();
+@include selects();
+
+@include select-single();
 
 @include select-multi();
