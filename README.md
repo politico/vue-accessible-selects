@@ -82,10 +82,20 @@ export default Vue.extend({
 ```
 
 ```scss
-// In a .scss file used by your project (safe to do globally, since the styles are wrapped by unique `vue-accessible-` prefixed roots)...
+// In any .scss file
+// Simple, use default styles provided by lib
+@import '~@politico/vue-accessible-selects/styles';
 
-// Using Webpack syntax: `~` indicates "look in the current working directory"
-// See https://stackoverflow.com/a/39535907/4167438
+@include selects();
+@include select-single();
+@include select-multi();
+```
+
+or
+
+```scss
+// In any .scss file
+// Customized, using any of the optional SCSS vars provided, as well as targeting any specific classes
 @import '~@politico/vue-accessible-selects/styles';
 
 @include selects(
@@ -104,6 +114,8 @@ export default Vue.extend({
 }
 
 @include select-multi(
+	$selected-color: white,
+	$selected-background-color: blue,
 	$selected-option-pill-color: blue,
 	$selected-option-pill-background-color: lightblue
 ) {
@@ -124,5 +136,6 @@ export default Vue.extend({
 
 #### Multi
 
+* `.combo-wrapper`
 * `.selected-options`
 * `.selected-option-pill`
