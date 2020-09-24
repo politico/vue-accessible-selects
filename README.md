@@ -86,7 +86,7 @@ export default Vue.extend({
 
 // Using Webpack syntax: `~` indicates "look in the current working directory"
 // See https://stackoverflow.com/a/39535907/4167438
-@import '~@politico/vue-accessible-selects';
+@import '~@politico/vue-accessible-selects/styles';
 
 @include selects(
 	$primary-background-color: white,

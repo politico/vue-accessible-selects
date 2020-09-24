@@ -1,4 +1,11 @@
+# Node / NPM
 node_modules
+
+# Distribution
 dist
+styles
 storybook-static
+
+# Editor
 .vscode
+.DS_Store

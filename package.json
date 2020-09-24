@@ -2,16 +2,14 @@
   "name": "@politico/vue-accessible-selects",
   "version": "0.2.1-alpha.1",
   "description": "Select & Multi Select implementations for Vue, focused especially on implementing accessibility best practices",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist", "styles"],
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "test": "echo \"TODO: write basic specs\"",
-    "build": "rm -rf dist && NODE_ENV=production rollup --config rollup.config.js",
+    "build": "rm -rf dist && rm -rf styles && NODE_ENV=production rollup --config rollup.config.js",
     "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js",
     "storybook": "start-storybook -p 6006 --docs",

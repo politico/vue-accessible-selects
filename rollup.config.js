@@ -21,8 +21,7 @@ export default {
         copy({
             // For now, we only support usage of the styling as SCSS mixins, and thus only need to copy over the SCSS without compilation
             // In the future, we could easily export compiled CSS by request, & perhaps allow for CSS vars replacing SCSS vars for customization in that case
-            targets: [{ src: 'src/**/*.scss', dest: 'dist' }],
-            flatten: false
+            targets: [{ src: 'src/styles', dest: './' }]
         })
     ],
 };
