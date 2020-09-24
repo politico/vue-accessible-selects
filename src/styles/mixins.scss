@@ -29,6 +29,13 @@ $spacer: 1.875rem; // 30px
 ) {
 	background-color: $selected-background-color;
 	color: $selected-color;
+}
+
+@mixin highlighted-with-icon(
+	$selected-color,
+	$selected-background-color,
+) {
+	@include highlighted($selected-color, $selected-background-color);
 
 	&::after {
 		// border-color for check icon
@@ -78,7 +85,7 @@ $spacer: 1.875rem; // 30px
 
 	$border-width: 0;
 	$max-width: 100%;
-	$option-padding: $spacer/3 $spacer $spacer/3 $spacer/1.5;
+	$option-padding: $spacer/3 $spacer * 4/3 $spacer/3 $spacer/1.5;
 	$dropdown-overflow-y: auto;
 	$z-index-combo-menu: 100;
 	// END All aesthetic CSS
@@ -163,24 +170,6 @@ $spacer: 1.875rem; // 30px
 			}
 			box-shadow: inset 0 -2px 0 $shadow-color;
 			transition-duration: 0.2s;
-		
-			// Downward v, with CSS
-			&::after {
-				$arrow-size: 8px;
-
-				content: '';
-				position: absolute;
-				top: 50%;
-				right: 20px;
-				display: block;
-				width: $arrow-size;
-				height: $arrow-size;
-				border-right: 2px solid rgba(0, 0, 0, 0.5);
-				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
-				transform: translateY(-85%) rotate(45deg);
-				transition: transform 0.2s ease;
-				pointer-events: none;
-			}
 
 			&:focus {
 				outline: 5px solid transparent;
@@ -221,53 +210,10 @@ $spacer: 1.875rem; // 30px
 			position: relative;
 			cursor: pointer;
 	
-			&::after {
-				content: '';
-				position: absolute;
-				top: 50%;
-				transform: translate(0, -50%);
-				right: $spacer;
-				width: 10px;
-				height: 10px;
-				background:
-					linear-gradient(#000,#000),
-					linear-gradient(#000,#000);
-				background-position:center;
-				background-size: 100% 2px,2px 100%;
-				background-repeat:no-repeat;
-			}
-	
 			&.option-selected {
 				@include highlighted($selected-color, $selected-background-color);
-	
-				&::after {
-					width: 8px;
-					height: 16px;
-					border-right: 2px solid;
-					border-bottom: 2px solid;
-					background: none;
-					transform: translate(0, -50%) rotate(45deg);
-				}
 			}
 		}
-
-
-		// .combo-option.option-selected {
-		// 	position: relative;
-		// 	padding-right: 30px;
-		// }
-
-		// .combo-option.option-selected::after {
-		// 	content: '';
-		// 	position: absolute;
-		// 	top: 50%;
-		// 	right: 15px;
-		// 	width: 8px;
-		// 	height: 16px;
-		// 	border-right: 2px solid #000;
-		// 	border-bottom: 2px solid #000;
-		// 	transform: translate(0, -50%) rotate(45deg);
-		// }
 	}
 }
 
@@ -277,11 +223,33 @@ $spacer: 1.875rem; // 30px
 		// they'll pass them in as part of the @content block here
 		@content;
 
-		@include input-menu-borders(1.4em)
+		@include input-menu-borders(1.4em);
+
+		.combo-input {
+			// Downward v, with CSS
+			&::after {
+				$arrow-size: 8px;
+
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: 20px;
+				display: block;
+				width: $arrow-size;
+				height: $arrow-size;
+				border-right: 2px solid rgba(0, 0, 0, 0.5);
+				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+				transform: translateY(-85%) rotate(45deg);
+				transition: transform 0.2s ease;
+				pointer-events: none;
+			}
+		}
 	}
 }
 
 @mixin select-multi(
+	$selected-color: $default-selected-color,
+	$selected-background-color: $default-selected-background-color,
 	$selected-option-pill-color: $default-selected-option-pill-color,
 	$selected-option-pill-background-color: $default-selected-option-pill-background-color
 ) {
@@ -296,6 +264,43 @@ $spacer: 1.875rem; // 30px
 		@content;
 		
 		@include input-menu-borders(4px);
+
+
+		.combo-option.option-current,
+		.combo-option:hover {
+			@include highlighted-with-icon($selected-color, $selected-background-color);
+		}
+
+		.combo-option {
+			&::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				transform: translate(0, -50%);
+				right: $spacer/1.5;
+				width: 10px;
+				height: 10px;
+				background:
+					linear-gradient(#000,#000),
+					linear-gradient(#000,#000);
+				background-position:center;
+				background-size: 100% 2px,2px 100%;
+				background-repeat:no-repeat;
+			}
+	
+			&.option-selected {
+				@include highlighted-with-icon($selected-color, $selected-background-color);
+	
+				&::after {
+					width: 8px;
+					height: 16px;
+					border-right: 2px solid;
+					border-bottom: 2px solid;
+					background: none;
+					transform: translate(0, -50%) rotate(45deg);
+				}
+			}
+		}
 
 		.selected-options {
 			max-width: 100%;
