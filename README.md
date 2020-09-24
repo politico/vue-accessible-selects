@@ -13,7 +13,11 @@ This entire repo is very much in an alpha state, and should currently be used on
 * Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select 
 * Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-## Current Usage *(updated 9/14/20)*
+## Current Usage *(updated 9/24/20)*
+
+```shell
+npm i @politico/vue-accessible-components
+```
 
 ```ts
 // In component
@@ -56,11 +60,12 @@ export default Vue.extend({
 ```
 
 ```html
+<!-- in component -->
 <SelectSingle
 	v-model="selectSingleValue"
 	:options="sampleOptions"
 	label="My Single Select"
-	:labelisVisible="true"
+	:labelIsVisible="true"
 	@select="handleSelectEvent"
 />
 
@@ -79,7 +84,7 @@ export default Vue.extend({
 ```scss
 // For now, we provide SCSS mixins to customize w/ colors
 // Soon, we'll add documentation for the primary classes to target, as well as a default .css file to include
-// So in a .scss file used by your project...
+// So in a .scss file used by your project (safe to do globally, since the styles are wrapped by unique `vue-accessible-` prefixed roots)...
 
 // Using Webpack syntax: `~` indicates "look in the current working directory"
 @import '~@politico/vue-accessible-selects/dist/mixins.scss';
@@ -93,3 +98,22 @@ export default Vue.extend({
 	$selected-option-pill-background-color: lightblue
 )
 ```
+
+For additional custom styling, the following classes are intended to be stable for targeting:
+
+* Root, Single: `.vue-accessible-select-single`
+* Root, Multi: `.vue-accessible-select-multi`
+
+### Both
+
+* `.combo-input`
+* `.combo-label`
+* `.combo-menu`
+* `.combo-option`
+* `.combo-option.option-selected`
+* `.combo-option.option-current`
+
+### Multi
+
+* `.selected-options`
+* `.selected-option-pill`
