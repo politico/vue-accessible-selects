@@ -13,7 +13,7 @@ This entire repo is very much in an alpha state, and should currently be used on
 * Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select 
 * Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-## Current Usage *(updated 9/24/20)*
+## Current Usage *(updated 9/25/20)*
 
 ```shell
 npm i @politico/vue-accessible-components
@@ -60,7 +60,7 @@ export default Vue.extend({
 ```
 
 ```html
-<!-- in component -->
+<!-- In component -->
 <SelectSingle
 	v-model="selectSingleValue"
 	:options="sampleOptions"
@@ -82,30 +82,38 @@ export default Vue.extend({
 ```
 
 ```scss
-// For now, we provide SCSS mixins to customize w/ colors
-// Soon, we'll add documentation for the primary classes to target, as well as a default .css file to include
-// So in a .scss file used by your project (safe to do globally, since the styles are wrapped by unique `vue-accessible-` prefixed roots)...
+// In a .scss file used by your project (safe to do globally, since the styles are wrapped by unique `vue-accessible-` prefixed roots)...
 
 // Using Webpack syntax: `~` indicates "look in the current working directory"
 // See https://stackoverflow.com/a/39535907/4167438
-@import '~@politico/vue-accessible-selects/dist/mixins.scss';
+@import '~@politico/vue-accessible-selects';
 
-@include select(
+@include selects(
 	$primary-background-color: white,
-	$focus-background-color: green,
-)
+	$closed-background-color: lightgray,
+	$selected-color: white,
+	$selected-background-color: blue,
+	$font-size: 14px,
+	$open-border-color: darkgray
+) {
+	.combo-input {  /* some CSS styles applied to the combo-input for *both* Single & Multi; see `Custom Styling` for available classes */ }
+}
+
+@include select-single() {
+	.combo-input {  /* some CSS styles applied to the combo-input for *only* Single */ }
+}
+
 @include select-multi(
 	$selected-option-pill-color: blue,
 	$selected-option-pill-background-color: lightblue
-)
+) {
+	.combo-input {  /* some CSS styles applied to the combo-input for *only* Multi */ }
+}
 ```
 
-For additional custom styling, the following classes are intended to be stable for targeting:
+### Custom Styling
 
-* Root, Single: `.vue-accessible-select-single`
-* Root, Multi: `.vue-accessible-select-multi`
-
-### Both
+#### Both
 
 * `.combo-input`
 * `.combo-label`
@@ -114,7 +122,7 @@ For additional custom styling, the following classes are intended to be stable f
 * `.combo-option.option-selected`
 * `.combo-option.option-current`
 
-### Multi
+#### Multi
 
 * `.selected-options`
 * `.selected-option-pill`
