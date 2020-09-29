@@ -85,7 +85,7 @@ $spacer: 1.875rem; // 30px
 
 	$border-width: 0;
 	$max-width: 100%;
-	$option-padding: $spacer/3 $spacer * 4/3 $spacer/3 $spacer/1.5;
+	$option-padding: $spacer/3 $spacer/1.5;
 	$dropdown-overflow-y: auto;
 	$z-index-combo-menu: 100;
 	// END All aesthetic CSS
@@ -256,7 +256,8 @@ $spacer: 1.875rem; // 30px
 ) {
 	// START All aesthetic CSS
 	$border: 1px solid $selected-option-pill-color;
-	$pill-border-radius: 3.125rem;
+	$pill-border-radius: $spacer/2;
+	$option-padding: $spacer/3 $spacer $spacer/3 $spacer/1.5;
 	// END All aesthetic CSS
 
 	.vue-accessible-select-multi {
@@ -267,39 +268,20 @@ $spacer: 1.875rem; // 30px
 		@include input-menu-borders(4px);
 
 
-		.combo-option.option-current,
-		.combo-option:hover {
-			@include highlighted-with-icon($selected-color, $selected-background-color);
-		}
-
 		.combo-option {
-			&::after {
+			padding: $option-padding;
+
+			&.option-selected::after {
 				content: '';
 				position: absolute;
 				top: 50%;
-				transform: translate(0, -50%);
-				right: $spacer/1.5;
-				width: 10px;
-				height: 10px;
-				background:
-					linear-gradient(#000,#000),
-					linear-gradient(#000,#000);
-				background-position:center;
-				background-size: 100% 2px,2px 100%;
-				background-repeat:no-repeat;
-			}
-	
-			&.option-selected {
-				@include highlighted-with-icon($selected-color, $selected-background-color);
-	
-				&::after {
-					width: 8px;
-					height: 16px;
-					border-right: 2px solid;
-					border-bottom: 2px solid;
-					background: none;
-					transform: translate(0, -50%) rotate(45deg);
-				}
+				right: $spacer/2;
+				width: 8px;
+				height: 16px;
+				border-right: 2px solid;
+				border-bottom: 2px solid;
+				background: none;
+				transform: translate(0, -50%) rotate(45deg);
 			}
 		}
 
