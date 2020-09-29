@@ -97,7 +97,8 @@ $spacer: 1.875rem; // 30px
 		@content;
 
 		position: relative;
-		display: block;
+		display: flex;
+		flex-direction: column;
 		max-width: $max-width;
 
 		@include utilities();
@@ -304,9 +305,14 @@ $spacer: 1.875rem; // 30px
 
 		.selected-options {
 			max-width: 100%;
-			margin: $spacer / 3 0 0;
+			margin: 0;
 			padding: 0;
 			list-style-type: none;
+
+			&.below-input {
+				margin-top: $spacer / 3;
+				order: 3
+			}
 		}
 
 		.selected-options li {
