@@ -9,3 +9,6 @@ storybook-static
 # Editor
 .vscode
 .DS_Store
+
+# Local Testing
+*.tgz
