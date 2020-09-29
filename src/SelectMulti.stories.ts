@@ -1,4 +1,6 @@
-import SelectMulti from './SelectMulti.vue';
+import SelectMulti from './SelectMulti.vue'
+
+import { longDefaultListOfOptions } from './storybookUtilities'
 
 export default {
 	title: 'SelectMulti',
@@ -17,6 +19,7 @@ const Template = (args, { argTypes }) => ({
 			:label="label" 
 			:labelIsVisible="labelIsVisible"
 			:placeholder="placeholder"
+			:displayPillsBelowInput="displayPillsBelowInput"
 	  	/>
 	</div>`
 });
@@ -24,7 +27,8 @@ const Template = (args, { argTypes }) => ({
 export const Primary = Template.bind({});
 Primary.args = {
 	label: 'My SelectMulti',
-	options: [{ value: 'option-one', label: 'Option One' }, { value: 'option-two', label: 'Option Two' }],
+	options: longDefaultListOfOptions,
 	labelIsVisible: true,
-	placeholder: 'Select Options'
+	placeholder: 'Select Options',
+	displayPillsBelowInput: false
 };
