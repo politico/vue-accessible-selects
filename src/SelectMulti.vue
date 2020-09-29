@@ -101,7 +101,7 @@
 			}
 
 			if (this.open && isScrollable(this.$refs.listboxRef)) {
-				maintainScrollVisibility(this.$refs.activeOptionRef, this.$refs.listboxRef)
+				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxRef)
 			}
 		},
 		methods: {
