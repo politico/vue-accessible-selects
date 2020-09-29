@@ -74,8 +74,14 @@ $spacer: 1.875rem; // 30px
 @mixin selects(
 	$primary-background-color: $default-primary-background-color,
 	$closed-background-color: $default-primary-background-color,
+
 	$selected-color: $default-selected-color,
 	$selected-background-color: $default-selected-background-color,
+
+	// By default, we style selected & hover the same, but allow consuming projects to pass in separate values if desired
+	$hover-color: $default-selected-color,
+	$hover-background-color: $default-selected-background-color,
+	
 	$font-size: $default-font-size,
 	$open-border-color: $default-open-border-color
 ) {
@@ -201,9 +207,11 @@ $spacer: 1.875rem; // 30px
 			opacity: 0;
 		}
 
-		.combo-option.option-current,
-		.combo-option:hover {
+		.combo-option.option-current {
 			@include highlighted($selected-color, $selected-background-color);
+		}
+		.combo-option:hover {
+			@include highlighted($hover-color, $hover-background-color);
 		}
 
 		.combo-option {
