@@ -1,7 +1,12 @@
 // Define defaults & helper variables for internal use
 $default-primary-background-color: #eee;
-$default-selected-color: #222;
-$default-selected-background-color: #ddd;
+
+$default-selected-color: #fff;
+$default-selected-background-color: #444;
+
+$default-hover-color: #fff;
+$default-hover-background-color: #666;
+
 $default-font-size: 1em;
 $default-open-border-color: 'none';
 
@@ -78,9 +83,8 @@ $spacer: 1.875rem; // 30px
 	$selected-color: $default-selected-color,
 	$selected-background-color: $default-selected-background-color,
 
-	// By default, we style selected & hover the same, but allow consuming projects to pass in separate values if desired
-	$hover-color: $default-selected-color,
-	$hover-background-color: $default-selected-background-color,
+	$hover-color: $default-hover-color,
+	$hover-background-color: $default-hover-background-color,
 	
 	$font-size: $default-font-size,
 	$open-border-color: $default-open-border-color
