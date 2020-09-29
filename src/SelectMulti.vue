@@ -57,6 +57,10 @@
 				required: false,
 				default: () => null
 			},
+			displayPillsBelowInput: {
+				type: Boolean,
+				default: false
+			},
 			// No need to set via a prop; can just use v-model
 			values: {
 				type: Array as () => SelectOption[],
@@ -200,6 +204,19 @@
 		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 			{{ label }}
 		</label>
+		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
+			<span :id="`${htmlId}-selected-option-pills`" style="display: none;">remove</span>
+			<li v-for="(option, index) in selectedOptions" :key="option.value">
+				<button
+					class="selected-option-pill"
+					type="button"
+					:aria-describedby="`${htmlId}-selected-option-pills`"
+					@click="removeOption(index)"
+				>
+					{{ option.label }}
+				</button>
+			</li>
+		</ul>
 		<div class="combo-wrapper">
 			<input
 				ref="inputRef"
@@ -246,18 +263,5 @@
 				</div>
 			</div>
 		</div>
-		<ul :id="`${htmlId}-selected`" class="selected-options">
-			<span :id="`${htmlId}-selected-option-pills`" style="display: none;">remove</span>
-			<li v-for="(option, index) in selectedOptions" :key="option.value">
-				<button
-					class="selected-option-pill"
-					type="button"
-					:aria-describedby="`${htmlId}-selected-option-pills`"
-					@click="removeOption(index)"
-				>
-					{{ option.label }}
-				</button>
-			</li>
-		</ul>
 	</div>
 </template>
