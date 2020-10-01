@@ -14,7 +14,10 @@ export default {
         format: 'es',
     },
     plugins: [
-        typescript(),
+        typescript({
+            // We want `docs` to be built for Storybook, but no need to include those files in the library build
+            tsconfigOverride: { exclude: ['docs'] }
+        }),
         VuePlugin({
             css: false
         }),

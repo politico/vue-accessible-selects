@@ -1,4 +1,4 @@
-import SelectMulti from './SelectMulti.vue'
+import SelectMulti from '../src/SelectMulti.vue'
 
 import { longDefaultListOfOptions } from './storybookUtilities'
 

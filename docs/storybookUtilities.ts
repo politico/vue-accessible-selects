@@ -1,4 +1,4 @@
-import { SelectOption } from './types'
+import { SelectOption } from '../src/types'
 
 export const longDefaultListOfOptions: SelectOption[] = [{
     value: 'option-one',
