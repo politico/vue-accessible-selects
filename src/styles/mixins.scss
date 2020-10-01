@@ -100,6 +100,9 @@ $spacer: 1.875rem; // 30px
 	$z-index-combo-menu: 100;
 	// END All aesthetic CSS
 
+	// Logical variables
+	$closed-color-is-defined: $closed-background-color != $default-primary-background-color;
+
 	.vue-accessible-select-single,
 	.vue-accessible-select-multi {
 		// If a consuming project wants to set some custom styles to apply to *all* selects,
@@ -113,7 +116,83 @@ $spacer: 1.875rem; // 30px
 
 		@include utilities();
 
+		.combo-wrapper {
+			position: relative;
+		}
+
+		.combo-label {
+			display: block;
+			margin-bottom: 0.9em;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+
+		.combo-input {
+			display: block;
+			width: 100%;
+			min-height: calc(1.4em + 0.625em + 0.625em);
+			padding: 0.625em 2.5em 0.625em 1.25em;
+			position: relative;
+			border: $border-width solid rgba(0, 0, 0, 0.5);
+			text-align: left;
+			font-size: $font-size;
+			@if($closed-color-is-defined) {
+				background-color: $closed-background-color;
+			} @else {
+				background-color: $primary-background-color;
+			}
+			box-shadow: inset 0 -2px 0 $shadow-color;
+			transition-duration: 0.2s;
+
+			&:focus {
+				outline: 5px solid transparent;
+				box-shadow: 0 0 1px 1px $focus-shadow-color;
+			}
+		}
+
+		.combo-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			z-index: $z-index-combo-menu;
+			width: 100%;
+			max-height: 300px;
+			border: $border-width solid rgba(0, 0, 0, 0.42);
+			overflow-y: $dropdown-overflow-y;
+			background-color: $primary-background-color;
+			visibility: hidden;
+			opacity: 0;
+		}
+
+
 		&.open {
+			.combo-input {
+				transition: border-radius 0.1s ease-in-out;
+
+				// If a closed background-color has been defined, then we need to ensure that primary is set when open
+				// Otherwise, no need to define it here; it's already set when not open
+				@if($closed-color-is-defined) {
+					background-color: $primary-background-color;
+				}
+
+				&:focus {
+					box-shadow: none;
+				}
+		
+				&::after {
+					transform: translateY(-50%) rotate(225deg);
+				}
+
+				@if ($open-border-color != $default-open-border-color) {
+					border-top: 1px solid $open-border-color;
+					border-left: 1px solid $open-border-color;
+					border-right: 1px solid $open-border-color;
+					border-bottom: none;
+				}
+			}
+
 			.combo-menu {
 				visibility: visible;
 				opacity: 1;
@@ -139,76 +218,6 @@ $spacer: 1.875rem; // 30px
 					}
 				}
 			}
-
-			.combo-input {
-				background-color: $primary-background-color;
-				transition: border-radius 0.1s ease-in-out;
-
-				&:focus {
-					box-shadow: none;
-				}
-		
-				&::after {
-					transform: translateY(-50%) rotate(225deg);
-				}
-
-				@if ($open-border-color != $default-open-border-color) {
-					border-top: 1px solid $open-border-color;
-					border-left: 1px solid $open-border-color;
-					border-right: 1px solid $open-border-color;
-					border-bottom: none;
-				}
-			}
-		}
-
-		.combo-wrapper {
-			position: relative;
-		}
-
-		.combo-input {
-			display: block;
-			width: 100%;
-			min-height: calc(1.4em + 0.625em + 0.625em);
-			padding: 0.625em 2.5em 0.625em 1.25em;
-			position: relative;
-			border: $border-width solid rgba(0, 0, 0, 0.5);
-			text-align: left;
-			font-size: $font-size;
-			@if($closed-background-color != $default-primary-background-color) {
-				background-color: $closed-background-color;
-			} @else {
-				background-color: $primary-background-color;
-			}
-			box-shadow: inset 0 -2px 0 $shadow-color;
-			transition-duration: 0.2s;
-
-			&:focus {
-				outline: 5px solid transparent;
-				box-shadow: 0 0 1px 1px $focus-shadow-color;
-			}
-		}
-
-		.combo-label {
-			display: block;
-			margin-bottom: 0.9em;
-			font-size: 12px;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 1.5px;
-		}
-
-		.combo-menu {
-			position: absolute;
-			top: 100%;
-			left: 0;
-			z-index: $z-index-combo-menu;
-			width: 100%;
-			max-height: 300px;
-			border: $border-width solid rgba(0, 0, 0, 0.42);
-			overflow-y: $dropdown-overflow-y;
-			background-color: $primary-background-color;
-			visibility: hidden;
-			opacity: 0;
 		}
 
 		.combo-option.option-current {
