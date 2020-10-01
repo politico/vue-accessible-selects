@@ -101,8 +101,13 @@ or
 @include selects(
 	$primary-background-color: white,
 	$closed-background-color: lightgray,
+
 	$selected-color: white,
 	$selected-background-color: blue,
+
+	$hover-color: white,
+	$hover-background-color: darkblue,
+	
 	$font-size: 14px,
 	$open-border-color: darkgray
 ) {
@@ -114,8 +119,6 @@ or
 }
 
 @include select-multi(
-	$selected-color: white,
-	$selected-background-color: blue,
 	$selected-option-pill-color: blue,
 	$selected-option-pill-background-color: lightblue
 ) {
@@ -125,17 +128,7 @@ or
 
 ### Custom Styling
 
-#### Both
+As we determine the most-commonly externally-referenced classes, we'll add them here
 
 * `.combo-input`
-* `.combo-label`
 * `.combo-menu`
-* `.combo-option`
-* `.combo-option.option-selected`
-* `.combo-option.option-current`
-
-#### Multi
-
-* `.combo-wrapper`
-* `.selected-options`
-* `.selected-option-pill`
