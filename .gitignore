@@ -2,9 +2,9 @@
 node_modules
 
 # Distribution
-dist
-styles
-storybook-static
+/dist
+/styles
+/storybook-static
 
 # Editor
 .vscode
