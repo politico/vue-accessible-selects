@@ -13,6 +13,6 @@
     "declaration": true
   },
   "include": [
-    "src"
+    "src", "shims-vue.d.ts", "docs"
   ]
 }

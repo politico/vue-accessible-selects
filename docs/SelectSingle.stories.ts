@@ -1,4 +1,4 @@
-import SelectSingle from './SelectSingle.vue';
+import SelectSingle from '../src/SelectSingle.vue';
 
 import { longDefaultListOfOptions } from './storybookUtilities'
 
