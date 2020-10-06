@@ -144,6 +144,7 @@
 			},
 
 			onInputBlur() {
+				console.log('calling onInputBlur', this.ignoreBlur)
 				if (this.ignoreBlur) {
 					this.ignoreBlur = false
 					return
@@ -161,9 +162,14 @@
 				this.updateOption(index)
 			},
 
-			onOptionMouseDown() {
+			onOptionMouseDown(event: MouseEvent) {
 				this.ignoreBlur = true
 				this.callFocus = true
+				event.stopPropagation()
+			},
+
+			onMenuMouseDown(event: MouseEvent) {
+				event.preventDefault()
 			},
 
 			removeOption(index: number) {
@@ -243,6 +249,7 @@
 				class="combo-menu"
 				role="listbox"
 				aria-multiselectable="true"
+				@mousedown="onMenuMouseDown"
 			>
 				<div
 					v-for="(option, index) in filteredOptions"
