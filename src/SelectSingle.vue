@@ -173,8 +173,12 @@
 				this.onOptionChange(index)
 				this.updateMenuState(false)
 			},
-			onOptionMouseDown() {
+			onOptionMouseDown(event: MouseEvent) {
 				this.ignoreBlur = true
+				event.stopPropagation()
+			},
+			onMenuMouseDown(event: MouseEvent) {
+				event.preventDefault()
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
@@ -219,7 +223,13 @@
 			</span>
 		</div>
 		<!-- tabindex -->
-		<div :id="`${htmlId}-listbox`" ref="listboxEl" class="combo-menu" role="listbox">
+		<div 
+			:id="`${htmlId}-listbox`" 
+			ref="listboxEl" 
+			class="combo-menu" 
+			role="listbox"
+			@mousedown="onMenuMouseDown"
+		>
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
