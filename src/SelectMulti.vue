@@ -144,7 +144,6 @@
 			},
 
 			onInputBlur() {
-				console.log('calling onInputBlur', this.ignoreBlur)
 				if (this.ignoreBlur) {
 					this.ignoreBlur = false
 					return
