@@ -13,12 +13,13 @@ const Template = (args, { argTypes }) => ({
 	data() { return { values: [] } },
 	template: `
 	<div class="wrapper">
-		<SelectMulti 
-			v-model="values" 
+		<SelectMulti
+			v-model="values"
 			:options="options"
-			:label="label" 
+			:label="label"
 			:labelIsVisible="labelIsVisible"
 			:placeholder="placeholder"
+			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"
 	  	/>
 	</div>`
@@ -30,5 +31,6 @@ Primary.args = {
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
 	placeholder: 'Select Options',
-	displayPillsBelowInput: false
+	disabled: false,
+	displayPillsBelowInput: false,
 };
