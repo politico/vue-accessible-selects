@@ -39,6 +39,10 @@
 			event: 'change'
 		},
 		props: {
+			disabled: {
+				type: Boolean,
+				default: false
+			},
 			label: {
 				type: String,
 				required: true
@@ -205,7 +209,7 @@
 </script>
 
 <template>
-	<div class="vue-accessible-select-multi" :class="{ open }">
+	<div class="vue-accessible-select-multi" :class="{ disabled, open }">
 		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 			{{ label }}
 		</label>
@@ -214,6 +218,7 @@
 			<li v-for="(option, index) in selectedOptions" :key="option.value">
 				<button
 					class="selected-option-pill"
+					:disabled="disabled"
 					type="button"
 					:aria-describedby="`${htmlId}-selected-option-pills`"
 					@click="removeOption(index)"
@@ -232,6 +237,7 @@
 				aria-haspopup="listbox"
 				:aria-labelledby="`${htmlId} ${htmlId}-selected`"
 				class="combo-input"
+				:disabled="disabled"
 				role="combobox"
 				type="text"
 				:value="inputValue"

@@ -56,7 +56,6 @@
 			// Potential props:
 			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
 			// size
-			// disabled
 			// autofocus
 			// required
 		},
@@ -193,7 +192,7 @@
 	})
 </script>
 <template>
-	<div class="vue-accessible-select-single" :class="{ open }">
+	<div class="vue-accessible-select-single" :class="{ disabled, open }">
 		<label
 			:id="`${htmlId}-label`"
 			class="combo-label"
@@ -209,6 +208,7 @@
 			:aria-activedescendant="activeDescendant"
 			aria-autocomplete="none"
 			:aria-controls="`${htmlId}-listbox`"
+			:aria-disabled="disabled"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
 			:aria-labelledby="`${htmlId}-label`"
@@ -223,10 +223,10 @@
 			</span>
 		</div>
 		<!-- tabindex -->
-		<div 
-			:id="`${htmlId}-listbox`" 
-			ref="listboxEl" 
-			class="combo-menu" 
+		<div
+			:id="`${htmlId}-listbox`"
+			ref="listboxEl"
+			class="combo-menu"
 			role="listbox"
 			@mousedown="onMenuMouseDown"
 		>

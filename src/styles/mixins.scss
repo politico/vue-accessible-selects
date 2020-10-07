@@ -4,6 +4,9 @@ $default-primary-background-color: #eee;
 $default-selected-color: #fff;
 $default-selected-background-color: #444;
 
+$default-disabled-color: #868b98;
+$default-disabled-background-color: #e5e7eb;
+
 $default-hover-color: #fff;
 $default-hover-background-color: #666;
 
@@ -61,7 +64,7 @@ $spacer: 1.875rem; // 30px
 	*::after {
 		box-sizing: border-box;
 	}
-		
+
 	.sr-only {
 		position: absolute;
 		width: 1px;
@@ -83,9 +86,12 @@ $spacer: 1.875rem; // 30px
 	$selected-color: $default-selected-color,
 	$selected-background-color: $default-selected-background-color,
 
+	$disabled-color: $default-disabled-color,
+	$disabled-background-color: $default-disabled-background-color,
+
 	$hover-color: $default-hover-color,
 	$hover-background-color: $default-hover-background-color,
-	
+
 	$font-size: $default-font-size,
 	$open-border-color: $default-open-border-color
 ) {
@@ -166,6 +172,36 @@ $spacer: 1.875rem; // 30px
 			opacity: 0;
 		}
 
+		&.disabled {
+			.combo-input {
+				color: $disabled-color;
+				background-color: $disabled-background-color;
+				box-shadow: unset;
+			}
+
+			&::after {
+				border-color: $disabled-color;
+			}
+
+			.combo-input::after {
+				border-color: $disabled-color;
+			}
+
+			.combo-wrapper::after {
+				@include plus-icon($disabled-color)
+			}
+
+			.selected-option-pill {
+				background-color: $disabled-background-color;
+				color: $disabled-color;
+				border-color: $disabled-color;
+
+				&::before,
+				&::after {
+					border-color: $disabled-color;
+				}
+			}
+		}
 
 		&.open {
 			.combo-input {
@@ -180,7 +216,7 @@ $spacer: 1.875rem; // 30px
 				&:focus {
 					box-shadow: none;
 				}
-		
+
 				&::after {
 					transform: translateY(-50%) rotate(225deg);
 				}
@@ -231,7 +267,7 @@ $spacer: 1.875rem; // 30px
 			padding: $option-padding;
 			position: relative;
 			cursor: pointer;
-	
+
 			&.option-selected {
 				@include highlighted($selected-color, $selected-background-color);
 			}
@@ -269,6 +305,15 @@ $spacer: 1.875rem; // 30px
 	}
 }
 
+@mixin plus-icon($color: #000) {
+	background:
+		linear-gradient($color,$color),
+		linear-gradient($color,$color);
+	background-position:center;
+	background-size: 100% 2px,2px 100%;
+	background-repeat:no-repeat;
+}
+
 @mixin select-multi(
 	$selected-option-pill-color: $default-selected-option-pill-color,
 	$selected-option-pill-background-color: $default-selected-option-pill-background-color
@@ -283,7 +328,7 @@ $spacer: 1.875rem; // 30px
 		// If a consuming project wants to set some custom styles to apply to *only* SelectMulti,
 		// they'll pass them in as part of the @content block here
 		@content;
-		
+
 		@include input-menu-borders(4px);
 
 		.combo-wrapper::after {
@@ -294,12 +339,8 @@ $spacer: 1.875rem; // 30px
 			right: $spacer/1.5;
 			width: 10px;
 			height: 10px;
-			background:
-				linear-gradient(#000,#000),
-				linear-gradient(#000,#000);
-			background-position:center;
-			background-size: 100% 2px,2px 100%;
-			background-repeat:no-repeat;
+
+			@include plus-icon()
 		}
 
 		.combo-option {
