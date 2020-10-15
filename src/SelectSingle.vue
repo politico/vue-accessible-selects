@@ -219,7 +219,9 @@
 			v-on="disabled ? {} : { mousedown: handleClick, keydown: handleKeydown }"
 		>
 			<span :id="`${htmlId}-value`" ref="valueEl">
-				{{ value.label }}
+				<slot name="selectedOption" :option="value">
+					{{ value.label }}
+				</slot>
 			</span>
 		</div>
 		<!-- tabindex -->
@@ -241,7 +243,9 @@
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"
 			>
-				{{ option.label }}
+				<slot name="option" :option="option">
+					{{ option.label }}
+				</slot>
 			</div>
 		</div>
 	</div>

@@ -215,17 +215,21 @@
 		</label>
 		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
 			<span :id="`${htmlId}-selected-option-pills`" style="display: none;">remove</span>
-			<li v-for="(option, index) in selectedOptions" :key="option.value">
-				<button
-					class="selected-option-pill"
-					:disabled="disabled"
-					type="button"
-					:aria-describedby="`${htmlId}-selected-option-pills`"
-					@click="removeOption(index)"
-				>
-					{{ option.label }}
-				</button>
-			</li>
+			<template v-for="(option, index) in selectedOptions" >
+				<li v-if="option.value" :key="option.value" >
+					<button
+						class="selected-option-pill"
+						:disabled="disabled"
+						type="button"
+						:aria-describedby="`${htmlId}-selected-option-pills`"
+						@click="removeOption(index)"
+					>
+						<slot name="selectedOption" :option="option">
+							{{  option.label }}
+						</slot>
+					</button>
+				</li>
+			</template>
 		</ul>
 		<div class="combo-wrapper">
 			<input
@@ -271,7 +275,9 @@
 					@click="onOptionClick(index)"
 					@mousedown="onOptionMouseDown"
 				>
-					{{ option.label }}
+					<slot name="option" :option="option">
+						{{  option.label }}
+					</slot>
 				</div>
 			</div>
 			<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
