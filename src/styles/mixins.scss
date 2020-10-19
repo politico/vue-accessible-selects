@@ -111,10 +111,6 @@ $spacer: 1.875rem; // 30px
 
 	.vue-accessible-select-single,
 	.vue-accessible-select-multi {
-		// If a consuming project wants to set some custom styles to apply to *all* selects,
-		// they'll pass them in as part of the @content block here
-		@content;
-
 		position: relative;
 		display: flex;
 		flex-direction: column;
@@ -272,15 +268,15 @@ $spacer: 1.875rem; // 30px
 				@include highlighted($selected-color, $selected-background-color);
 			}
 		}
+
+		// If a consuming project wants to set some custom styles to apply to *all* selects,
+		// they'll pass them in as part of the @content block here
+		@content;
 	}
 }
 
 @mixin select-single() {
 	.vue-accessible-select-single {
-		// If a consuming project wants to set some custom styles to apply to *only* SelectSingle,
-		// they'll pass them in as part of the @content block here
-		@content;
-
 		@include input-menu-borders(1.4em);
 
 		.combo-input {
@@ -302,6 +298,10 @@ $spacer: 1.875rem; // 30px
 				pointer-events: none;
 			}
 		}
+
+		// If a consuming project wants to set some custom styles to apply to *only* SelectSingle,
+		// they'll pass them in as part of the @content block here
+		@content;
 	}
 }
 
@@ -325,10 +325,6 @@ $spacer: 1.875rem; // 30px
 	// END All aesthetic CSS
 
 	.vue-accessible-select-multi {
-		// If a consuming project wants to set some custom styles to apply to *only* SelectMulti,
-		// they'll pass them in as part of the @content block here
-		@content;
-
 		@include input-menu-borders(4px);
 
 		.combo-wrapper::after {
@@ -417,5 +413,9 @@ $spacer: 1.875rem; // 30px
 				transform: translate(0, 0%) rotate(-45deg);
 			}
 		}
+
+		// If a consuming project wants to set some custom styles to apply to *only* SelectMulti,
+		// they'll pass them in as part of the @content block here
+		@content;
 	}
 }
