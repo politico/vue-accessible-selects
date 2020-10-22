@@ -24,10 +24,10 @@ const Template = (args, { argTypes }) => ({
 			:displayPillsBelowInput="displayPillsBelowInput"
 			>
 				<template v-slot:selectedOption="{ option }" >
-					[{{ option.label }}] [{{ option.value }}]
+					<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
 				</template>
 				<template v-slot:option="{ option }" >
-					[label]: {{ option.label }} [with value]: {{ option.value }}
+					<strong>label: {{ option.label }}<strong>, <em>with value: {{ option.value }}</em>
 				</template>
 		</SelectMulti>
 	</div>`
