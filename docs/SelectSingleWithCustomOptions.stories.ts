@@ -28,10 +28,10 @@ const Template = (args, { argTypes }) => ({
 			:disabled="disabled"
 		>
 			<template v-slot:selectedOption="{ option }" >
-				[{{ option.label }}] [{{ option.value }}]
+				<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
 			</template>
 			<template v-slot:option="{ option }" >
-				[label]: {{ option.label }} [with value]: {{ option.value }}
+				<strong>label: {{ option.label }}</strong>, <em>with value: {{ option.value }}</em>
 			</template>
 		</SelectSingle>
 	</div>`
