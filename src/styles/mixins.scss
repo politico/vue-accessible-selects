@@ -140,6 +140,8 @@ $spacer: 1.875rem; // 30px
 			border: $border-width solid rgba(0, 0, 0, 0.5);
 			text-align: left;
 			font-size: $font-size;
+			outline: 1px solid transparent;
+
 			@if($closed-color-is-defined) {
 				background-color: $closed-background-color;
 			} @else {
@@ -158,6 +160,7 @@ $spacer: 1.875rem; // 30px
 			position: absolute;
 			top: 100%;
 			left: 0;
+			padding: 1px 0; // required for outline property
 			z-index: $z-index-combo-menu;
 			width: 100%;
 			max-height: 300px;
@@ -183,8 +186,8 @@ $spacer: 1.875rem; // 30px
 				border-color: $disabled-color;
 			}
 
-			.combo-wrapper::after {
-				@include plus-icon($disabled-color)
+			.combo-plus-icon {
+				color: $disabled-color;
 			}
 
 			.selected-option-pill {
@@ -253,9 +256,13 @@ $spacer: 1.875rem; // 30px
 		}
 
 		.combo-option.option-current {
+			outline: 1px dashed transparent;
+
 			@include highlighted($selected-color, $selected-background-color);
 		}
 		.combo-option:hover {
+			outline: 1px solid transparent;
+
 			@include highlighted($hover-color, $hover-background-color);
 		}
 
@@ -305,15 +312,6 @@ $spacer: 1.875rem; // 30px
 	}
 }
 
-@mixin plus-icon($color: #000) {
-	background:
-		linear-gradient($color,$color),
-		linear-gradient($color,$color);
-	background-position:center;
-	background-size: 100% 2px,2px 100%;
-	background-repeat:no-repeat;
-}
-
 @mixin select-multi(
 	$selected-option-pill-color: $default-selected-option-pill-color,
 	$selected-option-pill-background-color: $default-selected-option-pill-background-color
@@ -327,16 +325,13 @@ $spacer: 1.875rem; // 30px
 	.vue-accessible-select-multi {
 		@include input-menu-borders(4px);
 
-		.combo-wrapper::after {
-			content: '';
+		.combo-plus-icon {
 			position: absolute;
 			top: 50%;
 			transform: translate(0, -50%);
 			right: $spacer/1.5;
 			width: 10px;
 			height: 10px;
-
-			@include plus-icon()
 		}
 
 		.combo-option {
