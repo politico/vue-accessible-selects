@@ -274,6 +274,10 @@
 					{{ option.label }}
 				</div>
 			</div>
+			<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+				<line x1="5" y1="0" x2="5" y2="10" stroke="currentColor" stroke-width="2" />
+				<line x1="0" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="2" />
+			</svg>
 		</div>
 	</div>
 </template>
