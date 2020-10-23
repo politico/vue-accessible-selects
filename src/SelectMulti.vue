@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Original reference: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-	import Vue, { VueConstructor } from 'vue'
+	import Vue, { PropType, VueConstructor } from 'vue'
 
 	import { SelectOption } from './types'
 	import {
@@ -61,6 +61,11 @@
 				required: false,
 				default: () => null
 			},
+			optionLabelForSearching: {
+				type: Function as PropType<(option: SelectOption) => string>,
+				required: false,
+				default: null
+			},
 			displayPillsBelowInput: {
 				type: Boolean,
 				default: false
@@ -87,7 +92,7 @@
 				return this.open ? `${this.htmlId}-${this.activeIndex}` : ''
 			},
 			filteredOptions(): SelectOption[] {
-				return filterOptions(this.options, this.inputValue)
+				return filterOptions(this.options, this.inputValue, [], this.optionLabelForSearching)
 			},
 			selectedOptions: {
 				get(): SelectOption[] {

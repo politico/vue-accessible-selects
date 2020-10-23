@@ -1,4 +1,5 @@
 import SelectMulti from '../src/SelectMulti.vue'
+import { SelectOption } from '../src/types'
 
 import { longDefaultListOfOptions } from './storybookUtilities'
 
@@ -12,6 +13,11 @@ const Template = (args, { argTypes }) => ({
 	components: { SelectMulti },
 	data() {
 		return { values: [{}] } },
+	methods: {
+		getLabelForSearching(option: SelectOption): string {
+			return `label: ${option.label}, with value: ${option.value}`
+		}
+	},
 	template: `
 	<div class="wrapper">
 		<SelectMulti
@@ -19,6 +25,7 @@ const Template = (args, { argTypes }) => ({
 			:options="options"
 			:label="label"
 			:labelIsVisible="labelIsVisible"
+			:optionLabelForSearching="getLabelForSearching"
 			:placeholder="placeholder"
 			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"

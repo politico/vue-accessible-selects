@@ -42,13 +42,15 @@ export const enum MenuActions {
 export function filterOptions(
 	options: SelectOption[] = [],
 	filter: string,
-	exclude: SelectOption[] = []
+	exclude: SelectOption[] = [],
+	optionLabelForSearching: null | ((option: SelectOption) => string) = null
 ): SelectOption[] {
 	return options.filter(option => {
 		// NOTE: Changed from original implementation on sonder-ui:
 		// we want to match any instance of the current user string,
 		// rather than *only* when the user's string is at the beginning of an option
-		const matches = option.label.toLowerCase().includes(filter.toLowerCase())
+		const label = optionLabelForSearching ? optionLabelForSearching(option) : option.label
+		const matches = label.toLowerCase().includes(filter.toLowerCase())
 
 		return matches && exclude.indexOf(option) < 0
 	})
