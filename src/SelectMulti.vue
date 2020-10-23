@@ -61,6 +61,15 @@
 				required: false,
 				default: () => null
 			},
+			/** 
+			 * When using a slot to display each option in the select,
+			 * you'll want to pass in a way for the select to *search* for those options as a user types,
+			 * in order to accurately filter the available options
+			 * @example
+			 * ```
+			 * :optionLabelForSearching="option => option.label + option.value"
+			 * ```
+			 */
 			optionLabelForSearching: {
 				type: Function as PropType<(option: SelectOption) => string>,
 				required: false,
@@ -70,7 +79,7 @@
 				type: Boolean,
 				default: false
 			},
-			// No need to set via a prop; can just use v-model
+			/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 			values: {
 				type: Array as () => SelectOption[],
 				required: false,
