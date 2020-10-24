@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Original reference: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
 
-	import Vue, { VueConstructor } from 'vue'
+	import Vue, { PropType, VueConstructor } from 'vue'
 
 	import { SelectOption } from './types'
 	import { getActionFromKey, getIndexByLetter, MenuActions, uniqueId } from './shared'
@@ -23,6 +23,9 @@
 		}
 	}
 
+	/**
+	 * Component to select a single option from a dropdown, developed with accessibility & usability as the primary focus
+	 */
 	// `PURE` designation to enable tree-shaking
 	export default /*#__PURE__*/(Vue as VueConstructor<ISelectSingle>).extend({
 		name: 'SelectSingle',
@@ -45,13 +48,13 @@
 			},
 			options: {
 				required: true,
-				type: Array as () => SelectOption[]
+				type: Array as PropType<SelectOption[]>
 			},
-			// No need to set via a prop; can just use v-model
+			/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 			value: {
 				default: null,
 				required: false,
-				type: Object as () => SelectOption
+				type: Object as PropType<SelectOption>
 			}
 			// Potential props:
 			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
@@ -186,6 +189,10 @@
 				const selected = this.options[index]
 				this.inputValue = selected.label
 				this.selectedIndex = index
+				/**
+				 * emit the most recently selected value,
+				 * *generally not necessary*, if state can be handled w/ v-model alone
+				 */
 				this.$emit('select', selected)
 			}
 		}
@@ -219,6 +226,7 @@
 			v-on="disabled ? {} : { mousedown: handleClick, keydown: handleKeydown }"
 		>
 			<span :id="`${htmlId}-value`" ref="valueEl">
+				<!-- @slot Display the currently selected option via custom template code -->
 				<slot name="selectedOption" :option="value">
 					{{ value.label }}
 				</slot>
@@ -243,6 +251,7 @@
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"
 			>
+				<!-- @slot Display individual options via custom template code -->
 				<slot name="option" :option="option">
 					{{ option.label }}
 				</slot>

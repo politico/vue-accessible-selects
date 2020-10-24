@@ -31,6 +31,9 @@
 		}
 	}
 
+	/**
+	 * Component to select multiple options from a dropdown, developed with accessibility & usability as the primary focus
+	 */
 	// `PURE` designation to enable tree-shaking
 	export default /*#__PURE__*/(Vue as VueConstructor<ISelectMulti>).extend({
 		name: 'SelectMulti',
@@ -48,7 +51,7 @@
 				required: true
 			},
 			options: {
-				type: Array as () => SelectOption[],
+				type: Array as PropType<SelectOption[]>,
 				required: true
 			},
 			labelIsVisible: {
@@ -67,7 +70,7 @@
 			 * in order to accurately filter the available options
 			 * @example
 			 * ```
-			 * :optionLabelForSearching="option => option.label + option.value"
+			 * :optionLabelForSearching="a => a.label + '-' + a.value"
 			 * ```
 			 */
 			optionLabelForSearching: {
@@ -81,7 +84,7 @@
 			},
 			/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 			values: {
-				type: Array as () => SelectOption[],
+				type: Array as PropType<SelectOption[]>,
 				required: false,
 				default: () => []
 			}
@@ -108,6 +111,7 @@
 					return this.values
 				},
 				set(values: SelectOption[]) {
+					// Used just for v-model, no need to subscribe to handle event
 					this.$emit('change', values)
 				}
 			}
@@ -129,6 +133,10 @@
 				if (this.inputValue !== curValue) {
 					this.inputValue = curValue
 					this.activeIndex = 0
+					/**
+					 * emits the current user-provided search string,
+					 * primarily useful for making autocomplete calls
+					 */
 					this.$emit('searchChange', this.inputValue)
 				}
 
@@ -137,7 +145,6 @@
 					this.updateMenuState(menuState, false)
 				}
 			},
-
 			onInputKeyDown(event: KeyboardEvent) {
 				const max = this.filteredOptions.length - 1
 
@@ -160,7 +167,6 @@
 						return this.updateMenuState(true)
 				}
 			},
-
 			onInputBlur() {
 				if (this.ignoreBlur) {
 					this.ignoreBlur = false
@@ -169,36 +175,37 @@
 
 				this.updateMenuState(false, false)
 			},
-
 			onOptionChange(index: number) {
 				this.activeIndex = index
 			},
-
 			onOptionClick(index: number) {
 				this.onOptionChange(index)
 				this.updateOption(index)
 			},
-
 			onOptionMouseDown(event: MouseEvent) {
 				this.ignoreBlur = true
 				this.callFocus = true
 				event.stopPropagation()
 			},
-
 			onMenuMouseDown(event: MouseEvent) {
 				event.preventDefault()
 			},
-
 			removeOption(index: number) {
+				/**
+				 * emits the most recently removed value,
+				 * *generally not necessary*, if state can be handled w/ v-model alone
+				 */
 				this.$emit('remove', this.selectedOptions[index])
 				this.selectedOptions = [...this.selectedOptions.filter((_, i) => i !== index)]
 			},
-
 			selectOption(option: SelectOption) {
+				/**
+				 * emits the most recently selected value
+				 * *generally not necessary*, if state can be handled w/ v-model alone
+				 */
 				this.$emit('select', option)
 				this.selectedOptions = [...this.selectedOptions, option]
 			},
-
 			updateOption(index: number) {
 				const option = this.filteredOptions[index]
 				const optionIndex = this.selectedOptions.indexOf(option)
@@ -213,7 +220,6 @@
 					this.activeIndex = this.filteredOptions.indexOf(option)
 				}
 			},
-
 			updateMenuState(open: boolean, callFocus = true) {
 				this.open = open
 				this.callFocus = callFocus
@@ -238,6 +244,7 @@
 						:aria-describedby="`${htmlId}-selected-option-pills`"
 						@click="removeOption(index)"
 					>
+						<!-- @slot Display the currently selected options via custom template code -->
 						<slot name="selectedOption" :option="option">
 							{{  option.label }}
 						</slot>
@@ -289,6 +296,7 @@
 					@click="onOptionClick(index)"
 					@mousedown="onOptionMouseDown"
 				>
+					<!-- @slot Display individual options via custom template code -->
 					<slot name="option" :option="option">
 						{{  option.label }}
 					</slot>
