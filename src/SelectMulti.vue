@@ -154,11 +154,20 @@
 					this.$emit('searchChange', this.inputValue)
 				}
 
-				this.notificationMessage = !this.filteredOptions.length ? 'no results found' : ''
+				this.determineMenuStateAndNotificationMessage()
+			},
+			determineMenuStateAndNotificationMessage() {
+				let newMenuState = true
+				this.notificationMessage = ''
 
-				const menuState = this.filteredOptions.length > 0 || this.noResultsMessage
-				if (this.open !== menuState) {
-					this.updateMenuState(menuState, false)
+				if (!this.filteredOptions.length) {
+					// if there are no filteredOptions, the menu should only remain open when a custom `noResultsMessage` has been provided
+					newMenuState = !!this.noResultsMessage
+					this.notificationMessage = this.noResultsMessage || 'no results found'
+				}
+
+				if (this.open !== newMenuState) {
+					this.updateMenuState(newMenuState, false)
 				}
 			},
 			onInputKeyDown(event: KeyboardEvent) {
