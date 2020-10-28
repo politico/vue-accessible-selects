@@ -200,11 +200,11 @@
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
 				const option = this.selectedOptions[index]
-				this.notificationMessage = `option ${option.label} removed`
+				this.notificationMessage = 'removed'
 				this.$emit('remove', option)
 				this.selectedOptions = [...this.selectedOptions.filter((_, i) => i !== index)]
 
-				setTimeout(() => { this.notificationMessage = '' }, 50)
+				setTimeout(() => { this.notificationMessage = '' }, 100)
 			},
 			selectOption(option: SelectOption) {
 				/**
@@ -281,9 +281,7 @@
 				@keydown="onInputKeyDown"
 			/>
 
-			<div role="status" aria-live="polite" class="sr-only">
-				<span v-if="notificationMessage">{{ notificationMessage }}</span>
-			</div>
+			<span role="alert" class="sr-only" v-if="notificationMessage">{{ notificationMessage }}</span>
 			<div
 				:id="`${htmlId}-listbox`"
 				ref="listboxRef"
