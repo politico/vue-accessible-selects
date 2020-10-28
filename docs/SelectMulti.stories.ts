@@ -64,7 +64,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 					<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
 				</template>
 				<template v-slot:option="{ option }" >
-					<strong>label: {{ option.label }}<strong>, <em>with value: {{ option.value }}</em>
+					<strong>label: {{ option.label }}</strong>, <em>with value: {{ option.value }}</em>
 				</template>
 		</SelectMulti>
 	</div>`
