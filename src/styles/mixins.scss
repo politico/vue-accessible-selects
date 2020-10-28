@@ -350,6 +350,9 @@ $spacer: 1.875rem; // 30px
 				transform: translate(0, -50%) rotate(45deg);
 			}
 		}
+		.option-no-results {
+			padding: $option-padding;
+		}
 
 		.selected-options {
 			max-width: 100%;

@@ -22,6 +22,7 @@ const Template = (args, { argTypes }) => ({
 			:placeholder="placeholder"
 			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"
+			:noResultsMessage="noResultsMessage"
 	  	/>
 	</div>`
 });
@@ -34,6 +35,7 @@ Primary.args = {
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,
+	noResultsMessage: ''
 };
 
 
@@ -59,7 +61,8 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:placeholder="placeholder"
 			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"
-			>
+			:noResultsMessage="noResultsMessage"
+		>
 				<template v-slot:selectedOption="{ option }" >
 					<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
 				</template>
@@ -78,6 +81,7 @@ WithCustomOptions.args = {
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,
+	noResultsMessage: ''
 };
 
 WithCustomOptions.story = {
