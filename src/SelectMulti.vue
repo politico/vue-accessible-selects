@@ -19,6 +19,7 @@
 		callFocus: boolean
 		htmlId: string
 		ignoreBlur: boolean
+		notificationMessage: string
 		open: boolean
 		inputValue: string
 	}
@@ -64,7 +65,7 @@
 				required: false,
 				default: () => null
 			},
-			/** 
+			/**
 			 * When using a slot to display each option in the select,
 			 * you'll want to pass in a way for the select to *search* for those options as a user types,
 			 * in order to accurately filter the available options
@@ -95,6 +96,7 @@
 				callFocus: false,
 				htmlId: uniqueId(),
 				ignoreBlur: false,
+				notificationMessage: '',
 				open: false,
 				inputValue: ''
 			} as ComponentData
@@ -139,6 +141,8 @@
 					 */
 					this.$emit('searchChange', this.inputValue)
 				}
+
+				this.notificationMessage = !this.filteredOptions.length ? 'no results found' : ''
 
 				const menuState = this.filteredOptions.length > 0
 				if (this.open !== menuState) {
@@ -195,8 +199,12 @@
 				 * emits the most recently removed value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
-				this.$emit('remove', this.selectedOptions[index])
+				const option = this.selectedOptions[index]
+				this.notificationMessage = `option ${option.label} removed`
+				this.$emit('remove', option)
 				this.selectedOptions = [...this.selectedOptions.filter((_, i) => i !== index)]
+
+				setTimeout(() => { this.notificationMessage = '' }, 50)
 			},
 			selectOption(option: SelectOption) {
 				/**
@@ -273,6 +281,9 @@
 				@keydown="onInputKeyDown"
 			/>
 
+			<div role="status" aria-live="polite" class="sr-only">
+				<span v-if="notificationMessage">{{ notificationMessage }}</span>
+			</div>
 			<div
 				:id="`${htmlId}-listbox`"
 				ref="listboxRef"
