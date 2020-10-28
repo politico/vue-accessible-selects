@@ -83,6 +83,15 @@
 				type: Boolean,
 				default: false
 			},
+			/**
+			 * By default, the list will be empty when either no options are passed in,
+			 * or a user has typed a string that doesn't match any of the options. 
+			 * If you'd like to display a messsage instead when that occurs, pass it in here
+			 */
+			noResultsMessage: {
+				type: String,
+				default: ''
+			},
 			/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 			values: {
 				type: Array as PropType<SelectOption[]>,
@@ -116,6 +125,9 @@
 					// Used just for v-model, no need to subscribe to handle event
 					this.$emit('change', values)
 				}
+			},
+			displayNoResultsMessage(): boolean {
+				return this.noResultsMessage && (!this.filteredOptions || this.filteredOptions.length === 0)
 			}
 		},
 		updated() {
@@ -144,7 +156,7 @@
 
 				this.notificationMessage = !this.filteredOptions.length ? 'no results found' : ''
 
-				const menuState = this.filteredOptions.length > 0
+				const menuState = this.filteredOptions.length > 0 || this.noResultsMessage
 				if (this.open !== menuState) {
 					this.updateMenuState(menuState, false)
 				}
@@ -311,6 +323,9 @@
 					<slot name="option" :option="option">
 						{{  option.label }}
 					</slot>
+				</div>
+				<div v-if="displayNoResultsMessage" class="option-no-results">
+					<span>{{ noResultsMessage }}</span>
 				</div>
 			</div>
 			<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
