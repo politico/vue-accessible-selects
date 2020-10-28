@@ -11,6 +11,7 @@
   "types": "dist/index.d.ts",
   "sideEffects": false,
   "scripts": {
+    "start": "npm run storybook",
     "test": "echo \"TODO: write basic specs\"",
     "build": "rm -rf dist && rm -rf styles && NODE_ENV=production rollup --config rollup.config.js",
     "prepublishOnly": "npm test && npm run build && npm run shake",
