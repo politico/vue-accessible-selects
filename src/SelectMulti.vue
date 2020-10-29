@@ -29,6 +29,7 @@
 			inputRef: HTMLInputElement
 			listboxRef: HTMLElement
 			activeOptionRef: HTMLElement
+			selectedOptionPill: HTMLElement
 		}
 	}
 
@@ -230,6 +231,16 @@
 
 				setTimeout(() => { this.notificationMessage = '' }, 50)
 			},
+			removeOptionAndHandleFocusShift(index: number) {
+				this.removeOption(index)
+				this.$nextTick(() => {
+				if (this.selectedOptions.length === 0) {
+					this.$refs.inputRef.focus()
+				} else {
+					this.$refs.selectedOptionPill[0].focus()
+				}
+				})
+			},
 			selectOption(option: SelectOption) {
 				/**
 				 * emits the most recently selected value
@@ -269,11 +280,13 @@
 			<template v-for="(option, index) in selectedOptions" >
 				<li v-if="option.value" :key="option.value" >
 					<button
+						ref="selectedOptionPill"
 						class="selected-option-pill"
 						:disabled="disabled"
 						:aria-label="`remove ${option.label}`"
 						type="button"
-						@click="removeOption(index)"
+						:aria-describedby="`${htmlId}-selected-option-pills`"
+						@click="removeOptionAndHandleFocusShift(index)"
 					>
 						<!-- @slot Display the currently selected options via custom template code -->
 						<slot name="selectedOption" :option="option">
