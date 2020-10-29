@@ -325,7 +325,7 @@ $spacer: 1.875rem; // 30px
 	.vue-accessible-select-multi {
 		@include input-menu-borders(4px);
 
-		.input-icon {
+		.combo-input-icon-block {
 			position: absolute;
 			top: 50%;
 			transform: translate(0, -50%);
