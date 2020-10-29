@@ -325,13 +325,22 @@ $spacer: 1.875rem; // 30px
 	.vue-accessible-select-multi {
 		@include input-menu-borders(4px);
 
-		.combo-plus-icon {
+		.combo-input-icon-block {
 			position: absolute;
 			top: 50%;
 			transform: translate(0, -50%);
 			right: $spacer/1.5;
+		}
+
+		.combo-plus-icon {
 			width: 10px;
 			height: 10px;
+		}
+
+		.combo-spinner-icon {
+			width: 12px;
+			height: 12px;
+			animation: spin .75s linear infinite;
 		}
 
 		.combo-option {
@@ -416,4 +425,9 @@ $spacer: 1.875rem; // 30px
 		// they'll pass them in as part of the @content block here
 		@content;
 	}
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }

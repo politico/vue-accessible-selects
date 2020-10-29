@@ -18,6 +18,7 @@ const Template = (args, { argTypes }) => ({
 			v-model="values"
 			:options="options"
 			:label="label"
+			:loading="loading"
 			:labelIsVisible="labelIsVisible"
 			:placeholder="placeholder"
 			:disabled="disabled"
@@ -32,6 +33,7 @@ Primary.args = {
 	label: 'My SelectMulti',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,
@@ -56,6 +58,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			v-model="values"
 			:options="options"
 			:label="label"
+			:loading="loading"
 			:labelIsVisible="labelIsVisible"
 			:optionLabelForSearching="getLabelForSearching"
 			:placeholder="placeholder"
@@ -69,6 +72,9 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 				<template v-slot:option="{ option }" >
 					<strong>label: {{ option.label }}</strong>, <em>with value: {{ option.value }}</em>
 				</template>
+				<template v-slot:input-icon>
+					PLUS
+				</template>
 		</SelectMulti>
 	</div>`
 });
@@ -78,6 +84,7 @@ WithCustomOptions.args = {
 	label: 'My SelectMulti with custom options',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,

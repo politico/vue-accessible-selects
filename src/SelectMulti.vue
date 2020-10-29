@@ -51,6 +51,10 @@
 				type: String,
 				required: true
 			},
+			loading: {
+				type: Boolean,
+				default: false
+			},
 			options: {
 				type: Array as PropType<SelectOption[]>,
 				required: true
@@ -336,10 +340,22 @@
 					<span>{{ noResultsMessage }}</span>
 				</div>
 			</div>
-			<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-				<line x1="5" y1="0" x2="5" y2="10" stroke="currentColor" stroke-width="2" />
-				<line x1="0" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="2" />
-			</svg>
+			<div class="combo-input-icon-block">
+				<template v-if="!loading">
+					<slot name="input-icon">
+						<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+							<line x1="5" y1="0" x2="5" y2="10" stroke="currentColor" stroke-width="2" />
+							<line x1="0" y1="5" x2="10" y2="5" stroke="currentColor" stroke-width="2" />
+						</svg>
+					</slot>
+				</template>
+				<template v-else>
+					<svg class="combo-spinner-icon" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<path d="M4.44747 0C1.24747 0.887906 -0.651555 4.29399 0.205883 7.6077L1.36471 7.28616C0.678756 4.63519 2.19797 1.91032 4.75798 1.2L4.44747 0Z" fill="currentColor"/>
+						<path d="M10.6353 4.71384C11.3212 7.36481 9.80202 10.0897 7.24202 10.8L7.55253 12C10.7525 11.1121 12.6516 7.70601 11.7941 4.39231L10.6353 4.71384Z" fill="currentColor"/>
+					</svg>
+				</template>
+			</div>
 		</div>
 	</div>
 </template>
