@@ -89,7 +89,7 @@
 			},
 			/**
 			 * By default, the list will be empty when either no options are passed in,
-			 * or a user has typed a string that doesn't match any of the options. 
+			 * or a user has typed a string that doesn't match any of the options.
 			 * If you'd like to display a messsage instead when that occurs, pass it in here
 			 */
 			noResultsMessage: {
@@ -266,14 +266,13 @@
 			{{ label }}
 		</label>
 		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
-			<span :id="`${htmlId}-selected-option-pills`" style="display: none;">remove</span>
 			<template v-for="(option, index) in selectedOptions" >
 				<li v-if="option.value" :key="option.value" >
 					<button
 						class="selected-option-pill"
 						:disabled="disabled"
+						:aria-label="`remove ${option.label}`"
 						type="button"
-						:aria-describedby="`${htmlId}-selected-option-pills`"
 						@click="removeOption(index)"
 					>
 						<!-- @slot Display the currently selected options via custom template code -->
