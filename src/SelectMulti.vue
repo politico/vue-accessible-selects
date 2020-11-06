@@ -234,11 +234,11 @@
 			removeOptionAndHandleFocusShift(index: number) {
 				this.removeOption(index)
 				this.$nextTick(() => {
-				if (this.selectedOptions.length === 0) {
-					this.$refs.inputRef.focus()
-				} else {
-					this.$refs.selectedOptionPill[0].focus()
-				}
+					if (this.selectedOptions.length === 0) {
+						this.$refs.inputRef.focus()
+					} else {
+						this.$refs.selectedOptionPill[0].focus()
+					}
 				})
 			},
 			selectOption(option: SelectOption) {
