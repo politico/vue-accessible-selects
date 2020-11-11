@@ -114,7 +114,16 @@
 				open: false,
 				inputValue: ''
 			} as ComponentData
-		},
+        },
+        watch: {
+            loading(newLoadingState, oldLoadingState): void {
+                // In cases where we move from a loading state, to a resolved state...
+                if (newLoadingState === false && oldLoadingState === true) {
+                    //... we want to open the options to show the newly fetched items.
+                    this.updateMenuState(true)
+                }
+            }
+        },
 		computed: {
 			activeId(): string {
 				return this.open ? `${this.htmlId}-${this.activeIndex}` : ''
