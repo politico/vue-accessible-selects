@@ -245,7 +245,10 @@
 				:id="`${htmlId}-item-${index}`"
 				:key="option.value"
 				class="combo-option"
-				:class="{ 'option-current': index == activeIndex }"
+				:class="{
+					'option-selected': selectedIndex == index,
+					'option-current': index == activeIndex
+				}"
 				role="option"
 				:aria-selected="index == activeIndex"
 				@click="handleOptionClick($event, index)"
