@@ -10,6 +10,7 @@ This entire repo is very much in an alpha state, and should currently be used on
 ## References
 
 * Current guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/ 
+* Codepen from blogpost: https://codepen.io/smhigley/pen/gObMVzv (#1 ≈ SelectSingle, #3 ≈ SelectMulti)
 * Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select 
 * Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
