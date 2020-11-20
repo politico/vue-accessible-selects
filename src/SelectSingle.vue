@@ -131,8 +131,6 @@
 			},
 			updateMenuState(open: boolean, callFocus = true) {
 				this.open = open
-
-				if (!open) this.$emit('select', this.options[this.activeIndex])
 				callFocus && this.$refs.comboEl.focus()
 			},
 			handleKeydown(event: KeyboardEvent) {
@@ -172,6 +170,7 @@
 				}
 			},
 			handleOptionClick(event: MouseEvent, index: number) {
+				this.selectOption(index)
 				this.onOptionChange(index)
 				this.updateMenuState(false)
 			},
