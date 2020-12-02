@@ -13,10 +13,10 @@ const Template = (args, { argTypes }) => ({
 	data() { return { value: {} } },
 	template: `
 	<div class="wrapper">
-		<SelectSingle 
-			v-model="value" 
+		<SelectSingle
+			v-model="value"
 			:options="options"
-			:label="label" 
+			:label="label"
 			:labelIsVisible="labelIsVisible"
 			:disabled="disabled"
 		/>
@@ -31,6 +31,24 @@ Primary.args = {
 	disabled: false
 };
 
+const optionsWithArrayValues = [
+    {
+        value: ['value-1', 'value-2'],
+        label: 'Option 1'
+    },
+    {
+        value: 'value-3',
+        label: 'Option 2'
+    }
+]
+
+export const withArrayAsOptionValues = Template.bind({})
+withArrayAsOptionValues.args = {
+    label: 'My SelectSingle With Array Values',
+    options: optionsWithArrayValues,
+    labelIsVisible: true,
+    disabled: false
+}
 
 const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 	props: Object.keys(argTypes),
