@@ -23,8 +23,6 @@
 		}
 	}
 
-    const arrayJoinDelimiter = '_'
-
 	/**
 	 * Component to select a single option from a dropdown, developed with accessibility & usability as the primary focus
 	 */
@@ -66,13 +64,7 @@
 		},
 		data(): ComponentData {
 			const activeIndex = this.value
-				? this.options.findIndex(currentOption => {
-                    const { value: currentValue } = this.value
-                    if (Array.isArray(currentOption.value) && Array.isArray(currentValue)) {
-                        return currentOption.value.join(arrayJoinDelimiter) === currentValue.join(arrayJoinDelimiter)
-                    }
-                    return currentOption.value === currentValue
-                })
+				? this.options.findIndex(currentOption => currentOption.value == this.value.value)
 				: 0
 			return {
 				activeIndex,
@@ -109,9 +101,6 @@
 				this.searchString += char
 				return this.searchString
 			},
-            getOptionKey(value: string | string[]) {
-                return Array.isArray(value) ? value.join(arrayJoinDelimiter) : value
-            },
 			getUpdatedIndex(current: number, max: number, action: MenuActions) {
 				switch (action) {
 					case MenuActions.First:
@@ -253,7 +242,7 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:key="getOptionKey(option.value)"
+				:key="option.value.toString()"
 				class="combo-option"
 				:class="{
 					'option-selected': selectedIndex == index,
