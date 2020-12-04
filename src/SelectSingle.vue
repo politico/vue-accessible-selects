@@ -242,7 +242,7 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:key="option.value"
+				:key="option.value.toString()"
 				class="combo-option"
 				:class="{
 					'option-selected': selectedIndex == index,
