@@ -14,7 +14,6 @@
 		open: boolean
 		searchString: string
 		searchTimeout: number | null
-		selectedIndex: number | undefined
 	}
 
 	interface ISelectSingle extends Vue {
@@ -46,6 +45,10 @@
 				type: Boolean,
 				default: true
 			},
+			loading: {
+				type: Boolean,
+				default: false
+			},
 			options: {
 				required: true,
 				type: Array as PropType<SelectOption[]>
@@ -73,13 +76,20 @@
 				open: false,
 				searchString: '',
 				searchTimeout: null,
-				selectedIndex: undefined,
 				inputValue: ''
 			}
 		},
 		computed: {
 			activeDescendant(): string {
 				return `${this.htmlId}-item-${this.activeIndex}`
+			},
+			isDisabled(): boolean {
+				return this.disabled || this.loading
+			},
+			selectedIndex(): number {
+				return this.value
+				? this.options.findIndex(currentOption => currentOption.value == this.value.value)
+				: 0
 			}
 		},
 		methods: {
@@ -187,7 +197,6 @@
 			selectOption(index: number) {
 				const selected = this.options[index]
 				this.inputValue = selected.label
-				this.selectedIndex = index
 				/**
 				 * emit the most recently selected value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
@@ -198,7 +207,7 @@
 	})
 </script>
 <template>
-	<div class="vue-accessible-select-single" :class="{ disabled, open }">
+	<div class="vue-accessible-select-single" :class="{ disabled: isDisabled, open }">
 		<label
 			:id="`${htmlId}-label`"
 			class="combo-label"
@@ -214,7 +223,7 @@
 			:aria-activedescendant="activeDescendant"
 			aria-autocomplete="none"
 			:aria-controls="`${htmlId}-listbox`"
-			:aria-disabled="disabled"
+			:aria-disabled="isDisabled"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
 			:aria-labelledby="`${htmlId}-label`"
@@ -222,11 +231,15 @@
 			role="combobox"
 			tabindex="0"
 			@blur="handleBlur"
-			v-on="disabled ? {} : { mousedown: handleClick, keydown: handleKeydown }"
+			v-on="isDisabled ? {} : { mousedown: handleClick, keydown: handleKeydown }"
 		>
 			<span :id="`${htmlId}-value`" ref="valueEl">
+				<!-- @slot Display the loading state via custom template code-->
+				<slot v-if="loading" name="loadingState">
+					loading
+				</slot>
 				<!-- @slot Display the currently selected option via custom template code -->
-				<slot name="selectedOption" :option="value">
+				<slot v-else name="selectedOption" :option="value">
 					{{ value.label }}
 				</slot>
 			</span>
