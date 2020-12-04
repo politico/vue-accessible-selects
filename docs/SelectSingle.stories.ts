@@ -13,11 +13,12 @@ const Template = (args, { argTypes }) => ({
 	data() { return { value: {} } },
 	template: `
 	<div class="wrapper">
-		<SelectSingle 
-			v-model="value" 
+		<SelectSingle
+			v-model="value"
 			:options="options"
-			:label="label" 
+			:label="label"
 			:labelIsVisible="labelIsVisible"
+			:loading="loading"
 			:disabled="disabled"
 		/>
 	</div>`
@@ -28,6 +29,7 @@ Primary.args = {
 	label: 'My SelectSingle',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	disabled: false
 };
 
@@ -50,6 +52,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:options="options"
 			:label="label"
 			:labelIsVisible="labelIsVisible"
+			:loading="loading"
 			:disabled="disabled"
 		>
 			<template v-slot:selectedOption="{ option }" >
@@ -67,6 +70,7 @@ WithCustomOptions.args = {
 	label: 'My SelectSingle with custom options',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	disabled: false
 };
 
