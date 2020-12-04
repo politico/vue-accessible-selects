@@ -165,6 +165,7 @@
 						this.updateMenuState(false, false)
 						break
 					case MenuActions.Close:
+						this.activeIndex = this.selectedIndex
 						this.updateMenuState(false, false)
 						break
 					case MenuActions.Type: {
@@ -262,7 +263,7 @@
 					'option-current': index == activeIndex
 				}"
 				role="option"
-				:aria-selected="index == activeIndex"
+				:aria-selected="index == selectedIndex ? 'true' : 'false'"
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"
 			>
