@@ -42,6 +42,7 @@ export const enum MenuActions {
 export function filterOptions(
 	options: SelectOption[] = [],
 	filter: string,
+	labelField: string,
 	exclude: SelectOption[] = [],
 	optionLabelForSearching: null | ((option: SelectOption) => string) = null
 ): SelectOption[] {
@@ -49,8 +50,8 @@ export function filterOptions(
 		// NOTE: Changed from original implementation on sonder-ui:
 		// we want to match any instance of the current user string,
 		// rather than *only* when the user's string is at the beginning of an option
-		const label = optionLabelForSearching ? optionLabelForSearching(option) : option.label
-		const matches = label.toLowerCase().includes(filter.toLowerCase())
+		const label = optionLabelForSearching ? optionLabelForSearching(option) : option[labelField]
+		const matches = label?.toLowerCase().includes(filter.toLowerCase())
 
 		return matches && exclude.indexOf(option) < 0
 	})
@@ -132,7 +133,7 @@ export function getIndexByLetter(
 	startIndex = 0
 ): number {
 	const orderedOptions = [...options.slice(startIndex), ...options.slice(0, startIndex)]
-	const firstMatch = filterOptions(orderedOptions, filter)[0]
+	const firstMatch = filterOptions(orderedOptions, filter, this.labelField)[0]
 	const allSameLetter = (array: string[]) => array.every(letter => letter === array[0])
 
 	// first check if there is an exact match for the typed string
@@ -142,7 +143,7 @@ export function getIndexByLetter(
 
 	// if the same letter is being repeated, cycle through first-letter matches
 	else if (allSameLetter(filter.split(''))) {
-		const matches = filterOptions(orderedOptions, filter[0])
+		const matches = filterOptions(orderedOptions, filter[0], this.labelField)
 		return options.indexOf(matches[0])
 	}
 
