@@ -52,6 +52,14 @@
 				type: String,
 				required: true
 			},
+			/**
+			 * Field name in the `options` array that should be used for the label
+			 */
+			labelField: {
+				type: String,
+				required: false,
+				default: 'label'
+			},
 			loading: {
 				type: Boolean,
 				default: false
@@ -102,6 +110,14 @@
 				type: Array as PropType<SelectOption[]>,
 				required: false,
 				default: () => []
+			},
+			/**
+			 * Field name in the `options` array that should be used for the value
+			 */
+			valueField: {
+				type: String,
+				required: false,
+				default: 'value'
 			}
 		},
 		data() {
@@ -129,7 +145,7 @@
 				return this.open ? `${this.htmlId}-${this.activeIndex}` : ''
 			},
 			filteredOptions(): SelectOption[] {
-				return filterOptions(this.options, this.inputValue, [], this.optionLabelForSearching)
+				return filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching)
 			},
 			selectedOptions: {
 				get(): SelectOption[] {
@@ -287,19 +303,19 @@
 		</label>
 		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
 			<template v-for="(option, index) in selectedOptions" >
-				<li v-if="option.value" :key="option.value" >
+				<li v-if="option[valueField]" :key="option[valueField]" >
 					<button
 						ref="selectedOptionPill"
 						class="selected-option-pill"
 						:disabled="disabled"
-						:aria-label="`remove ${option.label}`"
+						:aria-label="`remove ${option[labelField]}`"
 						type="button"
 						:aria-describedby="`${htmlId}-selected-option-pills`"
 						@click="removeOptionAndHandleFocusShift(index)"
 					>
 						<!-- @slot Display the currently selected options via custom template code -->
 						<slot name="selectedOption" :option="option">
-							{{  option.label }}
+							{{  option[labelField] }}
 						</slot>
 					</button>
 				</li>
@@ -340,7 +356,7 @@
 				<div
 					v-for="(option, index) in filteredOptions"
 					:id="`${htmlId}-${index}`"
-					:key="option.value"
+					:key="option[valueField]"
 					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,
@@ -354,7 +370,7 @@
 				>
 					<!-- @slot Display individual options via custom template code -->
 					<slot name="option" :option="option">
-						{{  option.label }}
+						{{  option[labelField] }}
 					</slot>
 				</div>
 				<div v-if="displayNoResultsMessage" class="option-no-results">

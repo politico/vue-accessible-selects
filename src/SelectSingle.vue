@@ -42,6 +42,14 @@
 				type: String,
 				required: true
 			},
+			/**
+			 * Field name in the `options` array that should be used for the label
+			 */
+			labelField: {
+				type: String,
+				required: false,
+				default: 'label'
+			},
 			labelIsVisible: {
 				type: Boolean,
 				default: true
@@ -55,6 +63,14 @@
 				default: null,
 				required: false,
 				type: Object as PropType<SelectOption>
+			},
+		  /**
+			 * Field name in the `options` array that should be used for the value
+			 */
+			valueField: {
+				type: String,
+				required: false,
+				default: 'value'
 			}
 			// Potential props:
 			// https://developer.mozilla.org/en-US/docs/Web/HTML/Element/select
@@ -64,7 +80,7 @@
 		},
 		data(): ComponentData {
 			const activeIndex = this.value
-				? this.options.findIndex(currentOption => currentOption.value == this.value.value)
+				? this.options.findIndex(currentOption => currentOption[this.valueField] == this.value[this.valueField])
 				: 0
 			return {
 				activeIndex,
@@ -186,7 +202,7 @@
 			},
 			selectOption(index: number) {
 				const selected = this.options[index]
-				this.inputValue = selected.label
+				this.inputValue = selected[this.labelField]
 				this.selectedIndex = index
 				/**
 				 * emit the most recently selected value,
@@ -205,7 +221,7 @@
 			:class="{ 'sr-only': !labelIsVisible }"
 		>
 			{{ label }}
-			<span class="sr-only"> {{ value.label }}</span>
+			<span class="sr-only"> {{ value[labelField] }}</span>
 		</label>
 		<!-- aria-expanded is `open ? 'true' : 'false'` rather than `open` because the latter results in no attribute -->
 		<div
@@ -227,7 +243,7 @@
 			<span :id="`${htmlId}-value`" ref="valueEl">
 				<!-- @slot Display the currently selected option via custom template code -->
 				<slot name="selectedOption" :option="value">
-					{{ value.label }}
+					{{ value[labelField] }}
 				</slot>
 			</span>
 		</div>
@@ -242,7 +258,7 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:key="option.value.toString()"
+				:key="option[valueField].toString()"
 				class="combo-option"
 				:class="{
 					'option-selected': selectedIndex == index,
@@ -255,7 +271,7 @@
 			>
 				<!-- @slot Display individual options via custom template code -->
 				<slot name="option" :option="option">
-					{{ option.label }}
+					{{ option[labelField] }}
 				</slot>
 			</div>
 		</div>

@@ -17,8 +17,10 @@ const Template = (args, { argTypes }) => ({
 			v-model="value"
 			:options="options"
 			:label="label"
+			:labelField="labelField"
 			:labelIsVisible="labelIsVisible"
 			:disabled="disabled"
+			:valueField="valueField"
 		/>
 	</div>`
 });
@@ -71,10 +73,10 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:disabled="disabled"
 		>
 			<template v-slot:selectedOption="{ option }" >
-				<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
+				<strong>{{ option[labelField] }}</strong> <em>{{ option[valueField] }}</em>
 			</template>
 			<template v-slot:option="{ option }" >
-				<strong>label: {{ option.label }}</strong>, <em>with value: {{ option.value }}</em>
+				<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[valueField] }}</em>
 			</template>
 		</SelectSingle>
 	</div>`

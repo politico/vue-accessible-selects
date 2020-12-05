@@ -18,12 +18,14 @@ const Template = (args, { argTypes }) => ({
 			v-model="values"
 			:options="options"
 			:label="label"
+			:labelField="labelField"
 			:loading="loading"
 			:labelIsVisible="labelIsVisible"
 			:placeholder="placeholder"
 			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"
 			:noResultsMessage="noResultsMessage"
+			:valueField="valueField"
 	  	/>
 	</div>`
 });
@@ -32,12 +34,14 @@ export const Primary = Template.bind({});
 Primary.args = {
 	label: 'My SelectMulti',
 	options: longDefaultListOfOptions,
+	labelField: 'label',
 	labelIsVisible: true,
 	loading: false,
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,
-	noResultsMessage: ''
+	noResultsMessage: '',
+	valueField: 'value'
 };
 
 
@@ -49,7 +53,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 	},
 	methods: {
 		getLabelForSearching(option: SelectOption): string {
-			return `label: ${option.label}, with value: ${option.value}`
+			return `label: ${option[this.labelField]}, with value: ${option[this.valueField]}`
 		}
 	},
 	template: `
@@ -67,10 +71,10 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:noResultsMessage="noResultsMessage"
 		>
 				<template v-slot:selectedOption="{ option }" >
-					<strong>{{ option.label }}</strong> <em>{{ option.value }}</em>
+					<strong>{{ option[labelField] }}</strong> <em>{{ option[valueField] }}</em>
 				</template>
 				<template v-slot:option="{ option }" >
-					<strong>label: {{ option.label }}</strong>, <em>with value: {{ option.value }}</em>
+					<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[valueField] }}</em>
 				</template>
 				<template v-slot:input-icon>
 					PLUS
