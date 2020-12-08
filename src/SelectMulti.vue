@@ -165,7 +165,7 @@
 					 * emits the current user-provided search string,
 					 * primarily useful for making autocomplete calls
 					 */
-					this.$emit('searchChange', this.inputValue)
+					this.$emit('searchChange', this.inputValue, this.filteredOptions)
 				}
 
 				this.determineMenuStateAndNotificationMessage()
