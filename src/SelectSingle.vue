@@ -237,7 +237,7 @@
 			<span :id="`${htmlId}-value`" ref="valueEl">
 				<!-- @slot Display the loading state via custom template code-->
 				<slot v-if="loading" name="loadingState">
-					loading
+					Loading...
 				</slot>
 				<!-- @slot Display the currently selected option via custom template code -->
 				<slot v-else name="selectedOption" :option="value">
