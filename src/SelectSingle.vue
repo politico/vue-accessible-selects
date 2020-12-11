@@ -83,7 +83,7 @@
 			activeDescendant(): string {
 				return `${this.htmlId}-item-${this.activeIndex}`
 			},
-			isDisabled(): boolean {
+			isDisabledOrLoading(): boolean {
 				return this.disabled || this.loading
 			},
 			selectedIndex(): number {
@@ -208,7 +208,7 @@
 	})
 </script>
 <template>
-	<div class="vue-accessible-select-single" :class="{ disabled: isDisabled, open }">
+	<div class="vue-accessible-select-single" :class="{ disabled: isDisabledOrLoading, open }">
 		<label
 			:id="`${htmlId}-label`"
 			class="combo-label"
@@ -224,7 +224,7 @@
 			:aria-activedescendant="activeDescendant"
 			aria-autocomplete="none"
 			:aria-controls="`${htmlId}-listbox`"
-			:aria-disabled="isDisabled"
+			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
 			:aria-labelledby="`${htmlId}-label`"
@@ -232,7 +232,7 @@
 			role="combobox"
 			tabindex="0"
 			@blur="handleBlur"
-			v-on="isDisabled ? {} : { mousedown: handleClick, keydown: handleKeydown }"
+			v-on="isDisabledOrLoading ? {} : { mousedown: handleClick, keydown: handleKeydown }"
 		>
 			<span :id="`${htmlId}-value`" ref="valueEl">
 				<!-- @slot Display the loading state via custom template code-->
