@@ -16,6 +16,8 @@ $default-open-border-color: 'none';
 $default-selected-option-pill-color: #02598e;
 $default-selected-option-pill-background-color: #e7f6ff;
 
+$default-z-index-combo-menu: 100;
+
 $spacer: 1.875rem; // 30px
 
 @mixin input-menu-borders($border-radius) {
@@ -93,7 +95,9 @@ $spacer: 1.875rem; // 30px
 	$hover-background-color: $default-hover-background-color,
 
 	$font-size: $default-font-size,
-	$open-border-color: $default-open-border-color
+	$open-border-color: $default-open-border-color,
+
+	$z-index-combo-menu: $default-z-index-combo-menu
 ) {
 	// START All aesthetic CSS
 	$shadow-color:  #e3e3e3;
@@ -103,7 +107,6 @@ $spacer: 1.875rem; // 30px
 	$max-width: 100%;
 	$option-padding: $spacer/3 $spacer/1.5;
 	$dropdown-overflow-y: auto;
-	$z-index-combo-menu: 100;
 	// END All aesthetic CSS
 
 	// Logical variables
