@@ -92,6 +92,11 @@
 				: 0
 			}
 		},
+		watch: {
+			selectedIndex(newValue: number) {
+				this.activeIndex = newValue
+			}
+		},
 		methods: {
 			getIndexByLetter,
 			getSearchString(char: string) {
@@ -182,7 +187,6 @@
 			},
 			handleOptionClick(event: MouseEvent, index: number) {
 				this.selectOption(index)
-				this.onOptionChange(index)
 				this.updateMenuState(false)
 			},
 			onOptionMouseDown(event: MouseEvent) {
