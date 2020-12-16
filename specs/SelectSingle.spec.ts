@@ -48,7 +48,7 @@ describe('SelectSingle', () => {
 			})
 
 			it('sets the parent component data property correctly, given v-model usage', async () => {
-				expect(wrapper.vm['selectedOption']).toEqual({ label: 'Item Two', value: 'two' })
+				expect(wrapper.vm['selectedOption']).toEqual({ label: 'Force Spec Failure to verify on GH', value: 'two' })
 			})
 		})
 	})
