@@ -1,21 +1,18 @@
 module.exports = {
-  preset: 'ts-jest',
-  "transform": {
-		".*\\.(vue)$": "vue-jest"
-  },
-  "moduleFileExtensions": [
+	preset: 'ts-jest',
+	"moduleFileExtensions": [
 		"js",
 		"json",
 		"ts",
 		// tell Jest to handle `*.vue` files
 		"vue"
-  ],
-  "transform": {
+	],
+	"transform": {
 		// process `*.vue` files with `vue-jest`
 		".*\\.(js)$": "babel-jest",
 		".*\\.(ts)$": "ts-jest",
 		".*\\.(vue)$": "vue-jest"
 	},
-  "collectCoverage": true,
+	"collectCoverage": true,
 	"collectCoverageFrom": ["src/**/*.{js,ts,vue}"]
 };
