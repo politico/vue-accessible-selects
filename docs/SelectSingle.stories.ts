@@ -19,6 +19,7 @@ const Template = (args, { argTypes }) => ({
 			:label="label"
 			:labelField="labelField"
 			:labelIsVisible="labelIsVisible"
+			:loading="loading"
 			:disabled="disabled"
 			:valueField="valueField"
 		/>
@@ -30,6 +31,7 @@ Primary.args = {
 	label: 'My SelectSingle',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	disabled: false
 };
 
@@ -70,6 +72,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:options="options"
 			:label="label"
 			:labelIsVisible="labelIsVisible"
+			:loading="loading"
 			:disabled="disabled"
 		>
 			<template v-slot:selectedOption="{ option }" >
@@ -87,6 +90,7 @@ WithCustomOptions.args = {
 	label: 'My SelectSingle with custom options',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	loading: false,
 	disabled: false
 };
 
