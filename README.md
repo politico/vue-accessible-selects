@@ -17,7 +17,7 @@ This entire repo is very much in an alpha state, and should currently be used on
 ## Current Usage *(updated 9/25/20)*
 
 ```shell
-npm i @politico/vue-accessible-components
+npm i @politico/vue-accessible-selects
 ```
 
 ```ts
