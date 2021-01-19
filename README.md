@@ -9,9 +9,9 @@ This entire repo is very much in an alpha state, and should currently be used on
 
 ## References
 
-* Current guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/ 
+* Current guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/
 * Codepen from blogpost: https://codepen.io/smhigley/pen/gObMVzv (#1 ≈ SelectSingle, #3 ≈ SelectMulti)
-* Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select 
+* Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
 * Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
 ## Current Usage *(updated 9/25/20)*
@@ -20,12 +20,12 @@ This entire repo is very much in an alpha state, and should currently be used on
 npm i @politico/vue-accessible-selects
 ```
 
-```ts
+```javascript
 // In component
 
-import { SelectSingle, SelectMulti, SelectOption } from '@politico/vue-accessible-selects'
+import { SelectSingle, SelectMulti } from '@politico/vue-accessible-selects'
 
-const sampleOptions: SelectOption[] = [{
+const sampleOptions = [{
 	label: 'One Option',
 	value: 'one_option'
 }, {
@@ -33,30 +33,16 @@ const sampleOptions: SelectOption[] = [{
 	value: 'another_option'
 }]
 
-export default Vue.extend({
+export default {
 	components: { SelectSingle, SelectMulti },
 	data() {
 		return {
 			sampleOptions,
-			selectSingleValue: {} as SelectOption,
-			selectMultiValues: [] as SelectOption[]
+			selectSingleValue: {},
+			selectMultiValues: []
 		}
 	},
-	methods: {
-		handleSelectEvent(selectedValue: SelectOption) {
-			// selectedValue will be the most recently selected value
-			// *generally not necessary*, if state can be handled w/ v-model alone
-		},
-		handleRemoveEvent(selectedValue: SelectOption) {
-			// selectedValue will be the most recently removed value
-			// *generally not necessary*, if state can be handled w/ v-model alone
-		},
-		handleSearchChangeEvent(inputValue: string) {
-			// inputValue will be the current user-provided search string
-			// primarily useful for making autocomplete calls
-		}
-	}
-})
+}
 
 ```
 
@@ -67,7 +53,6 @@ export default Vue.extend({
 	:options="sampleOptions"
 	label="My Single Select"
 	:labelIsVisible="true"
-	@select="handleSelectEvent"
 />
 
 <SelectMulti
@@ -76,9 +61,6 @@ export default Vue.extend({
 	label="My Multiple Select"
 	:labelIsVisible="true"
 	placeholder="Default Text to Display"
-	@select="handleSelectEvent"
-	@remove="handleRemoveEvent"
-	@searchChange="handleSearchChangeEvent"
 />
 ```
 
@@ -92,40 +74,7 @@ export default Vue.extend({
 @include select-multi();
 ```
 
-or
-
-```scss
-// In any .scss file
-// Customized, using any of the optional SCSS vars provided, as well as targeting any specific classes
-@import '~@politico/vue-accessible-selects/styles';
-
-@include selects(
-	$primary-background-color: white,
-	$closed-background-color: lightgray,
-
-	$selected-color: white,
-	$selected-background-color: blue,
-
-	$hover-color: white,
-	$hover-background-color: darkblue,
-	
-	$font-size: 14px,
-	$open-border-color: darkgray
-) {
-	.combo-input {  /* some CSS styles applied to the combo-input for *both* Single & Multi; see `Custom Styling` for available classes */ }
-}
-
-@include select-single() {
-	.combo-input {  /* some CSS styles applied to the combo-input for *only* Single */ }
-}
-
-@include select-multi(
-	$selected-option-pill-color: blue,
-	$selected-option-pill-background-color: lightblue
-) {
-	.combo-input {  /* some CSS styles applied to the combo-input for *only* Multi */ }
-}
-```
+for more detailed implementations, checkout the docs site
 
 ### Custom Styling
 
