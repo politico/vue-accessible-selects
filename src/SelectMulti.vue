@@ -264,8 +264,10 @@
 				 * emits the most recently selected value
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
-				this.$emit('select', option)
-				this.selectedOptions = [...this.selectedOptions, option]
+				if (option) {
+					this.$emit('select', option)
+					this.selectedOptions = [...this.selectedOptions, option]
+				}
 			},
 			updateOption(index: number) {
 				const option = this.filteredOptions[index]
