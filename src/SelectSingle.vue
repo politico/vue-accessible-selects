@@ -270,13 +270,8 @@ export default /*#__PURE__*/ (Vue as VueConstructor<ISelectSingle>).extend({
 					Loading...
 				</slot>
 				<!-- @slot Display the currently selected option via custom template code -->
-<<<<<<< HEAD
-				<slot name="selectedOption" :option="value">
-					{{ value[labelField] }}
-=======
 				<slot v-else name="selectedOption" :option="value">
-					{{ value.label }}
->>>>>>> main
+					{{ value[labelField] }}
 				</slot>
 			</span>
 		</div>
