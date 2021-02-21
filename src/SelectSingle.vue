@@ -42,7 +42,7 @@
 				required: true
 			},
 			/**
-			 * Field name in the `options` array that should be used for the label
+			 * Field name in the `options` array that should be used for displaying the label
 			 */
 			labelField: {
 				type: String,
@@ -67,10 +67,12 @@
 				required: false,
 				type: Object as PropType<SelectOption>
 			},
-		  /**
-			 * Field name in the `options` array that should be used for the value
+		  	/**
+			 * Field name in the `options` array that should be used as the identifier for each option
+			 * Required in order to disambiguate between options, when indicating which option is selected, for example
+			 * default field: 'value'
 			 */
-			valueField: {
+			uniqueIdField: {
 				type: String,
 				required: false,
 				default: 'value'
@@ -83,7 +85,7 @@
 		},
 		data(): ComponentData {
 			const activeIndex = this.value
-				? this.options.findIndex(currentOption => currentOption[this.valueField] == this.value[this.valueField])
+				? this.options.findIndex(currentOption => currentOption[this.uniqueIdField] == this.value[this.uniqueIdField])
 				: 0
 			return {
 				activeIndex,
@@ -275,7 +277,7 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:key="option[valueField].toString()"
+				:key="option[uniqueIdField].toString()"
 				class="combo-option"
 				:class="{
 					'option-selected': selectedIndex == index,

@@ -53,7 +53,7 @@
 				required: true
 			},
 			/**
-			 * Field name in the `options` array that should be used for the label
+			 * Field name in the `options` array that should be used for displaying the label
 			 */
 			labelField: {
 				type: String,
@@ -121,9 +121,11 @@
 				default: () => []
 			},
 			/**
-			 * Field name in the `options` array that should be used for the value
+			 * Field name in the `options` array that should be used as the identifier for each option
+			 * Required in order to disambiguate between options, when indicating which options are selected, for example
+			 * default field: 'value'
 			 */
-			valueField: {
+			uniqueIdField: {
 				type: String,
 				required: false,
 				default: 'value'
@@ -314,7 +316,7 @@
 		</label>
 		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
 			<template v-for="(option, index) in selectedOptions" >
-				<li v-if="option[valueField]" :key="option[valueField]" >
+				<li v-if="option[uniqueIdField]" :key="option[uniqueIdField]" >
 					<button
 						ref="selectedOptionPill"
 						class="selected-option-pill"
@@ -367,7 +369,7 @@
 				<div
 					v-for="(option, index) in filteredOptions"
 					:id="`${htmlId}-${index}`"
-					:key="option[valueField]"
+					:key="option[uniqueIdField]"
 					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,

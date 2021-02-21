@@ -25,7 +25,7 @@ const Template = (args, { argTypes }) => ({
 			:disabled="disabled"
 			:displayPillsBelowInput="displayPillsBelowInput"
 			:noResultsMessage="noResultsMessage"
-			:valueField="valueField"
+			:uniqueIdField="uniqueIdField"
 	  	/>
 	</div>`
 });
@@ -41,7 +41,7 @@ Primary.args = {
 	disabled: false,
 	displayPillsBelowInput: false,
 	noResultsMessage: '',
-	valueField: 'value'
+	uniqueIdField: 'value'
 };
 
 
@@ -53,7 +53,7 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 	},
 	methods: {
 		getLabelForSearching(option: SelectOption): string {
-			return `label: ${option[this.labelField]}, with value: ${option[this.valueField]}`
+			return `label: ${option[this.labelField]}, with value: ${option[this.uniqueIdField]}`
 		}
 	},
 	template: `
@@ -71,10 +71,10 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:noResultsMessage="noResultsMessage"
 		>
 				<template v-slot:selectedOption="{ option }" >
-					<strong>{{ option[labelField] }}</strong> <em>{{ option[valueField] }}</em>
+					<strong>{{ option[labelField] }}</strong> <em>{{ option[uniqueIdField] }}</em>
 				</template>
 				<template v-slot:option="{ option }" >
-					<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[valueField] }}</em>
+					<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[uniqueIdField] }}</em>
 				</template>
 				<template v-slot:input-icon>
 					PLUS
