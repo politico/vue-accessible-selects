@@ -130,10 +130,11 @@ export function getActionFromKey(
 export function getIndexByLetter(
 	options: SelectOption[],
 	filter: string,
-	startIndex = 0
+	labelField: string,
+	startIndex = 0,
 ): number {
 	const orderedOptions = [...options.slice(startIndex), ...options.slice(0, startIndex)]
-	const firstMatch = filterOptions(orderedOptions, filter, this.labelField)[0]
+	const firstMatch = filterOptions(orderedOptions, filter, labelField)[0]
 	const allSameLetter = (array: string[]) => array.every(letter => letter === array[0])
 
 	// first check if there is an exact match for the typed string
@@ -143,7 +144,7 @@ export function getIndexByLetter(
 
 	// if the same letter is being repeated, cycle through first-letter matches
 	else if (allSameLetter(filter.split(''))) {
-		const matches = filterOptions(orderedOptions, filter[0], this.labelField)
+		const matches = filterOptions(orderedOptions, filter[0], labelField)
 		return options.indexOf(matches[0])
 	}
 
