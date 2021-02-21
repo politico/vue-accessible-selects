@@ -114,7 +114,6 @@
 			}
 		},
 		methods: {
-			getIndexByLetter,
 			getSearchString(char: string) {
 				const multimatchTimeout = 500
 
@@ -193,7 +192,7 @@
 						this.updateMenuState(true)
 						const searchString = this.getSearchString(key)
 						return this.onOptionChange(
-							Math.max(0, this.getIndexByLetter(this.options, searchString))
+							Math.max(0, getIndexByLetter(this.options, searchString, this.labelField))
 						)
 					}
 					case MenuActions.Open:
