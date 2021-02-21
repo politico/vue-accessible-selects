@@ -21,7 +21,7 @@ const Template = (args, { argTypes }) => ({
 			:labelIsVisible="labelIsVisible"
 			:loading="loading"
 			:disabled="disabled"
-			:valueField="valueField"
+			:uniqueIdField="uniqueIdField"
 		/>
 	</div>`
 });
@@ -76,10 +76,10 @@ const WithCustomOptionsTemplate = (args, { argTypes }) => ({
 			:disabled="disabled"
 		>
 			<template v-slot:selectedOption="{ option }" >
-				<strong>{{ option[labelField] }}</strong> <em>{{ option[valueField] }}</em>
+				<strong>{{ option[labelField] }}</strong> <em>{{ option[uniqueIdField] }}</em>
 			</template>
 			<template v-slot:option="{ option }" >
-				<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[valueField] }}</em>
+				<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[uniqueIdField] }}</em>
 			</template>
 		</SelectSingle>
 	</div>`
