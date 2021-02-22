@@ -183,7 +183,6 @@
 			}
 		},
 		methods: {
-			optionExistsByUniqueId,
 			onInput() {
 				const curValue = this.$refs.inputRef.value
 
