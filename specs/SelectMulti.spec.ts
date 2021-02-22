@@ -8,21 +8,17 @@ import {
 	optionsWithCustomLabelAndUniqueIdFields
 } from './sampleData'
 
-function duplicateOptionsAsNewArrayInstance(options: SelectOption[]) {
-	return [...options.map(option => ({ ...option }))]
-}
-
 describe('SelectMulti', () => {
 	let wrapper: Wrapper<Vue>
 	let options: SelectOption[]
 
-	function mountSelectMulti(selectMultiTemplate) {
+	function mountSelectMulti(selectMultiTemplate: string) {
 		return mount({
 			data() { return { selectedOptions: [], options }},
 			template: `<div>${selectMultiTemplate}</div>`,
 			components: { SelectMulti },
-			methods: { 
-				setOptions(newOptions) { (this as any).options = newOptions }
+			methods: {
+				setOptions(newOptions) { this['options'] = newOptions }
 			}
 		})
 	}
@@ -32,6 +28,7 @@ describe('SelectMulti', () => {
 			beforeEach(async () => {
 				const listbox = wrapper.find("div[role=listbox]")
 				const divOptions = listbox.findAll('div[role=option]')
+				
 				await divOptions.at(1).trigger('click')
 				await divOptions.at(2).trigger('click')
 			})
@@ -56,11 +53,12 @@ describe('SelectMulti', () => {
 			describe('(testing finding items by value, rather than reference) ' + 
 				'then something occurs in the parent such that the options array is updated to be a new instance (of the same original array)', () => {
 				beforeEach(() => {
-					wrapper.vm['setOptions'](duplicateOptionsAsNewArrayInstance(originalOptions))
+					wrapper.vm['setOptions'](originalOptions.map(option => ({ ...option })))
 				})
 
 				it('continues to display the correctly selected pills', () => {
 					const selectedOptionsText = wrapper.find('.selected-options').text()
+
 					expect(selectedOptionsText).toContain('Item Two')
 					expect(selectedOptionsText).toContain('Item Three')
 				})
