@@ -4,7 +4,13 @@
 	import Vue, { PropType, VueConstructor } from 'vue'
 
 	import { SelectOption } from './types'
-	import { getActionFromKey, getIndexByLetter, MenuActions, uniqueId } from './shared'
+	import { 
+		getActionFromKey,
+		getIndexByLetter,
+		MenuActions,
+		optionExistsByUniqueId,
+		uniqueId 
+	} from './shared'
 
 	interface ComponentData {
 		activeIndex: number
@@ -84,11 +90,8 @@
 			// required
 		},
 		data(): ComponentData {
-			const activeIndex = this.value
-				? this.options.findIndex(currentOption => currentOption[this.uniqueIdField] == this.value[this.uniqueIdField])
-				: 0
 			return {
-				activeIndex,
+				activeIndex: 0,
 				htmlId: uniqueId(),
 				ignoreBlur: false,
 				open: false,
@@ -105,15 +108,31 @@
 				return this.disabled || this.loading
 			},
 			selectedIndex(): number {
-				return this.value
-				? this.options.findIndex(currentOption => currentOption.value == this.value.value)
-				: 0
+				return this.selectedOption
+					? this.options.findIndex(this.optionExists(this.selectedOption))
+					: 0
+			},
+			selectedOption: {
+				get(): SelectOption {
+					return this.value
+				},
+				set(value: SelectOption) {
+					/**
+					 * emit the most recently selected value, triggers v-model update
+					 */
+					this.$emit('select', value)
+				}
 			}
 		},
 		watch: {
 			selectedIndex(newValue: number) {
 				this.activeIndex = newValue
 			}
+		},
+		created() {
+			this.activeIndex = this.selectedOption
+				? this.options.findIndex(this.optionExists(this.selectedOption))
+				: 0
 		},
 		methods: {
 			getSearchString(char: string) {
@@ -216,14 +235,13 @@
 			onOptionChange(index: number) {
 				this.activeIndex = index
 			},
+			optionExists(option: SelectOption) {
+				return optionExistsByUniqueId(option, this.uniqueIdField)
+			},
 			selectOption(index: number) {
 				const selected = this.options[index]
 				this.inputValue = selected[this.labelField]
-				/**
-				 * emit the most recently selected value,
-				 * *generally not necessary*, if state can be handled w/ v-model alone
-				 */
-				this.$emit('select', selected)
+				this.selectedOption = selected
 			}
 		}
 	})
