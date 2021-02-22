@@ -174,6 +174,10 @@ export function getUpdatedIndex(
 	}
 }
 
+export function optionExistsByUniqueId(testedOption: SelectOption, uniqueIdField: string) {
+	return (arrayOption: SelectOption) => testedOption[uniqueIdField] === arrayOption[uniqueIdField]
+}
+
 // check if an element is currently scrollable
 export function isScrollable(element: HTMLElement): boolean {
 	return element && element.clientHeight < element.scrollHeight

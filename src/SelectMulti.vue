@@ -11,7 +11,8 @@
 		isScrollable,
 		maintainScrollVisibility,
 		MenuActions,
-		uniqueId
+		uniqueId, 
+		optionExistsByUniqueId
 	} from './shared'
 
 	interface ComponentData {
@@ -182,6 +183,7 @@
 			}
 		},
 		methods: {
+			optionExistsByUniqueId,
 			onInput() {
 				const curValue = this.$refs.inputRef.value
 
@@ -256,6 +258,9 @@
 			onMenuMouseDown(event: MouseEvent) {
 				event.preventDefault()
 			},
+			optionExists(option: SelectOption) {
+				return optionExistsByUniqueId(option, this.uniqueIdField)
+			},
 			removeOption(index: number) {
 				/**
 				 * emits the most recently removed value,
@@ -289,7 +294,7 @@
 			},
 			updateOption(index: number) {
 				const option = this.filteredOptions[index]
-				const optionIndex = this.selectedOptions.indexOf(option)
+				const optionIndex = this.selectedOptions.indexOf(this.optionExists(option))
 				const isSelected = optionIndex > -1
 
 				if (isSelected) {
@@ -298,7 +303,7 @@
 				} else {
 					this.selectOption(option)
 					this.inputValue = ''
-					this.activeIndex = this.filteredOptions.indexOf(option)
+					this.activeIndex = this.filteredOptions.findIndex(this.optionExists(option))
 				}
 			},
 			updateMenuState(open: boolean, callFocus = true) {
@@ -373,10 +378,10 @@
 					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,
-						'option-selected': selectedOptions.indexOf(option) > -1,
+						'option-selected': !!selectedOptions.find(optionExists(option)),
 						'combo-option': true
 					}"
-					:aria-selected="selectedOptions.indexOf(option) > -1 ? 'true' : false"
+					:aria-selected="!!selectedOptions.find(optionExists(option)) ? 'true' : false"
 					role="option"
 					@click="onOptionClick(index)"
 					@mousedown="onOptionMouseDown"
