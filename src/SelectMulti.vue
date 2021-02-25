@@ -127,8 +127,9 @@
 			 * 
 			 * @example
 			 * ```
-			 * const options = [{ label: 'One', id: 1 }, { label: 'Two', id: 2 }]
-			 * 
+			 * options = [{ label: 'One', id: 1 },{ label: 'Two', id: 2 }]
+			 * ```
+			 * ```
 			 * <SelectMulti :options="options" uniqueIdField="id" />
 			 * ```
 			 */
