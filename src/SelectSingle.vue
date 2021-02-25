@@ -74,8 +74,9 @@
 			 * 
 			 * @example
 			 * ```
-			 * const options = [{ label: 'One', id: 1 }, { label: 'Two', id: 2 }]
-			 * 
+			 * options = [{ label: 'One', id: 1 },{ label: 'Two', id: 2 }]
+			 * ```
+			 * ```
 			 * <SelectSingle :options="options" uniqueIdField="id" />
 			 * ```
 			 */
