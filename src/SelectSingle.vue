@@ -43,6 +43,7 @@
 			},
 			/**
 			 * Field name in the `options` array that should be used for displaying the label
+			 * Values in this field do not need to be unique - they are used for display only
 			 */
 			labelField: {
 				type: String,
@@ -68,9 +69,15 @@
 				type: Object as PropType<SelectOption>
 			},
 		  	/**
-			 * Field name in the `options` array that should be used as the identifier for each option
-			 * Required in order to disambiguate between options, when indicating which option is selected, for example
-			 * default field: 'value'
+			 * Field name in the `options` array that should be used as the **unique** identifier for each option
+			 * Required in order to disambiguate between options, when indicating which options are selected, for example
+			 * 
+			 * @example
+			 * ```
+			 * const options = [{ label: 'One', id: 1 }, { label: 'Two', id: 2 }]
+			 * 
+			 * <SelectSingle :options="options" uniqueIdField="id" />
+			 * ```
 			 */
 			uniqueIdField: {
 				type: String,
