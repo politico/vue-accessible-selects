@@ -185,7 +185,7 @@
 				this.callFocus = false
 			}
 
-			if (this.open && this.$refs?.activeOptionsRef?.[0] && isScrollable(this.$refs.listboxRef)) {
+			if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxRef)) {
 				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxRef)
 			}
 		},
