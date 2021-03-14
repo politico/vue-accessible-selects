@@ -4,7 +4,14 @@
 	import Vue, { PropType, VueConstructor } from 'vue'
 
 	import { SelectOption } from './types'
-	import { getActionFromKey, getIndexByLetter, MenuActions, uniqueId } from './shared'
+	import {
+		getActionFromKey,
+		getIndexByLetter,
+		isScrollable,
+		maintainScrollVisibility,
+		MenuActions,
+		uniqueId 
+	} from './shared'
 
 	interface ComponentData {
 		activeIndex: number
@@ -121,6 +128,11 @@
 		watch: {
 			selectedIndex(newValue: number) {
 				this.activeIndex = newValue
+			}
+		},
+		updated() {
+			if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxEl)) {
+				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxEl)
 			}
 		},
 		methods: {
@@ -287,6 +299,7 @@
 				:id="`${htmlId}-item-${index}`"
 				:key="option[uniqueIdField].toString()"
 				class="combo-option"
+				:ref="activeIndex === index ? 'activeOptionRef' : null"
 				:class="{
 					'option-selected': selectedIndex == index,
 					'option-current': index == activeIndex

@@ -185,15 +185,28 @@ export function maintainScrollVisibility(
 	scrollParent: HTMLElement
 ) {
 	const { offsetHeight, offsetTop } = activeElement
+	const { bottom, top } = activeElement.getBoundingClientRect()
 	const { offsetHeight: parentOffsetHeight, scrollTop } = scrollParent
 
-	const isAbove = offsetTop < scrollTop
-	const isBelow = offsetTop + offsetHeight > scrollTop + parentOffsetHeight
+	const isAboveParent = offsetTop < scrollTop
+	const isBelowParent = offsetTop + offsetHeight > scrollTop + parentOffsetHeight
+	const isBelowScreen = bottom > document.documentElement.clientHeight
+	const isAboveScreen = top < 0
 
-	if (isAbove) {
-		scrollParent.scrollTo(0, offsetTop)
-	} else if (isBelow) {
-		scrollParent.scrollTo(0, offsetTop - parentOffsetHeight + offsetHeight)
+	if (isBelowScreen) {
+		return activeElement.scrollIntoView(false)
+	}
+
+	if (isAboveScreen) {
+		return activeElement.scrollIntoView(true)
+	}
+
+	if (isBelowParent) {
+		return (scrollParent.scrollTop = offsetTop + offsetHeight - parentOffsetHeight)
+	} 
+	
+	if (isAboveParent) {
+		return (scrollParent.scrollTop = offsetTop)
 	}
 }
 
