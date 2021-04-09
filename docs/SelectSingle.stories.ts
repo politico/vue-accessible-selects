@@ -20,6 +20,7 @@ const Template = (args, { argTypes }) => ({
 			:labelField="labelField"
 			:labelIsVisible="labelIsVisible"
 			:loading="loading"
+			placeholder="Select any option"
 			:disabled="disabled"
 			:uniqueIdField="uniqueIdField"
 		/>
@@ -36,22 +37,22 @@ Primary.args = {
 };
 
 const optionsWithArrayValues = [
-    {
-        value: ['value-1', 'value-2'],
-        label: 'Option 1'
-    },
-    {
-        value: 'value-3',
-        label: 'Option 2'
-    }
+	{
+		value: ['value-1', 'value-2'],
+		label: 'Option 1'
+	},
+	{
+		value: 'value-3',
+		label: 'Option 2'
+	}
 ]
 
 export const withArrayAsOptionValues = Template.bind({})
 withArrayAsOptionValues.args = {
-    label: 'My SelectSingle With Array Values',
-    options: optionsWithArrayValues,
-    labelIsVisible: true,
-    disabled: false
+	label: 'My SelectSingle With Array Values',
+	options: optionsWithArrayValues,
+	labelIsVisible: true,
+	disabled: false
 }
 
 const WithCustomOptionsTemplate = (args, { argTypes }) => ({

@@ -28,6 +28,10 @@ export const longDefaultListOfOptions: SelectOption[] = [{
     value: 'option-emoji',
     label: '👋'
 },{
+    value: 'disabled-option',
+    label: 'disabled option',
+    $isDisabled: true
+},{
     value: 'option-numbers',
     label: '123456'
 }]

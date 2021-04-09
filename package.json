@@ -45,6 +45,7 @@
   "homepage": "https://github.com/politico/vue-accessible-selects#readme",
   "devDependencies": {
     "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.12",
     "@babel/preset-env": "^7.12.11",
     "@storybook/addon-actions": "^6.0.21",
     "@storybook/addon-docs": "^6.1.14",
