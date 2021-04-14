@@ -10,7 +10,7 @@
 		isScrollable,
 		maintainScrollVisibility,
 		MenuActions,
-		uniqueId
+		uniqueId 
 	} from './shared'
 
 	interface ComponentData {
@@ -78,7 +78,7 @@
 		  	/**
 			 * Field name in the `options` array that should be used as the **unique** identifier for each option
 			 * Required in order to disambiguate between options, when indicating which options are selected, for example
-			 *
+			 * 
 			 * @example
 			 * ```
 			 * options = [{ label: 'One', id: 1 },{ label: 'Two', id: 2 }]
@@ -297,15 +297,15 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:aria-label="`${option[labelField]} ${selectedIndex === index ? 'selected' : 'not selected'}`"
 				:key="option[uniqueIdField].toString()"
 				class="combo-option"
 				:ref="activeIndex === index ? 'activeOptionRef' : null"
 				:class="{
-					'option-selected': selectedIndex === index,
-					'option-current': index === activeIndex
+					'option-selected': selectedIndex == index,
+					'option-current': index == activeIndex
 				}"
 				role="option"
+				:aria-selected="index == selectedIndex ? 'true' : 'false'"
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"
 			>
