@@ -1,6 +1,8 @@
 // Define defaults & helper variables for internal use
 $default-primary-background-color: #eee;
 
+$default-placeholder-color: lightgray;
+
 $default-selected-color: #fff;
 $default-selected-background-color: #444;
 
@@ -317,7 +319,8 @@ $spacer: 1.875rem; // 30px
 
 @mixin select-multi(
 	$selected-option-pill-color: $default-selected-option-pill-color,
-	$selected-option-pill-background-color: $default-selected-option-pill-background-color
+	$selected-option-pill-background-color: $default-selected-option-pill-background-color,
+	$placeholder-color: $default-placeholder-color
 ) {
 	// START All aesthetic CSS
 	$border: 1px solid $selected-option-pill-color;
@@ -327,6 +330,12 @@ $spacer: 1.875rem; // 30px
 
 	.vue-accessible-select-multi {
 		@include input-menu-borders(4px);
+
+		.combo-input {
+			&::placeholder {
+				color: $placeholder-color;
+			}
+		}
 
 		.combo-input-icon-block {
 			position: absolute;
