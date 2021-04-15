@@ -10,7 +10,7 @@
 		isScrollable,
 		maintainScrollVisibility,
 		MenuActions,
-		uniqueId 
+		uniqueId
 	} from './shared'
 
 	interface ComponentData {
@@ -69,6 +69,10 @@
 				required: true,
 				type: Array as PropType<SelectOption[]>
 			},
+			placeholder: {
+				type: String,
+				default: ''
+			},
 			/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 			value: {
 				default: null,
@@ -78,7 +82,7 @@
 		  	/**
 			 * Field name in the `options` array that should be used as the **unique** identifier for each option
 			 * Required in order to disambiguate between options, when indicating which options are selected, for example
-			 * 
+			 *
 			 * @example
 			 * ```
 			 * options = [{ label: 'One', id: 1 },{ label: 'Two', id: 2 }]
@@ -116,8 +120,14 @@
 			activeDescendant(): string {
 				return `${this.htmlId}-item-${this.activeIndex}`
 			},
+			isCurrentOptionDisabled(): boolean {
+				return this.options[this.activeIndex]?.disabled || false
+			},
 			isDisabledOrLoading(): boolean {
 				return this.disabled || this.loading
+			},
+			isPlaceholderShown(): boolean {
+				return this.placeholder && !this.value?.value
 			},
 			selectedIndex(): number {
 				return this.value
@@ -189,7 +199,7 @@
 				const { key } = event
 				const max = this.options.length - 1
 
-				const action = getActionFromKey(event, this.open)
+				const action = getActionFromKey(event, this.open, this.isCurrentOptionDisabled)
 
 				switch (action) {
 					case MenuActions.Next:
@@ -280,6 +290,7 @@
 				<slot v-if="loading" name="loadingState">
 					Loading...
 				</slot>
+				<span v-else-if="isPlaceholderShown" class="combo-placeholder">{{ placeholder }}</span>
 				<!-- @slot Display the currently selected option via custom template code -->
 				<slot v-else name="selectedOption" :option="value">
 					{{ value[labelField] }}
@@ -302,9 +313,11 @@
 				:ref="activeIndex === index ? 'activeOptionRef' : null"
 				:class="{
 					'option-selected': selectedIndex == index,
-					'option-current': index == activeIndex
+					'option-current': index == activeIndex,
+					'option-disabled': option.disabled
 				}"
 				role="option"
+				:aria-disabled="option.disabled"
 				:aria-selected="index == selectedIndex ? 'true' : 'false'"
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"

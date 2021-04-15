@@ -80,7 +80,8 @@ export function filterOptions(
 // return combobox action from key press
 export function getActionFromKey(
 	event: KeyboardEvent,
-	menuOpen: boolean
+	menuOpen: boolean,
+	isCurrentOptionDisabled: boolean
 ): MenuActions | undefined {
 	const { key, altKey, ctrlKey, metaKey } = event
 	const openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End'] // all keys that will open the combo
@@ -118,9 +119,9 @@ export function getActionFromKey(
 		} else if (key === Keys.Escape) {
 			return MenuActions.Close
 		} else if (key === Keys.Enter) {
-			return MenuActions.CloseSelect
+			return isCurrentOptionDisabled ? undefined : MenuActions.CloseSelect
 		} else if (key === Keys.Space) {
-			return MenuActions.Space
+			return isCurrentOptionDisabled ? undefined : MenuActions.Space
 		}
 	}
 }
@@ -203,8 +204,8 @@ export function maintainScrollVisibility(
 
 	if (isBelowParent) {
 		return (scrollParent.scrollTop = offsetTop + offsetHeight - parentOffsetHeight)
-	} 
-	
+	}
+
 	if (isAboveParent) {
 		return (scrollParent.scrollTop = offsetTop)
 	}

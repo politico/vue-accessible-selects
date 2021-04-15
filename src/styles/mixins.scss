@@ -311,6 +311,14 @@ $spacer: 1.875rem; // 30px
 			}
 		}
 
+		.option-disabled {
+			pointer-events: none;
+		}
+
+		.combo-placeholder {
+			color: #6a6e71;
+		}
+
 		// If a consuming project wants to set some custom styles to apply to *only* SelectSingle,
 		// they'll pass them in as part of the @content block here
 		@content;
