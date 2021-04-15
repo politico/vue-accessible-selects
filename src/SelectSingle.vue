@@ -121,7 +121,7 @@
 				return `${this.htmlId}-item-${this.activeIndex}`
 			},
 			isCurrentOptionDisabled(): boolean {
-				return this.options[this.activeIndex]?.$isDisabled || false
+				return this.options[this.activeIndex]?.disabled || false
 			},
 			isDisabledOrLoading(): boolean {
 				return this.disabled || this.loading
@@ -314,10 +314,10 @@
 				:class="{
 					'option-selected': selectedIndex == index,
 					'option-current': index == activeIndex,
-					'option-disabled': option.$isDisabled
+					'option-disabled': option.disabled
 				}"
 				role="option"
-				:aria-disabled="option.$isDisabled"
+				:aria-disabled="option.disabled"
 				:aria-selected="index == selectedIndex ? 'true' : 'false'"
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"

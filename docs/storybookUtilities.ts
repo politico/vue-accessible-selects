@@ -30,7 +30,7 @@ export const longDefaultListOfOptions: SelectOption[] = [{
 },{
     value: 'disabled-option',
     label: 'disabled option',
-    $isDisabled: true
+    disabled: true
 },{
     value: 'option-numbers',
     label: '123456'
