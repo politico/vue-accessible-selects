@@ -81,7 +81,7 @@ export function filterOptions(
 export function getActionFromKey(
 	event: KeyboardEvent,
 	menuOpen: boolean,
-	isCurrentOptionDisabled: boolean
+	isCurrentOptionDisabled = false
 ): MenuActions | undefined {
 	const { key, altKey, ctrlKey, metaKey } = event
 	const openKeys = ['ArrowDown', 'ArrowUp', 'Enter', ' ', 'Home', 'End'] // all keys that will open the combo

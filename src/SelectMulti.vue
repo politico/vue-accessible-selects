@@ -124,7 +124,7 @@
 			/**
 			 * Field name in the `options` array that should be used as the **unique** identifier for each option
 			 * Required in order to disambiguate between options, when indicating which options are selected, for example
-			 * 
+			 *
 			 * @example
 			 * ```
 			 * options = [{ label: 'One', id: 1 },{ label: 'Two', id: 2 }]
