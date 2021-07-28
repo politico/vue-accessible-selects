@@ -95,7 +95,7 @@ export function getActionFromKey(
 	if (
 		key === Keys.Backspace ||
 		key === Keys.Clear ||
-		(key.length === 1 && key !== ' ' && !altKey && !ctrlKey && !metaKey)
+		(key?.length === 1 && key !== ' ' && !altKey && !ctrlKey && !metaKey)
 	) {
 		return MenuActions.Type
 	}
