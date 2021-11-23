@@ -63,7 +63,10 @@ export default {
 	placeholder="Default Text to Display"
 />
 ```
+## WARNING! node-sass deprecated
+To compile scss code you must use dart `sass` package  as it uses `sass:math` module for divisions instead of slash https://sass-lang.com/documentation/breaking-changes/slash-div
 
+`node-sass` is deprecated
 ```scss
 // In any .scss file
 // Simple, use default styles provided by lib

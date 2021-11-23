@@ -1,4 +1,6 @@
 // Define defaults & helper variables for internal use
+@use "sass:math";
+
 $default-primary-background-color: #eee;
 
 $default-placeholder-color: hsl(224, 8%, 47%);
@@ -107,7 +109,7 @@ $spacer: 1.875rem; // 30px
 
 	$border-width: 0;
 	$max-width: 100%;
-	$option-padding: $spacer/3 $spacer/1.5;
+	$option-padding: math.div($spacer, 3) math.div($spacer, 1.5);
 	$dropdown-overflow-y: auto;
 	// END All aesthetic CSS
 
@@ -245,15 +247,15 @@ $spacer: 1.875rem; // 30px
 					border-right: 1px solid $open-border-color;
 
 					& > div:first-child {
-						margin-top: $spacer/1.5;
+						margin-top: math.div($spacer, 1.5);
 					}
 
 					// short bottom border for input when combo-menu is shown
 					&::before {
 						position: absolute;
 						content: '';
-						left: $spacer/1.5;
-						right: $spacer/1.5;
+						left: math.div($spacer, 1.5);
+						right: math.div($spacer, 1.5);
 						top: 0;
 						border-bottom: 1px solid $open-border-color;
 					}
@@ -333,8 +335,8 @@ $spacer: 1.875rem; // 30px
 ) {
 	// START All aesthetic CSS
 	$border: 1px solid $selected-option-pill-color;
-	$pill-border-radius: $spacer/2;
-	$option-padding: $spacer/3 $spacer $spacer/3 $spacer/1.5;
+	$pill-border-radius: $spacer*0.5;
+	$option-padding: math.div($spacer, 3) $spacer math.div($spacer, 3) math.div($spacer, 1.5);
 	// END All aesthetic CSS
 
 	.vue-accessible-select-multi {
@@ -350,7 +352,7 @@ $spacer: 1.875rem; // 30px
 			position: absolute;
 			top: 50%;
 			transform: translate(0, -50%);
-			right: $spacer/1.5;
+			right: math.div($spacer, 1.5);
 		}
 
 		.combo-plus-icon {
@@ -371,7 +373,7 @@ $spacer: 1.875rem; // 30px
 				content: '';
 				position: absolute;
 				top: 50%;
-				right: $spacer/2;
+				right: $spacer*0.5;
 				width: 8px;
 				height: 16px;
 				border-right: 2px solid;
@@ -391,7 +393,7 @@ $spacer: 1.875rem; // 30px
 			list-style-type: none;
 
 			&.below-input {
-				margin-top: $spacer / 3;
+				margin-top: math.div($spacer, 3);
 				order: 3
 			}
 		}

@@ -14,7 +14,14 @@ module.exports = {
     config.module.rules.push({
       test: /\.scss$/,
       sideEffects: true,
-      loaders: ["style-loader", "css-loader", "sass-loader"],
+      loaders: [
+        "style-loader",
+        "css-loader",
+        {
+          loader: "sass-loader",
+          options: { additionalData: '@use "sass:math";' }
+        }
+      ],
       include: path.resolve(__dirname, '../.storybook')
     });
     return config;
