@@ -374,10 +374,11 @@
 				aria-multiselectable="true"
 				@mousedown="onMenuMouseDown"
 			>
+			<template v-if="filteredOptions">
 				<div
 					v-for="(option, index) in filteredOptions"
 					:id="`${htmlId}-${index}`"
-					:key="option[uniqueIdField]"
+					:key="`${option[uniqueIdField]}-${index}`"
 					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,
@@ -394,6 +395,7 @@
 						{{  option[labelField] }}
 					</slot>
 				</div>
+			</template>
 				<div v-if="displayNoResultsMessage" class="option-no-results">
 					<span>{{ noResultsMessage }}</span>
 				</div>
