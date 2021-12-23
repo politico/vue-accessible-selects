@@ -199,7 +199,7 @@ export function maintainScrollVisibility(
 	}
 
 	if (isAboveScreen) {
-		return activeElement.scrollIntoView(true)
+		return (scrollParent.scrollTop = 0)
 	}
 
 	if (isBelowParent) {
