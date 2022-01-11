@@ -184,12 +184,13 @@
 				this.$refs.inputRef.focus()
 				this.callFocus = false
 			}
-
-			if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxRef)) {
-				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxRef)
-			}
 		},
 		methods: {
+			scrollOptionMenuIntoTheView() {
+				if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxRef)) {
+					maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxRef)
+				}
+			},
 			onInput() {
 				const curValue = this.$refs.inputRef.value
 
@@ -219,7 +220,7 @@
 					this.updateMenuState(newMenuState, false)
 				}
 			},
-			onInputKeyDown(event: KeyboardEvent) {
+			async onInputKeyDown(event: KeyboardEvent) {
 				const max = this.filteredOptions.length - 1
 
 				const action = getActionFromKey(event, this.open)
@@ -230,7 +231,9 @@
 					case MenuActions.First:
 					case MenuActions.Previous:
 						event.preventDefault()
-						return this.onOptionChange(getUpdatedIndex(this.activeIndex, max, action))
+						this.onOptionChange(getUpdatedIndex(this.activeIndex, max, action))
+						await this.$nextTick()
+						return this.scrollOptionMenuIntoTheView()
 					case MenuActions.CloseSelect:
 						event.preventDefault()
 						return this.updateOption(this.activeIndex)
