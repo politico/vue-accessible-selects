@@ -267,6 +267,7 @@
 		>
 			{{ label }}
 			<span class="sr-only"> {{ value[labelField] }}</span>
+			<span v-if="value.screenReaderLabel" class="sr-only"> {{ value.screenReaderLabel }}</span>
 		</label>
 		<!-- aria-expanded is `open ? 'true' : 'false'` rather than `open` because the latter results in no attribute -->
 		<div
@@ -325,6 +326,7 @@
 				<!-- @slot Display individual options via custom template code -->
 				<slot name="option" :option="option">
 					{{ option[labelField] }}
+					<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
 				</slot>
 			</div>
 		</div>
