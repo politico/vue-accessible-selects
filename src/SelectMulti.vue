@@ -385,7 +385,8 @@
 						'option-selected': selectedOptions.indexOf(option) > -1,
 						'combo-option': true
 					}"
-					:aria-selected="selectedOptions.indexOf(option) > -1 ? 'true' : false"
+					:aria-selected="selectedOptions.indexOf(option) > -1 ? true : false"
+					:aria-label="selectedOptions.indexOf(option) > -1 ? `${option.label} selected` : ''"
 					role="option"
 					@click="onOptionClick(index)"
 					@mousedown="onOptionMouseDown"
