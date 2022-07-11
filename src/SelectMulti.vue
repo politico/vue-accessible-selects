@@ -322,7 +322,12 @@
 		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 			{{ label }}
 		</label>
-		<ul :id="`${htmlId}-selected`" class="selected-options" :class="{ 'below-input': displayPillsBelowInput }">
+		<ul
+			:id="`${htmlId}-selected`"
+			:aria-labelledby="htmlId"
+			class="selected-options"
+			:class="{ 'below-input': displayPillsBelowInput }"
+		>
 			<template v-for="(option, index) in selectedOptions" >
 				<li v-if="option[uniqueIdField]" :key="option[uniqueIdField]" >
 					<button
