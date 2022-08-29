@@ -320,6 +320,7 @@
 				role="option"
 				:aria-disabled="option.disabled"
 				:aria-selected="index == selectedIndex ? 'true' : 'false'"
+				:aria-label="index === selectedIndex ? `${option.label} selected` : ''"
 				@click="handleOptionClick($event, index)"
 				@mousedown="onOptionMouseDown"
 			>
