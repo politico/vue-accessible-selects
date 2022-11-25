@@ -356,7 +356,6 @@
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
 				aria-roledescription="Extended select list box"
-				:aria-labelledby="`${htmlId} ${htmlId}-selected`"
 				class="combo-input"
 				:disabled="disabled"
 				role="combobox"
