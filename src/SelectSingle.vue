@@ -261,13 +261,11 @@
 <template>
 	<div class="vue-accessible-select-single" :class="{ disabled: isDisabledOrLoading, open }">
 		<label
+			v-if="labelIsVisible"
 			:id="`${htmlId}-label`"
 			class="combo-label"
-			:class="{ 'sr-only': !labelIsVisible }"
 		>
 			{{ label }}
-			<span class="sr-only"> {{ value[labelField] }}</span>
-			<span v-if="value.screenReaderLabel" class="sr-only"> {{ value.screenReaderLabel }}</span>
 		</label>
 		<!-- aria-expanded is `open ? 'true' : 'false'` rather than `open` because the latter results in no attribute -->
 		<div
@@ -279,6 +277,7 @@
 			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
+			:aria-label="value.screenReaderLabel || value[labelField]"
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
