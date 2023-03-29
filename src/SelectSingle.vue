@@ -300,7 +300,7 @@
 				<span v-else-if="isPlaceholderShown" class="combo-placeholder">{{ placeholder }}</span>
 				<!-- @slot Display the currently selected option via custom template code -->
 				<slot v-else name="selectedOption" :option="value">
-					{{ this.prependLabel ? label + ': ' + value[labelField] : value[labelField] }}
+					{{ prependLabel ? label + ': ' + value[labelField] : value[labelField] }}
 				</slot>
 			</span>
 		</div>
