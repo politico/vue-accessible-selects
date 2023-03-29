@@ -65,7 +65,7 @@ describe('SelectSingle', () => {
 					data() { 
 						return { selectedOption: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" prependLabel="true"/>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
 								</div>`,
 					components: { SelectSingle }
 				})
@@ -79,7 +79,7 @@ describe('SelectSingle', () => {
 					data() { 
 						return { selectedOption: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" prependLabel="true"/>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
 								</div>`,
 					components: { SelectSingle }
 				})
@@ -93,7 +93,7 @@ describe('SelectSingle', () => {
 						return { selectedOption: {}, options }},
 					template: `<div>
 									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" 
-										prependLabel="true" placeholder="Select an option"/>
+										:prependLabel="true" placeholder="Select an option"/>
 								</div>`,
 					components: { SelectSingle }
 				})
