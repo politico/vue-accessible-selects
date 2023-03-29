@@ -19,6 +19,7 @@ const Template = (args, { argTypes }) => ({
 			:label="label"
 			:labelField="labelField"
 			:labelIsVisible="labelIsVisible"
+			:prependLabel="prependLabel"
 			:loading="loading"
 			placeholder="Select any option"
 			:disabled="disabled"
@@ -32,6 +33,7 @@ Primary.args = {
 	label: 'My SelectSingle',
 	options: longDefaultListOfOptions,
 	labelIsVisible: true,
+	prependLabel: false,
 	loading: false,
 	disabled: false
 };
