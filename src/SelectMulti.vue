@@ -402,11 +402,11 @@
 					</slot>
 				</div>
 			</template>
-				<slot name="no-results">
-					<div v-if="displayNoResultsMessage" class="option-no-results">
-						<span>{{ noResultsMessage }}</span>
-					</div>
-				</slot>
+			<slot name="no-results">
+				<div v-if="displayNoResultsMessage" class="option-no-results">
+					<span>{{ noResultsMessage }}</span>
+				</div>
+			</slot>
 			</div>
 			<div class="combo-input-icon-block">
 				<template v-if="!loading">
