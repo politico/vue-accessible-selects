@@ -52,4 +52,68 @@ describe('SelectSingle', () => {
 			})
 		})
 	})
+
+	describe('options', () => {
+		describe('prependLabel', () => {
+			const options = [
+				{ label: 'Item One', value: 'one' },
+				{ label: 'Item Two', value: 'two' },
+				{ label: 'Item Three', value: 'three' }
+			]
+			it('prepends the field label to the displayed option when attribute is set to true', async () => {
+				const myWrapper = mount({
+					data() { 
+						return { selectedOption: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+				const listbox = myWrapper.find("div[role=listbox]")
+				await listbox.trigger('click')
+				await listbox.findAll('div[role=option]').at(1).trigger('click')
+				expect(myWrapper.find('div[role=combobox]').text()).toContain('Sample SelectSingle: Item Two')
+			})
+			it('does not prepend the label to items in the list while the dropdown is open', async () => {
+				const myWrapper = mount({
+					data() { 
+						return { selectedOption: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+				const listbox = myWrapper.find("div[role=listbox]")
+				const firstOption = listbox.findAll('div[role=option]').at(1);
+				expect(firstOption.text()).toContain('Item Two')
+			})
+			it('does not prepend the field label to the placeholder text', async () => {
+				const myWrapper = mount({
+					data() { 
+						return { selectedOption: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" 
+										:prependLabel="true" placeholder="Select an option"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+				const placeholder = myWrapper.find(".combo-placeholder")
+				expect(placeholder.text()).toContain('Select an option')
+			})
+			it('does not prepend the field label when attribute is not set', async () => {
+				const myWrapper = mount({
+					data() { 
+						return { selectedOption: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+				const listbox = myWrapper.find("div[role=listbox]")
+				await listbox.trigger('click')
+				await listbox.findAll('div[role=option]').at(1).trigger('click')
+				expect(myWrapper.find('div[role=combobox]').text()).toContain('Item Two')
+			})
+		})
+	})
 })

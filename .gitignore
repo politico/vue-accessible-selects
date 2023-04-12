@@ -9,6 +9,7 @@ node_modules
 # Editor
 .vscode
 .DS_Store
+.idea
 
 # Local Testing
 *.tgz

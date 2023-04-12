@@ -176,7 +176,11 @@
 				}
 			},
 			displayNoResultsMessage(): boolean {
-				return this.noResultsMessage && (!this.filteredOptions || this.filteredOptions.length === 0)
+				return (this.noResultsMessage || this.hasNoResultsSlot)
+						&& (!this.filteredOptions || this.filteredOptions.length === 0)
+			},
+			hasNoResultsSlot(): boolean {
+				return !!this.$slots['no-results']
 			}
 		},
 		updated() {
@@ -210,8 +214,8 @@
 				this.notificationMessage = ''
 
 				if (!this.filteredOptions.length) {
-					// if there are no filteredOptions, the menu should only remain open when a custom `noResultsMessage` has been provided
-					newMenuState = !!this.noResultsMessage
+					// if there are no filteredOptions, the menu should only remain open when we need to display no results message
+					newMenuState = !!this.displayNoResultsMessage
 					this.notificationMessage = this.noResultsMessage || 'no results found'
 				}
 
@@ -402,9 +406,11 @@
 					</slot>
 				</div>
 			</template>
-				<div v-if="displayNoResultsMessage" class="option-no-results">
+			<slot v-if="displayNoResultsMessage" name="no-results">
+				<div class="option-no-results">
 					<span>{{ noResultsMessage }}</span>
 				</div>
+			</slot>
 			</div>
 			<div class="combo-input-icon-block">
 				<template v-if="!loading">
