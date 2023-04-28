@@ -37,6 +37,21 @@ export const enum MenuActions {
 	Type
 }
 
+// determines if element is in viewport
+// if not, scrolls element into view
+export function ensureElementInViewport(elem: HTMLElement) {
+	const rect = elem.getBoundingClientRect()
+
+	const isInView = rect.top >= 0 
+		&& rect.left >= 0 
+		&& rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+		&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+
+	if (!isInView) {
+		elem.scrollIntoView()
+	}
+}
+
 // filter an array of options against an input string
 // returns an array of options that begin with the filter string, case-independent
 export function filterOptions(

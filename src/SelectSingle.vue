@@ -5,6 +5,7 @@
 
 	import { SelectOption } from './types'
 	import {
+		ensureElementInViewport,
 		getActionFromKey,
 		getIndexByLetter,
 		isScrollable,
@@ -125,7 +126,7 @@
 		},
 		computed: {
 			activeDescendant(): string {
-				return `${this.htmlId}-item-${this.activeIndex}`
+				return this.open && this.activeIndex >= 0 ? `${this.htmlId}-item-${this.activeIndex}` : ''
 			},
 			isCurrentOptionDisabled(): boolean {
 				return this.options[this.activeIndex]?.disabled || false
@@ -252,6 +253,14 @@
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
+
+				setTimeout(() => {
+					const elem = document.getElementById(`${this.htmlId}-item-${this.activeIndex}`)
+
+					if (elem) {
+						ensureElementInViewport(elem)
+					}
+				})
 			},
 			selectOption(index: number) {
 				const selected = this.options[index]
