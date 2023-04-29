@@ -48,7 +48,7 @@ export function ensureElementInViewport(elem: HTMLElement) {
 		&& rect.right <= (window.innerWidth || document.documentElement.clientWidth)
 
 	if (!isInView) {
-		elem.scrollIntoView()
+		elem.scrollIntoView(false)
 	}
 }
 
