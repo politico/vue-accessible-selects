@@ -5,6 +5,7 @@
 
 	import { SelectOption } from './types'
 	import {
+		ensureElementInViewport,
 		getActionFromKey,
 		getUpdatedIndex,
 		filterOptions,
@@ -255,6 +256,14 @@
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
+
+				setTimeout(() => {
+					const elem = document.getElementById(`${this.htmlId}-${this.activeIndex}`)
+
+					if (elem) {
+						ensureElementInViewport(elem)
+					}
+				})
 			},
 			onOptionClick(index: number) {
 				this.onOptionChange(index)
