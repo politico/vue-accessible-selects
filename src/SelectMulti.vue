@@ -141,6 +141,7 @@
 			},
 			/**
 			 * Function that fires on blur event and can prevent popup closing.
+			 * Here is an example of why we need it https://github.com/politico/gamma/pull/801#discussion_r1172914181
 			 */
 			customBlurPreventFunction: {
 				type: Function as PropType<(event: FocusEvent) => boolean>
