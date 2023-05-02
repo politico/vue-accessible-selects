@@ -138,6 +138,12 @@
 				type: String,
 				required: false,
 				default: 'value'
+			},
+			/**
+			 * Function that fires on blur event and can prevent popup closing.
+			 */
+			customBlurPreventFunction: {
+				type: Function as PropType<(event: FocusEvent) => boolean>
 			}
 		},
 		data() {
@@ -246,9 +252,20 @@
 						return this.updateMenuState(true)
 				}
 			},
-			onInputBlur() {
+			onInputBlur(event: FocusEvent) {
 				if (this.ignoreBlur) {
 					this.ignoreBlur = false
+					return
+				}
+
+				if (this.customBlurPreventFunction?.(event)) {
+					return
+				}
+
+				this.updateMenuState(false, false)
+			},
+			onPopupBlur(event: FocusEvent) {
+				if (event.target === this.$refs.inputRef || this.customBlurPreventFunction?.(event)) {
 					return
 				}
 
@@ -360,7 +377,7 @@
 				</li>
 			</template>
 		</ul>
-		<div class="combo-wrapper">
+		<div class="combo-wrapper" @focusout="onPopupBlur">
 			<input
 				ref="inputRef"
 				:aria-activedescendant="activeId"
