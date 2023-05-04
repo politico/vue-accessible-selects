@@ -1,9 +1,0 @@
-// include `mixins.scss` to demo current styles, with no arguments set
-
-@import '../src/styles/mixins';
-
-@include selects();
-
-@include select-single();
-
-@include select-multi();
