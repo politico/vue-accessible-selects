@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Original reference: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-	import Vue, { PropType, VueConstructor } from 'vue'
+	import { PropType, defineComponent } from 'vue'
 
 	import { SelectOption } from './types'
 	import {
@@ -25,7 +25,7 @@
 		inputValue: string
 	}
 
-	interface ISelectMulti extends Vue {
+	interface ISelectMulti {
 		$refs: {
 			inputRef: HTMLInputElement
 			listboxRef: HTMLElement
@@ -38,8 +38,9 @@
 	 * Component to select multiple options from a dropdown, developed with accessibility & usability as the primary focus
 	 */
 	// `PURE` designation to enable tree-shaking
-	export default /*#__PURE__*/(Vue as VueConstructor<ISelectMulti>).extend({
+	export default /*#__PURE__*/defineComponent({
 		name: 'SelectMulti',
+		extends: defineComponent<ISelectMulti>({}),
 		model: {
 			prop: 'values',
 			event: 'change'

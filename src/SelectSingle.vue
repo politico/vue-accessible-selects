@@ -24,7 +24,7 @@
 		searchTimeout: number | null
 	}
 
-	interface ISelectSingle extends Vue {
+	interface ISelectSingle {
 		$refs: {
 			comboEl: HTMLElement
 		}
@@ -36,6 +36,7 @@
 	// `PURE` designation to enable tree-shaking
 	export default /*#__PURE__*/defineComponent({
 		name: 'SelectSingle',
+		extends: defineComponent<ISelectSingle>({}),
 		model: {
 			prop: 'value',
 			event: 'select'
