@@ -111,7 +111,7 @@
 			/**
 			 * By default, the list will be empty when either no options are passed in,
 			 * or a user has typed a string that doesn't match any of the options.
-			 * If you'd like to display a messsage instead when that occurs, pass it in here
+			 * If you'd like to display a message instead when that occurs, pass it in here
 			 */
 			noResultsMessage: {
 				type: String,
