@@ -63,5 +63,23 @@ describe('SelectMulti', () => {
 				expect(wrapper.vm['selectedOptions']).toEqual([{ label: 'Item Two', value: 'two' },{ label: 'Item Three', value: 'three' }])
 			})
 		})
+		describe('label functionality', () => {
+			it('adds the aria-labelledby attribute to the listbox', () => {
+				const options = [
+					{ label: 'Item One', value: 'one' },
+					{ label: 'Item Two', value: 'two' },
+					{ label: 'Item Three', value: 'three' }
+				]
+				wrapper = mount({
+					data() { 
+						return { selectedOptions: [], options }},
+					template: '<div><SelectMulti :options="options" v-model="selectedOptions" label="Sample SelectMulti" /></div>',
+					components: { SelectMulti }
+				})
+				const selectMulti = wrapper.findComponent(SelectMulti)
+				const input = selectMulti.find('input')
+				expect(Object.keys(input.attributes())).toContain('aria-labelledby')
+			})
+		})
 	})
 })
