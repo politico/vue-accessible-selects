@@ -253,8 +253,7 @@
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
-
-				setTimeout(() => {
+				Vue.nextTick(() => {
 					const elem = document.getElementById(`${this.htmlId}-item-${this.activeIndex}`)
 
 					if (elem) {
