@@ -376,6 +376,7 @@
 				type="text"
 				:value="inputValue"
 				:placeholder="placeholder"
+				:aria-placeholder="placeholder"
 				@blur="onInputBlur"
 				@click="updateMenuState(true)"
 				@input="onInput"
