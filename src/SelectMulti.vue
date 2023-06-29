@@ -174,7 +174,7 @@
 				},
 				set(values: SelectOption[]) {
 					// Used just for v-model, no need to subscribe to handle event
-					this.$emit('change', values)
+					this.$emit('update:values', values)
 				}
 			},
 			displayNoResultsMessage(): boolean {
