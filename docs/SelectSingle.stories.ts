@@ -14,7 +14,7 @@ const Template = (args, { argTypes }) => ({
 	template: `
 	<div class="wrapper">
 		<SelectSingle
-			v-model="value"
+			v-model:value="value"
 			:options="options"
 			:label="label"
 			:labelField="labelField"

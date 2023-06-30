@@ -270,7 +270,7 @@
 				 * emit the most recently selected value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
-				this.$emit('select', selected)
+				this.$emit('update:value', selected)
 			}
 		}
 	})
