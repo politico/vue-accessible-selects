@@ -11,6 +11,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "rollup": "^3.26.1",
+    "rollup-plugin-copy": "^3.4.0",
     "sass": "^1.62.1",
     "vue": "^3.2.47"
   },
@@ -23,7 +25,9 @@
     "@storybook/testing-library": "^0.0.14-next.2",
     "@storybook/vue3": "^7.0.17",
     "@storybook/vue3-vite": "^7.0.17",
+    "@types/jest": "^29.5.3",
     "@vitejs/plugin-vue": "^4.1.0",
+    "@vue/test-utils": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "storybook": "^7.0.17",
