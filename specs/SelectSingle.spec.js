@@ -1,9 +1,9 @@
-import { mount, Wrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import SelectSingle from '../src/SelectSingle.vue'
 
 describe('SelectSingle', () => {
-	let wrapper: Wrapper<Vue>
+	let wrapper
 
 	describe('given simple options', () => {
 		beforeEach(() => {
