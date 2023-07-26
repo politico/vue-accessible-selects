@@ -16,8 +16,8 @@ describe('SelectSingle', () => {
 
 			wrapper = mount({
 				data() { 
-					return { selectedOption: {}, options }},
-				template: '<div><SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" /></div>',
+					return { value: {}, options }},
+				template: '<div><SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" /></div>',
 				components: { SelectSingle }
 			})
 		})
@@ -43,12 +43,12 @@ describe('SelectSingle', () => {
 			it('emits the full selected item exactly once', async () => {
 				const selectSingle = wrapper.findComponent(SelectSingle)
 
-				expect(selectSingle.emitted().select.length).toEqual(1)
-				expect(selectSingle.emitted().select[0]).toEqual([{ label: 'Item Two', value: 'two' }])
+				expect(selectSingle.emitted()['update:value'].length).toEqual(1)
+				expect(selectSingle.emitted()['update:value'][0]).toEqual([{ label: 'Item Two', value: 'two' }])
 			})
 
 			it('sets the parent component data property correctly, given v-model usage', async () => {
-				expect(wrapper.vm['selectedOption']).toEqual({ label: 'Item Two', value: 'two' })
+				expect(wrapper.vm['value']).toEqual({ label: 'Item Two', value: 'two' })
 			})
 		})
 	})
@@ -63,9 +63,9 @@ describe('SelectSingle', () => {
 			it('prepends the field label to the displayed option when attribute is set to true', async () => {
 				const myWrapper = mount({
 					data() { 
-						return { selectedOption: {}, options }},
+						return { value: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" :prependLabel="true"/>
 								</div>`,
 					components: { SelectSingle }
 				})
@@ -77,9 +77,9 @@ describe('SelectSingle', () => {
 			it('does not prepend the label to items in the list while the dropdown is open', async () => {
 				const myWrapper = mount({
 					data() { 
-						return { selectedOption: {}, options }},
+						return { value: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" :prependLabel="true"/>
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" :prependLabel="true"/>
 								</div>`,
 					components: { SelectSingle }
 				})
@@ -90,9 +90,9 @@ describe('SelectSingle', () => {
 			it('does not prepend the field label to the placeholder text', async () => {
 				const myWrapper = mount({
 					data() { 
-						return { selectedOption: {}, options }},
+						return { value: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle" 
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" 
 										:prependLabel="true" placeholder="Select an option"/>
 								</div>`,
 					components: { SelectSingle }
@@ -103,9 +103,9 @@ describe('SelectSingle', () => {
 			it('does not prepend the field label when attribute is not set', async () => {
 				const myWrapper = mount({
 					data() { 
-						return { selectedOption: {}, options }},
+						return { value: {}, options }},
 					template: `<div>
-									<SelectSingle :options="options" v-model="selectedOption" label="Sample SelectSingle"/>
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle"/>
 								</div>`,
 					components: { SelectSingle }
 				})
