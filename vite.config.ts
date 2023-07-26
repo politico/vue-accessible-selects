@@ -1,4 +1,3 @@
-import path from 'path'
 import { defineConfig } from 'vite'
 import copy from 'rollup-plugin-copy'
 import vue from '@vitejs/plugin-vue'
