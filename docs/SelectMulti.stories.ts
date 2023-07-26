@@ -1,4 +1,4 @@
-import SelectMulti from '../src/SelectMulti.vue'
+import { SelectMulti } from '../src'
 
 import { SelectOption } from '../src/types'
 import { longDefaultListOfOptions } from './storybookUtilities'
@@ -15,7 +15,7 @@ const Template = (args, { argTypes }) => ({
 	template: `
 	<div class="wrapper">
 		<SelectMulti
-			v-model="values"
+			v-model:values="values"
 			:options="options"
 			:label="label"
 			:labelField="labelField"

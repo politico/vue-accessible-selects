@@ -1,9 +1,9 @@
-import { mount, Wrapper } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 
 import SelectMulti from '../src/SelectMulti.vue'
 
 describe('SelectMulti', () => {
-	let wrapper: Wrapper<Vue>
+	let wrapper
 
 	describe('given simple options', () => {
 		beforeEach(() => {
@@ -16,8 +16,8 @@ describe('SelectMulti', () => {
 
 			wrapper = mount({
 				data() { 
-					return { selectedOptions: [], options }},
-				template: '<div><SelectMulti :options="options" v-model="selectedOptions" label="Sample SelectMulti" /></div>',
+					return { values: [], options }},
+				template: '<div><SelectMulti :options="options" v-model:values="values" label="Sample SelectMulti" /></div>',
 				components: { SelectMulti }
 			})
 		})
@@ -38,7 +38,9 @@ describe('SelectMulti', () => {
 			})
 
 			it('adds those options to the list of selected options', async () => {
+				// const selectedOptionsText = wrapper.classes('selected-options')
 				const selectedOptionsText = wrapper.find('.selected-options').text()
+
 				expect(selectedOptionsText).toContain('Item Two')
 				expect(selectedOptionsText).toContain('Item Three')
 			})
@@ -54,13 +56,13 @@ describe('SelectMulti', () => {
 			it('emits the current list of all selected options each time the selected options are updated, using the `change` event to work w/ v-model', async () => {
 				const selectMulti = wrapper.findComponent(SelectMulti)
 
-				expect(selectMulti.emitted().change.length).toEqual(2)
-				expect(selectMulti.emitted().change[0]).toEqual([[{ label: 'Item Two', value: 'two' }]])
-				expect(selectMulti.emitted().change[1]).toEqual([[{ label: 'Item Two', value: 'two' },{ label: 'Item Three', value: 'three' }]])
+				expect(selectMulti.emitted()['update:values'].length).toEqual(2)
+				expect(selectMulti.emitted()['update:values'][0]).toEqual([[{ label: 'Item Two', value: 'two' }]])
+				expect(selectMulti.emitted()['update:values'][1]).toEqual([[{ label: 'Item Two', value: 'two' },{ label: 'Item Three', value: 'three' }]])
 			})
 
 			it('sets the parent component data property correctly, given v-model usage', async () => {
-				expect(wrapper.vm['selectedOptions']).toEqual([{ label: 'Item Two', value: 'two' },{ label: 'Item Three', value: 'three' }])
+				expect(wrapper.vm['values']).toEqual([{ label: 'Item Two', value: 'two' },{ label: 'Item Three', value: 'three' }])
 			})
 		})
 	})

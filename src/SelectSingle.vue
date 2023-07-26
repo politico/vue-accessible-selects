@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Original reference: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
 
-	import Vue, { PropType, VueConstructor } from 'vue'
+	import { PropType, defineComponent } from 'vue'
 
 	import { SelectOption } from './types'
 	import {
@@ -24,7 +24,7 @@
 		searchTimeout: number | null
 	}
 
-	interface ISelectSingle extends Vue {
+	interface ISelectSingle {
 		$refs: {
 			comboEl: HTMLElement
 		}
@@ -34,8 +34,9 @@
 	 * Component to select a single option from a dropdown, developed with accessibility & usability as the primary focus
 	 */
 	// `PURE` designation to enable tree-shaking
-	export default /*#__PURE__*/(Vue as VueConstructor<ISelectSingle>).extend({
+	export default /*#__PURE__*/defineComponent({
 		name: 'SelectSingle',
+		extends: defineComponent<ISelectSingle>({}),
 		model: {
 			prop: 'value',
 			event: 'select'
@@ -269,7 +270,7 @@
 				 * emit the most recently selected value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
-				this.$emit('select', selected)
+				this.$emit('update:value', selected)
 			}
 		}
 	})

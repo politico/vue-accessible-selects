@@ -1,18 +1,24 @@
 {
   "compilerOptions": {
-    // Target es5 for syntax (IE 11), but expect Vue projects (i.e. Babel) to provide polyfills up to at least es2016
-		// See https://stackoverflow.com/a/57474312/4167438 for explanation
-		"target": "es5",
-		"lib": [
-			"ES2016",
-			"DOM"
-		],
+    "target": "ES2020",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "esModuleInterop": true,
-    "outDir": "dist",
-    "declaration": true
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "jsx": "preserve",
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": [
-    "src", "shims-vue.d.ts", "docs"
-  ]
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

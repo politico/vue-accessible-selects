@@ -1,4 +1,4 @@
-import SelectSingle from '../src/SelectSingle.vue';
+import { SelectSingle } from '../src';
 
 import { longDefaultListOfOptions } from './storybookUtilities'
 
@@ -14,7 +14,7 @@ const Template = (args, { argTypes }) => ({
 	template: `
 	<div class="wrapper">
 		<SelectSingle
-			v-model="value"
+			v-model:value="value"
 			:options="options"
 			:label="label"
 			:labelField="labelField"

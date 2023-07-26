@@ -1,29 +1,23 @@
-const path = require('path');
-
-module.exports = {
-  "stories": [
+import type { StorybookConfig } from "@storybook/vue3-vite";
+const config: StorybookConfig = {
+  stories: [
     "../docs/**/*.stories.mdx",
     "../docs/**/*.stories.@(js|jsx|ts|tsx)"
   ],
-  "addons": [
+  addons: [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-docs"
+    "@storybook/addon-interactions",
   ],
-  webpackFinal: async (config, { configType }) => {
-    config.module.rules.push({
-      test: /\.scss$/,
-      sideEffects: true,
-      loaders: [
-        "style-loader",
-        "css-loader",
-        {
-          loader: "sass-loader",
-          options: { additionalData: '@use "sass:math";' }
-        }
-      ],
-      include: path.resolve(__dirname, '../.storybook')
-    });
-    return config;
+  core: {
+    builder: '@storybook/builder-vite',
   },
-}
+  framework: {
+    name: "@storybook/vue3-vite",
+    options: {},
+  },
+  docs: {
+    autodocs: true,
+  },
+};
+export default config;
