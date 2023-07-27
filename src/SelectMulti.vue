@@ -178,7 +178,7 @@
 				}
 			},
 			displayNoResultsMessage(): boolean {
-				return (this.noResultsMessage || this.hasNoResultsSlot)
+				return (!!this.noResultsMessage || !!this.hasNoResultsSlot)
 						&& (!this.filteredOptions || this.filteredOptions.length === 0)
 			},
 			hasNoResultsSlot(): boolean {
@@ -191,8 +191,8 @@
 				this.callFocus = false
 			}
 
-			if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxRef)) {
-				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxRef)
+			if (this.open && this.$refs?.activeOptionRef?.[0 as keyof {}] && isScrollable(this.$refs.listboxRef)) {
+				maintainScrollVisibility(this.$refs.activeOptionRef[0 as keyof {}], this.$refs.listboxRef)
 			}
 		},
 		methods: {
@@ -295,7 +295,8 @@
 					if (this.selectedOptions.length === 0) {
 						this.$refs.inputRef.focus()
 					} else {
-						this.$refs.selectedOptionPill[0].focus()
+						const firstOptionPill = this.$refs.selectedOptionPill[0 as keyof {}] as HTMLElement
+						firstOptionPill.focus()
 					}
 				})
 			},
@@ -343,19 +344,19 @@
 			:class="{ 'below-input': displayPillsBelowInput }"
 		>
 			<template v-for="(option, index) in selectedOptions" >
-				<li v-if="option[uniqueIdField]" :key="option[uniqueIdField]" >
+				<li v-if="option[uniqueIdField as keyof SelectOption]" :key="(option[uniqueIdField as keyof SelectOption] as string)" >
 					<button
 						ref="selectedOptionPill"
 						class="selected-option-pill"
 						:disabled="disabled"
-						:aria-label="`remove ${option[labelField]}`"
+						:aria-label="`remove ${option[labelField as keyof SelectOption]}`"
 						type="button"
 						:aria-describedby="`${htmlId}-selected-option-pills`"
 						@click="removeOptionAndHandleFocusShift(index)"
 					>
 						<!-- @slot Display the currently selected options via custom template code -->
 						<slot name="selectedOption" :option="option">
-							{{  option[labelField] }}
+							{{  option[labelField as keyof SelectOption] }}
 						</slot>
 					</button>
 				</li>
@@ -397,7 +398,7 @@
 				<div
 					v-for="(option, index) in filteredOptions"
 					:id="`${htmlId}-${index}`"
-					:key="`${option[uniqueIdField]}-${index}`"
+					:key="`${option[uniqueIdField as keyof SelectOption]}-${index}`"
 					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,
@@ -412,7 +413,7 @@
 				>
 					<!-- @slot Display individual options via custom template code -->
 					<slot name="option" :option="option">
-						{{  option[labelField] }}
+						{{  option[labelField as keyof SelectOption] }}
 					</slot>
 				</div>
 			</template>
