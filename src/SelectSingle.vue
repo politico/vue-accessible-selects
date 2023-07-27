@@ -113,7 +113,7 @@
 		},
 		data(): ComponentData {
 			const activeIndex = this.value
-				? this.options.findIndex(currentOption => currentOption[this.uniqueIdField] == this.value[this.uniqueIdField])
+				? this.options.findIndex(currentOption => currentOption[this.uniqueIdField as keyof SelectOption] == this.value[this.uniqueIdField as keyof SelectOption])
 				: 0
 			return {
 				activeIndex,
@@ -136,7 +136,7 @@
 				return this.disabled || this.loading
 			},
 			isPlaceholderShown(): boolean {
-				return this.placeholder && !this.value?.value
+				return !!this.placeholder && !this.value?.value
 			},
 			selectedIndex(): number {
 				return this.value
@@ -150,8 +150,8 @@
 			}
 		},
 		updated() {
-			if (this.open && this.$refs?.activeOptionRef?.[0] && isScrollable(this.$refs.listboxEl)) {
-				maintainScrollVisibility(this.$refs.activeOptionRef[0], this.$refs.listboxEl)
+			if (this.open && this.$refs?.activeOptionRef?.[0 as keyof {}] && isScrollable(this.$refs.listboxEl as HTMLElement)) {
+				maintainScrollVisibility(this.$refs.activeOptionRef[0 as keyof {}], this.$refs.listboxEl as HTMLElement)
 			}
 		},
 		methods: {
@@ -241,7 +241,7 @@
 						return this.updateMenuState(true)
 				}
 			},
-			handleOptionClick(event: MouseEvent, index: number) {
+			handleOptionClick(index: number) {
 				this.selectOption(index)
 				this.updateMenuState(false)
 			},
@@ -265,7 +265,7 @@
 			},
 			selectOption(index: number) {
 				const selected = this.options[index]
-				this.inputValue = selected[this.labelField]
+				this.inputValue = selected[this.labelField as keyof SelectOption] as string
 				/**
 				 * emit the most recently selected value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
@@ -294,7 +294,7 @@
 			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
-			:aria-label="value.screenReaderLabel || value[labelField]"
+			:aria-label="value.screenReaderLabel || value[labelField as keyof SelectOption] as string"
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
@@ -310,7 +310,7 @@
 				<span v-else-if="isPlaceholderShown" class="combo-placeholder">{{ placeholder }}</span>
 				<!-- @slot Display the currently selected option via custom template code -->
 				<slot v-else name="selectedOption" :option="value">
-					{{ prependLabel ? label + ': ' + value[labelField] : value[labelField] }}
+					{{ prependLabel ? label + ': ' + value[labelField as keyof SelectOption] : value[labelField as keyof SelectOption] }}
 				</slot>
 			</span>
 		</div>
@@ -325,7 +325,7 @@
 			<div
 				v-for="(option, index) in options"
 				:id="`${htmlId}-item-${index}`"
-				:key="option[uniqueIdField].toString()"
+				:key="option[uniqueIdField as keyof SelectOption]?.toString()"
 				class="combo-option"
 				:ref="activeIndex === index ? 'activeOptionRef' : null"
 				:class="{
@@ -337,12 +337,12 @@
 				:aria-disabled="option.disabled"
 				:aria-selected="index == selectedIndex ? 'true' : 'false'"
 				:aria-label="index === selectedIndex ? `${option.label} selected` : ''"
-				@click="handleOptionClick($event, index)"
+				@click="handleOptionClick(index)"
 				@mousedown="onOptionMouseDown"
 			>
 				<!-- @slot Display individual options via custom template code -->
 				<slot name="option" :option="option">
-					{{ option[labelField] }}
+					{{ option[labelField as keyof SelectOption] }}
 					<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
 				</slot>
 			</div>

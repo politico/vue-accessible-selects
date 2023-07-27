@@ -65,7 +65,7 @@ export function filterOptions(
 		// NOTE: Changed from original implementation on sonder-ui:
 		// we want to match any instance of the current user string,
 		// rather than *only* when the user's string is at the beginning of an option
-		const label = optionLabelForSearching ? optionLabelForSearching(option) : option[labelField]
+		const label = optionLabelForSearching ? optionLabelForSearching(option) : option[labelField as keyof SelectOption] as string
 		const matches = label?.toLowerCase().includes(filter.toLowerCase())
 
 		return matches && exclude.indexOf(option) < 0
