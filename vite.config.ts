@@ -15,6 +15,9 @@ export default defineConfig({
       targets: [{ src: 'src/styles', dest: './dist' }]
   }), 
   ],
+  optimizeDeps: {
+    disabled: false
+  },
   build: {
     lib: {
       entry: 'src/index.ts',
@@ -25,8 +28,9 @@ export default defineConfig({
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled
       // into your library
-      external,
+      external: ['vue'],
       output: {
+        dir: 'dist',
         // Provide global variables to use in the UMD build
         // for externalized deps
         globals: {
