@@ -1,0 +1,456 @@
+// Define defaults & helper variables for internal use
+@use "sass:math";
+
+$default-primary-background-color: #eee;
+
+$default-placeholder-color: hsl(0, 0%, 0%);
+
+$default-selected-color: #fff;
+$default-selected-background-color: #444;
+
+$default-disabled-color: #868b98;
+$default-disabled-background-color: #e5e7eb;
+
+$default-hover-color: #fff;
+$default-hover-background-color: #666;
+
+$default-font-size: 1em;
+$default-open-border-color: 'none';
+
+$default-selected-option-pill-color: #02598e;
+$default-selected-option-pill-background-color: #e7f6ff;
+
+$default-z-index-combo-menu: 100;
+
+$spacer: 1.875rem; // 30px
+
+@mixin input-menu-borders($border-radius) {
+	.combo-input {
+		border-radius: $border-radius;
+	}
+	&.open .combo-input {
+		border-radius: $border-radius $border-radius 0 0;
+	}
+
+	.combo-menu {
+		border-radius: 0 0 $border-radius $border-radius;
+	}
+}
+
+@mixin highlighted(
+	$selected-color,
+	$selected-background-color,
+) {
+	background-color: $selected-background-color;
+	color: $selected-color;
+}
+
+@mixin highlighted-with-icon(
+	$selected-color,
+	$selected-background-color,
+) {
+	@include highlighted($selected-color, $selected-background-color);
+
+	&::after {
+		// border-color for check icon
+		border-color: $selected-color !important;
+		// background for plus icon
+		background:
+			linear-gradient($selected-color,$selected-color),
+			linear-gradient($selected-color,$selected-color);
+		background-position:center;
+		background-size: 100% 2px,2px 100%;
+		background-repeat:no-repeat;
+	}
+}
+
+@mixin utilities {
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+		border: 0;
+	}
+
+	// TODO: Determine how disabled styles should be applied
+}
+
+@mixin selects(
+	$primary-background-color: $default-primary-background-color,
+	$closed-background-color: $default-primary-background-color,
+
+	$selected-color: $default-selected-color,
+	$selected-background-color: $default-selected-background-color,
+
+	$disabled-color: $default-disabled-color,
+	$disabled-background-color: $default-disabled-background-color,
+
+	$hover-color: $default-hover-color,
+	$hover-background-color: $default-hover-background-color,
+
+	$font-size: $default-font-size,
+	$open-border-color: $default-open-border-color,
+
+	$z-index-combo-menu: $default-z-index-combo-menu
+) {
+	// START All aesthetic CSS
+	$shadow-color:  #e3e3e3;
+	$focus-shadow-color: #222;
+
+	$border-width: 0;
+	$max-width: 100%;
+	$option-padding: math.div($spacer, 3) math.div($spacer, 1.5);
+	$dropdown-overflow-y: auto;
+	// END All aesthetic CSS
+
+	// Logical variables
+	$closed-color-is-defined: $closed-background-color != $default-primary-background-color;
+
+	.vue-accessible-select-single,
+	.vue-accessible-select-multi {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		max-width: $max-width;
+
+		@include utilities();
+
+		.combo-wrapper {
+			position: relative;
+		}
+
+		.combo-label {
+			display: block;
+			margin-bottom: 0.9em;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+
+		.combo-input {
+			display: block;
+			width: 100%;
+			min-height: calc(1.4em + 0.625em + 0.625em);
+			padding: 0.625em 2.5em 0.625em 1.25em;
+			position: relative;
+			border: $border-width solid rgba(0, 0, 0, 0.5);
+			text-align: left;
+			font-size: $font-size;
+			outline: 1px solid transparent;
+
+			@if($closed-color-is-defined) {
+				background-color: $closed-background-color;
+			} @else {
+				background-color: $primary-background-color;
+			}
+			box-shadow: inset 0 -2px 0 $shadow-color;
+			transition-duration: 0.2s;
+
+			&:focus {
+				outline: 5px solid transparent;
+				box-shadow: 0 0 1px 1px $focus-shadow-color;
+			}
+		}
+
+		.combo-menu {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			padding: 1px 0; // required for outline property
+			z-index: $z-index-combo-menu;
+			width: 100%;
+			max-height: 300px;
+			border: $border-width solid rgba(0, 0, 0, 0.42);
+			overflow-y: $dropdown-overflow-y;
+			background-color: $primary-background-color;
+			visibility: hidden;
+			opacity: 0;
+			box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.12);
+		}
+
+		&.disabled {
+			.combo-input {
+				color: $disabled-color;
+				background-color: $disabled-background-color;
+				box-shadow: unset;
+			}
+
+			&::after {
+				border-color: $disabled-color;
+			}
+
+			.combo-input::after {
+				border-color: $disabled-color;
+			}
+
+			.combo-plus-icon {
+				color: $disabled-color;
+			}
+
+			.selected-option-pill {
+				background-color: $disabled-background-color;
+				color: $disabled-color;
+				border-color: $disabled-color;
+
+				&::before,
+				&::after {
+					border-color: $disabled-color;
+				}
+			}
+		}
+
+		&.open {
+			.combo-input {
+				transition: border-radius 0.1s ease-in-out;
+
+				// If a closed background-color has been defined, then we need to ensure that primary is set when open
+				// Otherwise, no need to define it here; it's already set when not open
+				@if($closed-color-is-defined) {
+					background-color: $primary-background-color;
+				}
+
+				&:focus {
+					box-shadow: none;
+				}
+
+				&::after {
+					transform: translateY(-50%) rotate(225deg);
+				}
+
+				@if ($open-border-color != $default-open-border-color) {
+					border-top: 1px solid $open-border-color;
+					border-left: 1px solid $open-border-color;
+					border-right: 1px solid $open-border-color;
+					border-bottom: none;
+				}
+			}
+
+			.combo-menu {
+				visibility: visible;
+				opacity: 1;
+				transition: opacity 0.2s ease-in-out 0.04s, visibility 0.2s ease-in-out 0.04s;
+
+				@if ($open-border-color != $default-open-border-color) {
+					border-bottom: 1px solid $open-border-color;
+					border-left: 1px solid $open-border-color;
+					border-right: 1px solid $open-border-color;
+
+					& > div:first-child {
+						margin-top: math.div($spacer, 1.5);
+					}
+
+					// short bottom border for input when combo-menu is shown
+					&::before {
+						position: absolute;
+						content: '';
+						left: math.div($spacer, 1.5);
+						right: math.div($spacer, 1.5);
+						top: 0;
+						border-bottom: 1px solid $open-border-color;
+					}
+				}
+			}
+		}
+
+		.combo-option.option-current {
+			outline: 1px dashed transparent;
+
+			@include highlighted($selected-color, $selected-background-color);
+		}
+		.combo-option:hover {
+			outline: 1px solid transparent;
+
+			@include highlighted($hover-color, $hover-background-color);
+		}
+
+		.combo-option {
+			padding: $option-padding;
+			position: relative;
+			cursor: pointer;
+
+			&.option-selected {
+				@include highlighted($selected-color, $selected-background-color);
+			}
+		}
+
+		// If a consuming project wants to set some custom styles to apply to *all* selects,
+		// they'll pass them in as part of the @content block here
+		@content;
+	}
+}
+
+@mixin select-single() {
+	.vue-accessible-select-single {
+		@include input-menu-borders(1.4em);
+
+		.combo-input {
+			// Downward v, with CSS
+			&::after {
+				$arrow-size: 8px;
+
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: 20px;
+				display: block;
+				width: $arrow-size;
+				height: $arrow-size;
+				border-right: 2px solid rgba(0, 0, 0, 0.5);
+				border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+				transform: translateY(-85%) rotate(45deg);
+				transition: transform 0.2s ease;
+				pointer-events: none;
+			}
+		}
+
+		.option-disabled {
+			pointer-events: none;
+		}
+
+		.combo-placeholder {
+			color: #6a6e71;
+		}
+
+		// If a consuming project wants to set some custom styles to apply to *only* SelectSingle,
+		// they'll pass them in as part of the @content block here
+		@content;
+	}
+}
+
+@mixin select-multi(
+	$selected-option-pill-color: $default-selected-option-pill-color,
+	$selected-option-pill-background-color: $default-selected-option-pill-background-color,
+	$placeholder-color: $default-placeholder-color
+) {
+	// START All aesthetic CSS
+	$border: 1px solid $selected-option-pill-color;
+	$pill-border-radius: $spacer*0.5;
+	$option-padding: math.div($spacer, 3) $spacer math.div($spacer, 3) math.div($spacer, 1.5);
+	// END All aesthetic CSS
+
+	.vue-accessible-select-multi {
+		@include input-menu-borders(4px);
+
+		.combo-input {
+			&::placeholder {
+				color: $placeholder-color;
+			}
+		}
+
+		.combo-input-icon-block {
+			position: absolute;
+			top: 50%;
+			transform: translate(0, -50%);
+			right: math.div($spacer, 1.5);
+		}
+
+		.combo-plus-icon {
+			width: 10px;
+			height: 10px;
+		}
+
+		.combo-spinner-icon {
+			width: 12px;
+			height: 12px;
+			animation: spin .75s linear infinite;
+		}
+
+		.combo-option {
+			padding: $option-padding;
+
+			&.option-selected::after {
+				content: '';
+				position: absolute;
+				top: 50%;
+				right: $spacer*0.5;
+				width: 8px;
+				height: 16px;
+				border-right: 2px solid;
+				border-bottom: 2px solid;
+				background: none;
+				transform: translate(0, -50%) rotate(45deg);
+			}
+		}
+		.option-no-results {
+			padding: $option-padding;
+		}
+
+		.selected-options {
+			max-width: 100%;
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+
+			&.below-input {
+				margin-top: math.div($spacer, 3);
+				order: 3
+			}
+		}
+
+		.selected-options li {
+			display: inline-block;
+		}
+
+		.selected-option-pill {
+			position: relative;
+			margin-right: 10px;
+			margin-bottom: 10px;
+			padding: 6px 3em 6px 15px;
+			border: $border;
+			border-radius: $pill-border-radius;
+			text-align: left;
+			text-transform: uppercase;
+			color: $selected-option-pill-color;
+			font-size: 10px;
+			font-weight: bold;
+			line-height: 13px;
+			letter-spacing: 0.078125em;
+			background-color: $selected-option-pill-background-color;
+
+			&:focus {
+				border-color: $selected-option-pill-color;
+				outline: 3px solid transparent;
+				box-shadow: 0 0 3px 1px $selected-option-pill-color;
+			}
+
+			&::before,
+			&::after {
+				content: '';
+				position: absolute;
+				top: 8px;
+				right: 1.5em;
+				width: 0;
+				height: 1em;
+				border-right: 2px solid $selected-option-pill-color;
+			}
+
+			&::before {
+				transform: translate(0, 0%) rotate(45deg);
+			}
+
+			&::after {
+				transform: translate(0, 0%) rotate(-45deg);
+			}
+		}
+
+		// If a consuming project wants to set some custom styles to apply to *only* SelectMulti,
+		// they'll pass them in as part of the @content block here
+		@content;
+	}
+}
+
+@keyframes spin {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
+}

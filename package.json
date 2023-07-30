@@ -19,7 +19,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build && npm run shake",
+    "prepublishOnly": "npm run build",
     "shake": "agadoo dist/index.js",
     "dev": "vite",
     "preview": "vite preview",
@@ -58,7 +58,6 @@
   "dependencies": {
     "agadoo": "^3.0.0",
     "rollup": "^3.26.1",
-    "rollup-plugin-copy": "^3.4.0",
     "sass": "^1.62.1"
   },
   "devDependencies": {
@@ -80,6 +79,7 @@
     "storybook": "^7.0.17",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
+    "vite-plugin-static-copy": "^0.17.0",
     "vitest": "^0.33.0",
     "vue": "^3.3.4",
     "vue-tsc": "^1.4.2"
