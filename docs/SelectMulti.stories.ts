@@ -11,11 +11,11 @@ export default {
 const Template = (args, { argTypes }) => ({
 	props: Object.keys(argTypes),
 	components: { SelectMulti },
-	data() { return { values: [] } },
+	data() { return { selected: [] } },
 	template: `
 	<div class="wrapper">
 		<SelectMulti
-			v-model:values="values"
+			v-model:values="selected"
 			:options="options"
 			:label="label"
 			:labelField="labelField"

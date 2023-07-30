@@ -25,7 +25,7 @@
 	}
 
 	interface ISelectSingle {
-		$refs: {
+		$refs?: {
 			comboEl: HTMLElement
 		}
 	}
@@ -202,7 +202,7 @@
 			},
 			updateMenuState(open: boolean, callFocus = true) {
 				this.open = open
-				callFocus && this.$refs.comboEl.focus()
+				callFocus && (this.$refs.comboEl as any).focus()
 			},
 			handleKeydown(event: KeyboardEvent) {
 				const { key } = event
@@ -327,7 +327,6 @@
 				:id="`${htmlId}-item-${index}`"
 				:key="option[uniqueIdField as keyof SelectOption]?.toString()"
 				class="combo-option"
-				:ref="activeIndex === index ? 'activeOptionRef' : null"
 				:class="{
 					'option-selected': selectedIndex == index,
 					'option-current': index == activeIndex,

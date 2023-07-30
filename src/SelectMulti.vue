@@ -399,7 +399,6 @@
 					v-for="(option, index) in filteredOptions"
 					:id="`${htmlId}-${index}`"
 					:key="`${option[uniqueIdField as keyof SelectOption]}-${index}`"
-					:ref="activeIndex === index ? 'activeOptionRef' : null"
 					:class="{
 						'option-current': activeIndex === index,
 						'option-selected': selectedOptions.indexOf(option) > -1,

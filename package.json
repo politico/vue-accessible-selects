@@ -1,12 +1,22 @@
 {
   "name": "@politico/vue-accessible-selects",
-  "version": "2.0.1-alpha.0",
+  "version": "2.0.1-alpha.1",
   "type": "module",
+  "files": ["dist"],
+  "module": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./src/styles/index.scss": "./dist/styles/index.scss",
+    "./src/styles/mixins.scss": "./dist/styles/mixins.scss"
+  },
+  "types": "./dist/index.d.ts",
   "scripts": {
     "start": "npm run storybook",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "build": "vue-tsc && vite build",
+    "build": "vite build && vue-tsc --emitDeclarationOnly",
     "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js",
     "dev": "vite",
@@ -47,8 +57,7 @@
     "agadoo": "^3.0.0",
     "rollup": "^3.26.1",
     "rollup-plugin-copy": "^3.4.0",
-    "sass": "^1.62.1",
-    "vue": "^3.2.47"
+    "sass": "^1.62.1"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.17",
@@ -70,6 +79,10 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
     "vitest": "^0.33.0",
+    "vue": "^3.3.4",
     "vue-tsc": "^1.4.2"
+  },
+  "peerDependencies": {
+    "vue": "3.x"
   }
 }

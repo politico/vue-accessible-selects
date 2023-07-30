@@ -3,4 +3,5 @@ export interface SelectOption {
 	label: string
 	screenReaderLabel?: string
 	value: string | string[]
+	activeOption?: boolean
 }
