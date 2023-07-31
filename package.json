@@ -81,6 +81,7 @@
     "storybook": "^7.0.17",
     "typescript": "^5.0.2",
     "vite": "^4.3.2",
+    "vite-plugin-css-injected-by-js": "^3.2.1",
     "vite-plugin-static-copy": "^0.17.0",
     "vitest": "^0.33.0",
     "vue": "^3.3.4",
