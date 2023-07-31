@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import copy from 'ro'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
 import pkg from './package.json'
@@ -13,7 +12,7 @@ export default defineConfig({
     viteStaticCopy({
       // For now, we only support usage of the styling as SCSS mixins, and thus only need to copy over the SCSS without compilation
       // In the future, we could easily export compiled CSS by request, & perhaps allow for CSS vars replacing SCSS vars for customization in that case
-      targets: [{ src: './src/styles', dest: '../' }]
+      targets: [{ src: './src/styles', dest: './' }]
     })
   ],
   optimizeDeps: {
@@ -23,7 +22,7 @@ export default defineConfig({
     lib: {
       entry: 'src/index.ts',
       name: 'index',
-      fileName: 'index',
+      fileName: 'accessibleSelects/index',
       formats: ['es']
     },
     rollupOptions: {
