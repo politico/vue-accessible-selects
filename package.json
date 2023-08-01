@@ -20,7 +20,7 @@
     "test": "vitest",
     "coverage": "vitest run --coverage",
     "build": "vite build && vue-tsc --emitDeclarationOnly",
-    "prepublishOnly": "npm run build",
+    "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js",
     "dev": "vite",
     "preview": "vite preview",
