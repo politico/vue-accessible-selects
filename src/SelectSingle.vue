@@ -294,7 +294,7 @@
 			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
-			:aria-label="value.screenReaderLabel || value[labelField as keyof SelectOption] as string"
+			:aria-label="value.screenReaderLabel || (value[labelField as keyof SelectOption] as string)"
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
