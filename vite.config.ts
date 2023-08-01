@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import copy from 'rollup-plugin-copy'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 import pkg from './package.json'
 const external = Object.keys(pkg.peerDependencies || {})
@@ -14,8 +13,7 @@ export default defineConfig({
       // For now, we only support usage of the styling as SCSS mixins, and thus only need to copy over the SCSS without compilation
       // In the future, we could easily export compiled CSS by request, & perhaps allow for CSS vars replacing SCSS vars for customization in that case
       targets: [{ src: 'src/styles', dest: './' }]
-    }),
-    cssInjectedByJsPlugin()
+    })
   ],
   optimizeDeps: {
     disabled: false
