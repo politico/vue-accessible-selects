@@ -26,7 +26,7 @@
 	}
 
 	interface ISelectMulti {
-		$refs: {
+		$refs?: {
 			inputRef: HTMLInputElement
 			listboxRef: HTMLElement
 			activeOptionRef: HTMLElement
