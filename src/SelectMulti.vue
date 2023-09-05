@@ -1,7 +1,7 @@
 <script lang="ts">
 	// Original reference: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-	import { PropType, defineComponent } from 'vue'
+	import { PropType, defineComponent, nextTick } from 'vue'
 
 	import { SelectOption } from './types'
 	import {
@@ -258,7 +258,7 @@
 			onOptionChange(index: number) {
 				this.activeIndex = index
 
-				setTimeout(() => {
+				nextTick(() => {
 					const elem = document.getElementById(`${this.htmlId}-${this.activeIndex}`)
 
 					if (elem) {
