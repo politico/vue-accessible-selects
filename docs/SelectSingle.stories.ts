@@ -10,11 +10,11 @@ export default {
 const Template = (args, { argTypes }) => ({
 	props: Object.keys(argTypes),
 	components: { SelectSingle },
-	data() { return { value: {} } },
+	data() { return { selected: {} } },
 	template: `
 	<div class="wrapper">
 		<SelectSingle
-			v-model:value="value"
+			v-model:value="selected"
 			:options="options"
 			:label="label"
 			:labelField="labelField"
