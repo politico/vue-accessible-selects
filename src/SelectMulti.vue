@@ -370,6 +370,7 @@
 				:aria-controls="`${htmlId}-listbox`"
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
+				:aria-labelledby="htmlId"
 				aria-roledescription="Extended select list box"
 				class="combo-input"
 				:disabled="disabled"
