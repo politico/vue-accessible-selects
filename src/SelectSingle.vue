@@ -41,6 +41,10 @@
 			event: 'select'
 		},
 		props: {
+			ariaLabel: {
+				type: String,
+				default: ''
+			},
 			disabled: {
 				type: Boolean,
 				default: false
@@ -154,6 +158,9 @@
 			}
 		},
 		methods: {
+			ariaLabelValue(value, labelField) {
+				return this.ariaLabel.length > 0 ? this.ariaLabel : (value.screenReaderLabel || (value[labelField as keyof SelectOption] as string))
+			},
 			getSearchString(char: string) {
 				const multimatchTimeout = 500
 
@@ -293,7 +300,7 @@
 			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
-			:aria-label="value.screenReaderLabel || value[labelField]"
+			:aria-label="ariaLabelValue(value, labelField)"
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
