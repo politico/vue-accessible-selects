@@ -159,8 +159,8 @@
 			}
 		},
 		methods: {
-			ariaLabelValue(value, labelField) {
-				return this.ariaLabel.length > 0 ? this.ariaLabel : (value.screenReaderLabel || (value[labelField as keyof SelectOption] as string))
+			ariaLabelValue(value: SelectOption, labelField: keyof SelectOption) {
+				return this.ariaLabel.length > 0 ? this.ariaLabel : (value.screenReaderLabel || (value[labelField] as string))
 			},
 			getSearchString(char: string) {
 				const multimatchTimeout = 500
@@ -301,7 +301,7 @@
 			:aria-disabled="isDisabledOrLoading"
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
-			:aria-label="ariaLabelValue(value, labelField)"
+			:aria-label="ariaLabelValue(value, labelField as keyof SelectOption)"
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
