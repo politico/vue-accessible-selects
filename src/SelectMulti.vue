@@ -332,7 +332,7 @@
 
 <template>
 	<div class="vue-accessible-select-multi" :class="{ disabled, open }">
-		<slot name="custom-label">
+		<slot name="label">
 			<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 				{{ label }}
 			</label>
