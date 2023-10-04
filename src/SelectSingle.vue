@@ -284,13 +284,15 @@
 </script>
 <template>
 	<div class="vue-accessible-select-single" :class="{ disabled: isDisabledOrLoading, open }">
-		<label
-			v-if="labelIsVisible"
-			:id="`${htmlId}-label`"
-			class="combo-label"
-		>
-			{{ label }}
-		</label>
+		<slot name="label">
+			<label
+				v-if="labelIsVisible"
+				:id="`${htmlId}-label`"
+				class="combo-label"
+			>
+				{{ label }}
+			</label>
+		</slot>
 		<!-- aria-expanded is `open ? 'true' : 'false'` rather than `open` because the latter results in no attribute -->
 		<div
 			:id="htmlId"
