@@ -334,9 +334,11 @@
 
 <template>
 	<div class="vue-accessible-select-multi" :class="{ disabled, open }">
-		<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
-			{{ label }}
-		</label>
+		<slot name="label">
+			<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
+				{{ label }}
+			</label>
+		</slot>
 		<ul
 			:id="`${htmlId}-selected`"
 			:aria-labelledby="htmlId"
