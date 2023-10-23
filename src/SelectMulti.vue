@@ -45,6 +45,7 @@
 			prop: 'values',
 			event: 'change'
 		},
+		emits: ['update:values', 'searchChange', 'remove', 'select'],
 		props: {
 			disabled: {
 				type: Boolean,
