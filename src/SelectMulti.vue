@@ -167,7 +167,13 @@
 				return this.open ? `${this.htmlId}-${this.activeIndex}` : ''
 			},
 			filteredOptions(): SelectOption[] {
-				return this.internalSearch ? filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching) : this.options
+				if (this.internalSearch) {
+					return filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching)
+				} 
+				// filter selected values from options
+				return this.options.filter((option: SelectedItem) => {
+					return !this.values.find((val: SelectedItem) => val.value === option.value)
+				})
 			},
 			selectedOptions: {
 				get(): SelectOption[] {
