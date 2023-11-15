@@ -83,14 +83,14 @@
 				default: () => null
 			},
 			/**
-             * Determines whether or not typing in the input will filter the provided options.
+			 * Determines whether or not typing in the input will filter the provided options.
 			 * Should be set to false if you are making API calls to fetch options.
 			 */
-            internalSearch: {
-                type: Boolean,
-                required: false,
-                default: true
-            },
+			internalSearch: {
+					type: Boolean,
+					required: false,
+					default: true
+			},
 			/**
 			 * When using a slot to display each option in the select,
 			 * you'll want to pass in a way for the select to *search* for those options as a user types,
@@ -171,8 +171,8 @@
 					return filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching)
 				} 
 				// filter selected values from options
-				return this.options.filter((option: SelectedItem) => {
-					return !this.values.find((val: SelectedItem) => val.value === option.value)
+				return this.options.filter((option: SelectOption) => {
+					return !this.values.find((val: SelectOption) => val.value === option.value)
 				})
 			},
 			selectedOptions: {
