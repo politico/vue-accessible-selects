@@ -172,7 +172,10 @@
 				} 
 				// filter selected values from options
 				return this.options.filter((option: SelectOption) => {
-					return !this.values.find((val: SelectOption) => val.value === option.value)
+					return !this.values.find((val: SelectOption) => {
+						// @ts-ignore
+						return val[this.uniqueIdField] === option[this.uniqueIdField]
+					})
 				})
 			},
 			selectedOptions: {
