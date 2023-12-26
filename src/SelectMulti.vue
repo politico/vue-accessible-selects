@@ -140,6 +140,15 @@
 				type: String,
 				required: false,
 				default: 'value'
+			},
+			/**
+			 *  If internalSearch is false, by default we don't show selected values in the dropdown lest users
+			 *     see their current selections as "search results".  If users should see it, toggle this to "true"
+			 */
+			showSelected: {
+				type: Boolean,
+				required: false,
+				default: false
 			}
 		},
 		data() {
@@ -170,9 +179,17 @@
 				if (this.internalSearch) {
 					return filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching)
 				} 
+				if (this.showSelected) {
+					return this.options
+				}
 				// filter selected values from options
 				return this.options.filter((option: SelectOption) => {
-					return !this.values.find((val: SelectOption) => val.value === option.value)
+					return !this.values.find((val: SelectOption) => {
+						return (
+							val[this.uniqueIdField] as keyof SelectOption === 
+							option[this.uniqueIdField] as keyof SelectOption
+						)
+					})
 				})
 			},
 			selectedOptions: {
