@@ -186,8 +186,8 @@
 				return this.options.filter((option: SelectOption) => {
 					return !this.values.find((val: SelectOption) => {
 						return (
-							val[this.uniqueIdField] as keyof SelectOption === 
-							option[this.uniqueIdField] as keyof SelectOption
+							// @ts-ignore
+							val[this.uniqueIdField] === option[this.uniqueIdField]
 						)
 					})
 				})
