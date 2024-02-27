@@ -425,7 +425,7 @@
 				</div>
 			</slot>
 			</div>
-			<div class="combo-input-icon-block">
+			<div class="combo-input-icon-block" :class="{ 'not-clickable': !$slots['input-icon'] }">
 				<template v-if="!loading">
 					<slot name="input-icon">
 						<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
