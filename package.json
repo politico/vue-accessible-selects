@@ -1,6 +1,6 @@
 {
   "name": "@politico/vue-accessible-selects",
-  "version": "2.0.2",
+  "version": "2.0.3-alpha.0",
   "description": "Select & Multi Select implementations for Vue, focused especially on implementing accessibility best practices",
   "files": [
     "dist",
