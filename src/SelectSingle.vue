@@ -159,7 +159,7 @@
 		},
 		methods: {
 			ariaLabelValue(value, labelField) {
-				return this.ariaLabel.length > 0 ? this.ariaLabel : (value.screenReaderLabel || (value[labelField as keyof SelectOption] as string) || null)
+				return this.ariaLabel.length > 0 ? (this.ariaLabel || null) : (value.screenReaderLabel || (value[labelField as keyof SelectOption] as string) || null)
 			},
 			getSearchString(char: string) {
 				const multimatchTimeout = 500
