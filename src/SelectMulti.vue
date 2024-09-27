@@ -138,6 +138,10 @@
 				type: String,
 				required: false,
 				default: 'value'
+			},
+			iconIsClickable: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
@@ -425,7 +429,7 @@
 				</div>
 			</slot>
 			</div>
-			<div class="combo-input-icon-block" :class="{ 'not-clickable': !$slots['input-icon'] }">
+			<component :is="iconIsClickable ? 'button' : 'div'" @click="iconIsClickable ? updateMenuState(iconIsClickable) : false" class="combo-input-icon-block" :class="{ 'not-clickable': !iconIsClickable }">
 				<template v-if="!loading">
 					<slot name="input-icon">
 						<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
@@ -440,7 +444,7 @@
 						<path d="M10.6353 4.71384C11.3212 7.36481 9.80202 10.0897 7.24202 10.8L7.55253 12C10.7525 11.1121 12.6516 7.70601 11.7941 4.39231L10.6353 4.71384Z" fill="currentColor"/>
 					</svg>
 				</template>
-			</div>
+			</component>
 		</div>
 	</div>
 </template>
