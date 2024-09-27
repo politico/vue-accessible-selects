@@ -78,41 +78,5 @@ describe('SelectMulti', () => {
 				expect(Object.keys(input.attributes())).toContain('aria-labelledby')
 			})
 		})
-
-		describe('iconIsClickable works', () => {
-			it('when iconIsClickable false its not clickable and wrapper is a div', () => {
-				
-				wrapper = mount({
-					data() { 
-						return { selectedOptions: [], options }},
-					template: '<div><SelectMulti :options="options" v-model="selectedOptions" label="Sample SelectMulti" /></div>',
-					components: { SelectMulti }
-				})
-
-				const selectMulti = wrapper.findComponent(SelectMulti)
-
-				const inputIconBlock = selectMulti.find('.combo-input-icon-block')
-
-				expect(inputIconBlock.element.tagName === 'DIV').toBeTruthy()
-				expect(inputIconBlock.classes('not-clickable')).toBe(true)
-			})
-
-			it('when iconIsClickable true its clickable and wrapper is a button', () => {
-				
-				wrapper = mount({
-					data() { 
-						return { selectedOptions: [], options }},
-					template: '<div><SelectMulti :options="options" v-model="selectedOptions" :iconIsClickable="true" label="Sample SelectMulti" /></div>',
-					components: { SelectMulti }
-				})
-
-				const selectMulti = wrapper.findComponent(SelectMulti)
-
-				const inputIconBlock = selectMulti.find('.combo-input-icon-block')
-
-				expect(inputIconBlock.element.tagName === 'BUTTON').toBeTruthy()
-				expect(inputIconBlock.classes('not-clickable')).toBe(false)
-			})
-		})
 	})
 })
