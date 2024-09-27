@@ -23,6 +23,7 @@ const Template = (args, { argTypes }) => ({
 			:labelIsVisible="labelIsVisible"
 			:placeholder="placeholder"
 			:disabled="disabled"
+			:iconIsClickable="iconIsClickable"
 			:displayPillsBelowInput="displayPillsBelowInput"
 			:noResultsMessage="noResultsMessage"
 			:uniqueIdField="uniqueIdField"
@@ -37,6 +38,7 @@ Primary.args = {
 	labelField: 'label',
 	labelIsVisible: true,
 	loading: false,
+	iconIsClickable: true,
 	placeholder: 'Select Options',
 	disabled: false,
 	displayPillsBelowInput: false,
