@@ -2,17 +2,19 @@ import { mount, Wrapper } from '@vue/test-utils'
 
 import SelectMulti from '../src/SelectMulti.vue'
 
+const options = [
+	{ label: 'Item One', value: 'one' },
+	{ label: 'Item Two', value: 'two' },
+	{ label: 'Item Three', value: 'three' }
+]
+
 describe('SelectMulti', () => {
 	let wrapper: Wrapper<Vue>
 
 	describe('given simple options', () => {
 		beforeEach(() => {
 			// TODO: Share sample data between spec files & Storybook stories
-			const options = [
-				{ label: 'Item One', value: 'one' },
-				{ label: 'Item Two', value: 'two' },
-				{ label: 'Item Three', value: 'three' }
-			]
+
 
 			wrapper = mount({
 				data() { 
@@ -65,11 +67,6 @@ describe('SelectMulti', () => {
 		})
 		describe('label functionality', () => {
 			it('adds the aria-labelledby attribute to the listbox', () => {
-				const options = [
-					{ label: 'Item One', value: 'one' },
-					{ label: 'Item Two', value: 'two' },
-					{ label: 'Item Three', value: 'three' }
-				]
 				wrapper = mount({
 					data() { 
 						return { selectedOptions: [], options }},

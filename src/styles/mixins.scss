@@ -353,10 +353,7 @@ $spacer: 1.875rem; // 30px
 			top: 50%;
 			transform: translate(0, -50%);
 			right: math.div($spacer, 1.5);
-
-			&.not-clickable {
-				pointer-events: none;
-			}
+			cursor: pointer;
 		}
 
 		.combo-plus-icon {
