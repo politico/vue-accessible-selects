@@ -17,7 +17,8 @@
     "prepublishOnly": "npm test && npm run build && npm run shake",
     "shake": "agadoo dist/index.js",
     "storybook": "start-storybook -p 6006 --docs",
-    "build-storybook": "build-storybook --docs"
+    "build-storybook": "build-storybook --docs",
+    "postinstall": "echo 'VUE 2 SUPPORT WILL BE DEPRECATED AFTER DECEMBER 2024. Beginning in January 2025, we will publish version 2 of the Vue Accessible Selects library, which is compatible with Vue 3. Until then ,you can access this Vue 3-compatible version published as the alpha version of this package.'"
   },
   "repository": {
     "type": "git",
