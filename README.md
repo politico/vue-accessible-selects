@@ -1,5 +1,8 @@
 # vue-accessible-selects
 
+> [!WARNING]
+> VUE 2 SUPPORT WILL BE DEPRECATED AFTER DECEMBER 2024. Beginning in January 2025, we will publish version 2 of the Vue Accessible Selects library, which is compatible with Vue 3. Until then, you can access this Vue 3-compatible version published as the alpha version of this package.
+
 [![npm version](https://badge.fury.io/js/@politico%2Fvue-accessible-selects.svg)](https://badge.fury.io/js/@politico%2Fvue-accessible-selects)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dd8c8636-2b7a-4984-a031-712b57d9bfba/deploy-status)](https://app.netlify.com/sites/vue-accessible-selects/deploys)
 
