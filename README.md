@@ -1,18 +1,90 @@
-# Vue 3 + TypeScript + Vite
+# vue-accessible-selects
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+> [!WARNING]
+> VUE 2 SUPPORT WILL BE DEPRECATED AFTER DECEMBER 2024. Beginning in January 2025, we will publish version 2 of the Vue Accessible Selects library, which is compatible with Vue 3. Until then, you can access this Vue 3-compatible version published as the alpha version of this package.
 
-## Recommended IDE Setup
+[![npm version](https://badge.fury.io/js/@politico%2Fvue-accessible-selects.svg)](https://badge.fury.io/js/@politico%2Fvue-accessible-selects)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/dd8c8636-2b7a-4984-a031-712b57d9bfba/deploy-status)](https://app.netlify.com/sites/vue-accessible-selects/deploys)
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Current Development
 
-## Type Support For `.vue` Imports in TS
+This entire repo is very much in an alpha state, and should currently be used only within internal Politico projects, as props / events / classes remain fluid. However, we are working towards a 1.0.0 release, and want to capture our relevant bugs fixed during that process.
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## References
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+* Current guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/
+* Codepen from blogpost: https://codepen.io/smhigley/pen/gObMVzv (#1 ≈ SelectSingle, #3 ≈ SelectMulti)
+* Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
+* Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+## Current Usage *(updated 9/25/20)*
+
+```shell
+npm i @politico/vue-accessible-selects
+```
+
+```javascript
+// In component
+
+import { SelectSingle, SelectMulti } from '@politico/vue-accessible-selects'
+
+const sampleOptions = [{
+	label: 'One Option',
+	value: 'one_option'
+}, {
+	label: 'Another Option',
+	value: 'another_option'
+}]
+
+export default {
+	components: { SelectSingle, SelectMulti },
+	data() {
+		return {
+			sampleOptions,
+			selectSingleValue: {},
+			selectMultiValues: []
+		}
+	},
+}
+
+```
+
+```html
+<!-- In component -->
+<SelectSingle
+	v-model="selectSingleValue"
+	:options="sampleOptions"
+	label="My Single Select"
+	:labelIsVisible="true"
+/>
+
+<SelectMulti
+	v-model="selectMultiValues"
+	:options="sampleOptions"
+	label="My Multiple Select"
+	:labelIsVisible="true"
+	placeholder="Default Text to Display"
+/>
+```
+## WARNING! node-sass deprecated
+To compile scss code you must use dart `sass` package  as it uses `sass:math` module for divisions instead of slash https://sass-lang.com/documentation/breaking-changes/slash-div
+
+`node-sass` is deprecated
+```scss
+// In any .scss file
+// Simple, use default styles provided by lib
+@import '~@politico/vue-accessible-selects/styles';
+
+@include selects();
+@include select-single();
+@include select-multi();
+```
+
+for more detailed implementations, checkout the docs site
+
+### Custom Styling
+
+As we determine the most-commonly externally-referenced classes, we'll add them here
+
+* `.combo-input`
+* `.combo-menu`
