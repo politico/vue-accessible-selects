@@ -303,7 +303,6 @@
 				this.updateOption(index)
 			},
 			onOptionMouseDown(event: MouseEvent) {
-				console.log('ran onOptionMouseDown')
 				this.ignoreBlur = true
 				this.callFocus = true
 				event.stopPropagation()
