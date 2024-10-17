@@ -406,7 +406,7 @@
 				:placeholder="placeholder"
 				:aria-placeholder="placeholder"
 				@blur="onInputBlur"
-				@click="updateMenuState(true)"
+				@click="updateMenuState(!open, !open)"
 				@input="onInput"
 				@keydown="onInputKeyDown"
 			/>
