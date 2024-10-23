@@ -23,7 +23,6 @@
 		inputValue: string
 		notificationMessage: string
 		open: boolean
-		ranOnInputBlur: boolean
 	}
 
 	interface ISelectMulti {
@@ -161,7 +160,6 @@
 				inputValue: '',
 				notificationMessage: '',
 				open: false,
-				ranOnInputBlur: false
 			} as ComponentData
         },
         watch: {
@@ -251,11 +249,6 @@
 					this.updateMenuState(newMenuState, false)
 				}
 			},
-			onIconClick() {
-				this.ranOnInputBlur ? null : this.updateMenuState(!this.open, !this.open)
-
-				this.ranOnInputBlur = false
-			},
 			onInputKeyDown(event: KeyboardEvent) {
 				const max = this.filteredOptions.length - 1
 
@@ -279,13 +272,14 @@
 				}
 			},
 			onInputBlur() {
-				if (this.ignoreBlur) {
-					this.ignoreBlur = false
-					return
-				}
-
-				this.updateMenuState(!open, !open)
-				this.ranOnInputBlur = true
+				setTimeout(() => {
+					if (this.ignoreBlur) {
+						this.ignoreBlur = false
+						return
+					}
+	
+					this.updateMenuState(false, false)
+				}, 100)
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
@@ -414,7 +408,7 @@
 				:placeholder="placeholder"
 				:aria-placeholder="placeholder"
 				@blur="onInputBlur"
-				@click="updateMenuState(!open, !open)"
+				@click="updateMenuState(true)"
 				@input="onInput"
 				@keydown="onInputKeyDown"
 			/>
@@ -458,7 +452,7 @@
 					</div>
 				</slot>
 			</div>
-			<div @click="!open ? onIconClick() : null" class="combo-input-icon-block">
+			<div @click="updateMenuState(!open, !open)" class="combo-input-icon-block">
 				<template v-if="!loading">
 					<slot name="input-icon">
 						<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
