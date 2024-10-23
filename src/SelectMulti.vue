@@ -20,9 +20,9 @@
 		callFocus: boolean
 		htmlId: string
 		ignoreBlur: boolean
+		inputValue: string
 		notificationMessage: string
 		open: boolean
-		inputValue: string
 	}
 
 	interface ISelectMulti extends Vue {
@@ -146,9 +146,9 @@
 				callFocus: false,
 				htmlId: uniqueId(),
 				ignoreBlur: false,
+				inputValue: '',
 				notificationMessage: '',
-				open: false,
-				inputValue: ''
+				open: false
 			} as ComponentData
         },
         watch: {
@@ -247,12 +247,14 @@
 				}
 			},
 			onInputBlur() {
-				if (this.ignoreBlur) {
-					this.ignoreBlur = false
-					return
-				}
-
-				this.updateMenuState(false, false)
+				setTimeout(() => {
+					if (this.ignoreBlur) {
+						this.ignoreBlur = false
+						return
+					}
+	
+					this.updateMenuState(false, false)
+				}, 100)
 			},
 			onOptionChange(index: number) {
 				this.activeIndex = index
@@ -396,36 +398,36 @@
 				aria-multiselectable="true"
 				@mousedown="onMenuMouseDown"
 			>
-			<template v-if="filteredOptions">
-				<div
-					v-for="(option, index) in filteredOptions"
-					:id="`${htmlId}-${index}`"
-					:key="`${option[uniqueIdField]}-${index}`"
-					:ref="activeIndex === index ? 'activeOptionRef' : null"
-					:class="{
-						'option-current': activeIndex === index,
-						'option-selected': selectedOptions.indexOf(option) > -1,
-						'combo-option': true
-					}"
-					:aria-selected="selectedOptions.indexOf(option) > -1 ? true : false"
-					:aria-label="selectedOptions.indexOf(option) > -1 ? `${option.label} selected` : ''"
-					role="option"
-					@click="onOptionClick(index)"
-					@mousedown="onOptionMouseDown"
-				>
-					<!-- @slot Display individual options via custom template code -->
-					<slot name="option" :option="option">
-						{{  option[labelField] }}
-					</slot>
-				</div>
-			</template>
-			<slot v-if="displayNoResultsMessage" name="no-results">
-				<div class="option-no-results">
-					<span>{{ noResultsMessage }}</span>
-				</div>
-			</slot>
+				<template v-if="filteredOptions">
+					<div
+						v-for="(option, index) in filteredOptions"
+						:id="`${htmlId}-${index}`"
+						:key="`${option[uniqueIdField]}-${index}`"
+						:ref="activeIndex === index ? 'activeOptionRef' : null"
+						:class="{
+							'option-current': activeIndex === index,
+							'option-selected': selectedOptions.indexOf(option) > -1,
+							'combo-option': true
+						}"
+						:aria-selected="selectedOptions.indexOf(option) > -1 ? true : false"
+						:aria-label="selectedOptions.indexOf(option) > -1 ? `${option.label} selected` : ''"
+						role="option"
+						@click="onOptionClick(index)"
+						@mousedown="onOptionMouseDown"
+					>
+						<!-- @slot Display individual options via custom template code -->
+						<slot name="option" :option="option">
+							{{  option[labelField] }}
+						</slot>
+					</div>
+				</template>
+				<slot v-if="displayNoResultsMessage" name="no-results">
+					<div class="option-no-results">
+						<span>{{ noResultsMessage }}</span>
+					</div>
+				</slot>
 			</div>
-			<div @click="updateMenuState(true)" class="combo-input-icon-block">
+			<div @click="updateMenuState(!open, !open)" class="combo-input-icon-block">
 				<template v-if="!loading">
 					<slot name="input-icon">
 						<svg class="combo-plus-icon" viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
