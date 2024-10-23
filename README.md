@@ -1,30 +1,20 @@
 # vue-accessible-selects
 
-> [!WARNING]
-> VUE 2 SUPPORT WILL BE DEPRECATED AFTER DECEMBER 2024. Beginning in January 2025, we will publish version 2 of the Vue Accessible Selects library, which is compatible with Vue 3. Until then, you can access this Vue 3-compatible version published as the alpha version of this package.
-
 [![npm version](https://badge.fury.io/js/@politico%2Fvue-accessible-selects.svg)](https://badge.fury.io/js/@politico%2Fvue-accessible-selects)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/dd8c8636-2b7a-4984-a031-712b57d9bfba/deploy-status)](https://app.netlify.com/sites/vue-accessible-selects/deploys)
 
-## Current Development
+**Description:** Select & Multi Select implementations for Vue, focused especially on implementing accessibility best practices
+- **Technology stack:** Vue 3, Typescript, Vite
+- **Demo:** [vue-accessible-selects.netlify.app/](vue-accessible-selects.netlify.app/)
 
-This entire repo is very much in an alpha state, and should currently be used only within internal Politico projects, as props / events / classes remain fluid. However, we are working towards a 1.0.0 release, and want to capture our relevant bugs fixed during that process.
 
-## References
-
-* Current guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/
-* Codepen from blogpost: https://codepen.io/smhigley/pen/gObMVzv (#1 ≈ SelectSingle, #3 ≈ SelectMulti)
-* Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
-* Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
-
-## Current Usage *(updated 9/25/20)*
+## Installation
 
 ```shell
 npm i @politico/vue-accessible-selects
 ```
 
+## Usage
 ```javascript
-// In component
 
 import { SelectSingle, SelectMulti } from '@politico/vue-accessible-selects'
 
@@ -50,7 +40,6 @@ export default {
 ```
 
 ```html
-<!-- In component -->
 <SelectSingle
 	v-model="selectSingleValue"
 	:options="sampleOptions"
@@ -66,6 +55,23 @@ export default {
 	placeholder="Default Text to Display"
 />
 ```
+
+### Custom Styling
+
+Most-commonly externally-referenced classes:
+
+* `.combo-input`
+* `.combo-menu`
+
+## References
+
+- Guiding blogpost: https://www.24a11y.com/2019/select-your-poison-part-2/
+- Codepen from above blogpost: https://codepen.io/smhigley/pen/gObMVzv
+	- #1 ≈ SelectSingle
+	- #3 ≈ SelectMulti
+- Select single implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/select
+- Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
+
 ## WARNING! node-sass deprecated
 To compile scss code you must use dart `sass` package  as it uses `sass:math` module for divisions instead of slash https://sass-lang.com/documentation/breaking-changes/slash-div
 
@@ -81,10 +87,3 @@ To compile scss code you must use dart `sass` package  as it uses `sass:math` mo
 ```
 
 for more detailed implementations, checkout the docs site
-
-### Custom Styling
-
-As we determine the most-commonly externally-referenced classes, we'll add them here
-
-* `.combo-input`
-* `.combo-menu`
