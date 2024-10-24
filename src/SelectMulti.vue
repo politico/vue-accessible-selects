@@ -272,6 +272,7 @@
 				}
 			},
 			onInputBlur() {
+				// To force onInputBlur run after updateMenuState we use setTimeout
 				setTimeout(() => {
 					if (this.ignoreBlur) {
 						this.ignoreBlur = false
