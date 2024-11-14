@@ -251,7 +251,6 @@
 			},
 			onInputKeyDown(event: KeyboardEvent) {
 				const max = this.filteredOptions.length - 1
-
 				const action = getActionFromKey(event, this.open)
 
 				switch (action) {
@@ -265,6 +264,7 @@
 						event.preventDefault()
 						return this.updateOption(this.activeIndex)
 					case MenuActions.Close:
+						event.stopPropagation()
 						event.preventDefault()
 						return this.updateMenuState(false)
 					case MenuActions.Open:
