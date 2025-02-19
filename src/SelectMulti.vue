@@ -15,7 +15,7 @@
 		uniqueId
 	} from './shared'
 
-	interface ComponentData {
+	export interface ComponentData {
 		activeIndex: number
 		callFocus: boolean
 		htmlId: string
@@ -25,7 +25,7 @@
 		open: boolean
 	}
 
-	interface ISelectMulti {
+	export interface ISelectMulti {
 		$refs?: {
 			inputRef: HTMLInputElement
 			listboxRef: HTMLElement

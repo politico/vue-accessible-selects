@@ -14,7 +14,7 @@
 		uniqueId
 	} from './shared'
 
-	interface ComponentData {
+	export interface ComponentData {
 		activeIndex: number
 		htmlId: string
 		ignoreBlur: boolean
@@ -24,7 +24,7 @@
 		searchTimeout: number | null
 	}
 
-	interface ISelectSingle {
+	export interface ISelectSingle {
 		$refs?: {
 			comboEl: HTMLElement
 		}
