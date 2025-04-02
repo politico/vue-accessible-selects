@@ -15,7 +15,7 @@ describe("SelectSearchSingle", () => {
       ]
 
       wrapper = mount({
-		components: { SelectSearchSingle },
+        components: { SelectSearchSingle },
         data() {
           return { value: null, options }
         },
@@ -38,40 +38,40 @@ describe("SelectSearchSingle", () => {
         await listbox.findAll("div[role=option]").at(1).trigger("click")
       })
 
-		it('sets the new displayed value of the select appropriately', async () => {
-			expect(wrapper.find('input').element.value).toContain('Item Two')
-		})
-
-		it('emits the full selected item exactly once', async () => {
-			const selectSearchSingle = wrapper.findComponent(SelectSearchSingle)
-
-			expect(selectSearchSingle.emitted()['update:value'].length).toEqual(1)
-			expect(selectSearchSingle.emitted()['update:value'][0]).toEqual([{ label: 'Item Two', value: 'two' }])
-		})
-
-
-		it('sets the parent component data property correctly, given v-model usage', async () => {
-			expect(wrapper.vm['value']).toEqual({ label: 'Item Two', value: 'two' })
-		})
+    it('sets the new displayed value of the select appropriately', async () => {
+      expect(wrapper.find('input').element.value).toContain('Item Two')
     })
 
-    describe("label functionality", () => {
-		beforeEach(() => {
-			const options = [
-				{ label: "Item One", value: "one" },
-				{ label: "Item Two", value: "two" },
-				{ label: "Item Three", value: "three" },
-			]
+    it('emits the full selected item exactly once', async () => {
+      const selectSearchSingle = wrapper.findComponent(SelectSearchSingle)
 
-			wrapper = mount({
-				components: { SelectSearchSingle },
-				data() {
-					return { selectedOption: null, options }
-				},
-				template:
-					'<div><SelectSearchSingle :options="options" v-model:value="selectedOption" label="Sample SelectSearchSingle" /></div>'
-			})
-		})
+      expect(selectSearchSingle.emitted()['update:value'].length).toEqual(1)
+      expect(selectSearchSingle.emitted()['update:value'][0]).toEqual([{ label: 'Item Two', value: 'two' }])
+    })
+
+
+    it('sets the parent component data property correctly, given v-model usage', async () => {
+      expect(wrapper.vm['value']).toEqual({ label: 'Item Two', value: 'two' })
+    })
+  })
+
+    describe("label functionality", () => {
+    beforeEach(() => {
+      const options = [
+        { label: "Item One", value: "one" },
+        { label: "Item Two", value: "two" },
+        { label: "Item Three", value: "three" },
+      ]
+
+      wrapper = mount({
+        components: { SelectSearchSingle },
+        data() {
+          return { selectedOption: null, options }
+        },
+        template:
+          '<div><SelectSearchSingle :options="options" v-model:value="selectedOption" label="Sample SelectSearchSingle" /></div>'
+      })
+    })
 	
       it("adds the aria-roledescription attribute to the input", () => {
         const input = wrapper.find("input")

@@ -42,7 +42,7 @@ export const Primary: Story = {
 				v-bind="args"
 				@searchChange="clearValue"
 				@update:value="updateValue"
-			  />
+			/>
 		</div>`
 	}),
 	args: {

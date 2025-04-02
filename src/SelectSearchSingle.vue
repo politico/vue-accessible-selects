@@ -15,7 +15,7 @@ import {
 } from './shared'
 import { SelectOption } from './types'
 
-interface ISelectSearchSingle {
+export interface ISelectSearchSingle {
 	$refs?: {
 		inputRef: HTMLInputElement
 		activeOptionRef: HTMLElement
@@ -23,7 +23,7 @@ interface ISelectSearchSingle {
 	}
 }
 
-interface SelectFilterOption extends SelectOption {
+export interface SelectFilterOption extends SelectOption {
 	highlightedLabel?: string
 }
 
