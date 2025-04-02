@@ -27,7 +27,7 @@ npm i @politico/vue-accessible-selects
 ```ts
 // In component
 
-import { SelectSingle, SelectMulti, SelectOption } from '@politico/vue-accessible-selects'
+import { SelectSingle, SelectMulti, SelectSearchSingle, SelectOption } from '@politico/vue-accessible-selects'
 
 const sampleOptions: SelectOption[] = [{
 	label: 'One Option',
@@ -38,11 +38,12 @@ const sampleOptions: SelectOption[] = [{
 }]
 
 export default Vue.extend({
-	components: { SelectSingle, SelectMulti },
+	components: { SelectSingle, SelectMulti, SelectSearchSingle },
 	data() {
 		return {
 			sampleOptions,
 			selectSingleValue: {} as SelectOption,
+			selectSearchSingleValue: {} as SelectOption,
 			selectMultiValues: [] as SelectOption[]
 		}
 	},
@@ -84,6 +85,16 @@ export default Vue.extend({
 	@remove="handleRemoveEvent"
 	@searchChange="handleSearchChangeEvent"
 />
+
+<SelectSearchSingle
+	v-model:value="selectSearchSingleValue"
+	:options="sampleOptions"
+	label="My Search Single Select"
+	:labelIsVisible="true"
+	placeholder="Default Text to Display"
+	@searchChange="clearValue"
+	@update:value="updateValue"
+/>
 ```
 
 ```scss
@@ -94,6 +105,7 @@ export default Vue.extend({
 @include selects();
 @include select-single();
 @include select-multi();
+@include select-search-single();
 ```
 
 or

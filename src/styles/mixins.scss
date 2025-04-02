@@ -24,6 +24,8 @@ $default-z-index-combo-menu: 100;
 
 $spacer: 1.875rem; // 30px
 
+$focus-shadow-color: #222;
+
 @mixin input-menu-borders($border-radius) {
 	.combo-input {
 		border-radius: $border-radius;
@@ -117,6 +119,7 @@ $spacer: 1.875rem; // 30px
 	$closed-color-is-defined: $closed-background-color != $default-primary-background-color;
 
 	.vue-accessible-select-single,
+	.vue-accessible-select-search-single,
 	.vue-accessible-select-multi {
 		position: relative;
 		display: flex;
@@ -449,6 +452,251 @@ $spacer: 1.875rem; // 30px
 		// they'll pass them in as part of the @content block here
 		@content;
 	}
+}
+
+
+@mixin select-search-single(
+	$placeholder-color: $default-placeholder-color,
+	$z-index-combo-menu: 100,
+
+	$disabled-color: $default-disabled-color,
+	$disabled-background-color: $default-disabled-background-color,
+	
+	$selected-color: $default-selected-color,
+	$selected-background-color: #007BC7,
+	
+	$hover-color: $default-hover-color,
+	$hover-background-color: #007BC7,
+) {
+	// START All aesthetic CSS
+	$primary-background-color: #f4f5f7;
+	$shadow-color: #e4e7ee;
+	$no-results-color: #5F6C85;
+	$dropdown-overflow-y: auto;
+	$option-padding: math.div($spacer, 3) math.div($spacer, 1.5);
+
+	// END All aesthetic CSS
+
+	.vue-accessible-select-search-single {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		max-width: 100%;
+	
+		.combobox-wrapper {
+			position: relative;
+		}
+	
+		.combo-input-arrow-block {
+			display: block;
+			width: 8px;
+			height: 8px;
+			transform: translateY(-85%) rotate(45deg);
+			pointer-events: none;
+			border-right: 2px solid rgba(0, 0, 0, 0.5);
+			border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+			transition: transform 0.2s;
+		}
+	
+		.combo-spinner-icon {
+			width: 12px;
+			height: 12px;
+			animation: spin 0.75s linear infinite;
+		}
+	
+		.combo-option {
+			padding: $option-padding;
+	
+			&-no-results {
+				padding: $option-padding;
+			}
+		}
+	
+	
+		.combo-label {
+			display: block;
+			margin-bottom: 0.9em;
+			font-size: 12px;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 1.5px;
+		}
+	
+		.combo-input {
+			min-width: 191px;
+			min-height: 40px;
+			background-color: $primary-background-color;
+			border-radius: 5px;
+			box-shadow: 0 -2px $shadow-color inset;
+
+			&::placeholder {
+				color: $placeholder-color;
+			}
+	
+			&-icon-block {
+				position: absolute;
+				cursor: pointer;
+				top: 50%;
+				right: 20px;
+	
+				&.is-loading {
+					cursor: initial;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	
+		.combo-menu-wrapper {
+			overflow: hidden;
+			background-color: $primary-background-color;
+			visibility: hidden;
+			opacity: 0;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+			border: 1px solid #818ea7;
+			border-top: none;
+			position: absolute;
+			top: calc(100% - 1px);
+			left: 0;
+			padding: 1px 0; // required for outline property
+			z-index: $z-index-combo-menu;
+			width: 100%;
+			max-height: 300px;
+	
+			// for curved scrollbar edges
+			&__scroller {
+				height: 100%;
+				overflow-y: $dropdown-overflow-y;
+				scrollbar-width: thin;
+				scrollbar-color: #e4e7ee transparent;
+	
+				&::-webkit-scrollbar-thumb {
+					height: 58px;
+				}
+	
+				&::-webkit-scrollbar {
+					margin-right: 10px;
+				}
+			}
+		}
+	
+		.listbox-menu {
+			max-height: 300px;
+		}
+	
+		&.disabled {
+			.combo-input {
+				color: $disabled-color;
+				background-color: $disabled-background-color;
+				box-shadow: none;
+				pointer-events: none;
+				user-select: none;
+			}
+	
+			&::after {
+				border-color: $disabled-color;
+			}
+	
+			.combo-input-arrow-block {
+				border-color: $disabled-color;
+			}
+		}
+	
+		&.open {
+			.combobox-wrapper {
+				box-shadow: 0px 6px 14px 0px rgba(0, 0, 0, 0.08);
+			}
+	
+			.combo-input {
+				border: 1px solid #818ea7;
+				border-radius: 0;
+				border-bottom: 1px solid $primary-background-color;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				box-shadow: none;
+	
+				&:focus {
+					box-shadow: none;
+				}
+			}
+	
+			.combo-input-arrow-block {
+				transform: translateY(-15%) rotate(225deg);
+			}
+	
+			.combo-menu-wrapper {
+				visibility: visible;
+				opacity: 1;
+				transition: opacity 0.2s ease-in-out 0.04s, visibility 0.2s ease-in-out 0.04s;
+			}
+		}
+	
+		.combo-option.option-current {
+			outline: 1px dashed transparent;
+	
+			@include highlighted($selected-color, $selected-background-color);
+		}
+		.combo-option:hover {
+			outline: 1px solid transparent;
+	
+			@include highlighted($hover-color, $hover-background-color);
+		}
+	
+		.combo-option {
+			padding: $option-padding;
+			position: relative;
+			word-break: break-word;
+			cursor: pointer;
+	
+			&.option-selected {
+				@include highlighted($selected-color, $selected-background-color);
+			}
+		}
+	
+		.option-disabled {
+			pointer-events: none;
+			color: $disabled-color;
+			background-color: $disabled-background-color;
+		}
+	
+		.combo-placeholder {
+			color: #6a6e71;
+		}
+	
+		.option-no-results {
+			padding: $option-padding;
+			color: $no-results-color;
+		}
+	
+		.combo-input-clear {
+			display: block;
+			width: 20px;
+			height: 20px;
+			transform: translateY(-50%);
+			border: none;
+			box-shadow: none;
+			background: none;
+	
+			&:focus {
+				box-shadow: 0 0 1px 1px $focus-shadow-color;
+				outline: none;
+			}
+	
+			svg {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				width: 12px;
+				height: 12px;
+				transform: translate(-50%, -50%);
+			}
+		}
+	}
+	
+
+		// If a consuming project wants to set some custom styles to apply to *only* SelectMulti,
+		// they'll pass them in as part of the @content block here
+		@content;
 }
 
 @keyframes spin {
