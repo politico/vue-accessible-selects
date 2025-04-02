@@ -117,8 +117,9 @@
 		},
 		data(): ComponentData {
 			const activeIndex = this.value
-				? this.options.findIndex(currentOption => currentOption[this.uniqueIdField as keyof SelectOption] == this.value[this.uniqueIdField as keyof SelectOption])
+				? this.options?.findIndex(currentOption => currentOption[this.uniqueIdField as keyof SelectOption] == this.value[this.uniqueIdField as keyof SelectOption])
 				: 0
+				
 			return {
 				activeIndex,
 				htmlId: uniqueId(),
@@ -144,7 +145,7 @@
 			},
 			selectedIndex(): number {
 				return this.value
-				? this.options.findIndex(currentOption => currentOption.value == this.value.value)
+				? this.options?.findIndex(currentOption => currentOption.value == this.value.value)
 				: 0
 			}
 		},
