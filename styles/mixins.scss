@@ -486,7 +486,7 @@ $focus-shadow-color: #222;
 		.combobox-wrapper {
 			position: relative;
 		}
-	
+
 		.combo-input-arrow-block {
 			display: block;
 			width: 8px;
@@ -670,8 +670,8 @@ $focus-shadow-color: #222;
 		}
 	
 		.combo-input-clear {
-			cursor: pointer;
 			display: block;
+			cursor: pointer;
 			width: 20px;
 			height: 20px;
 			transform: translateY(-50%);
