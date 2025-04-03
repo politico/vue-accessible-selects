@@ -486,7 +486,7 @@ $focus-shadow-color: #222;
 		.combobox-wrapper {
 			position: relative;
 		}
-	
+
 		.combo-input-arrow-block {
 			display: block;
 			width: 8px;
@@ -528,6 +528,7 @@ $focus-shadow-color: #222;
 			background-color: $primary-background-color;
 			border-radius: 5px;
 			box-shadow: 0 -2px $shadow-color inset;
+			border: 1px solid transparent;
 
 			&::placeholder {
 				color: $placeholder-color;
@@ -670,6 +671,7 @@ $focus-shadow-color: #222;
 	
 		.combo-input-clear {
 			display: block;
+			cursor: pointer;
 			width: 20px;
 			height: 20px;
 			transform: translateY(-50%);
