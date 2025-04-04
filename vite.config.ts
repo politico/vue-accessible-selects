@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import copy from 'rollup-plugin-copy'
-import typescript2 from 'rollup-plugin-typescript2'
 
 import pkg from './package.json'
 const external = Object.keys(pkg.peerDependencies || {})
@@ -15,9 +14,6 @@ export default defineConfig({
       // In the future, we could easily export compiled CSS by request, & perhaps allow for CSS vars replacing SCSS vars for customization in that case
       targets: [{ src: 'src/styles', dest: './' }]
     }),
-    typescript2({
-      check: false
-    })
   ],
   optimizeDeps: {
     disabled: false

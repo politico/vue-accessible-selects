@@ -3,7 +3,7 @@
 
 	import { PropType, defineComponent, nextTick } from 'vue'
 
-	import { SelectOption } from './types'
+	import type { SelectOption } from './types'
 	import {
 		ensureElementInViewport,
 		getActionFromKey,
@@ -119,7 +119,7 @@
 			const activeIndex = this.value
 				? this.options?.findIndex(currentOption => currentOption[this.uniqueIdField as keyof SelectOption] == this.value[this.uniqueIdField as keyof SelectOption])
 				: 0
-				
+
 			return {
 				activeIndex,
 				htmlId: uniqueId(),

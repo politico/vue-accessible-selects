@@ -3,7 +3,7 @@
 
 	import { PropType, defineComponent, nextTick } from 'vue'
 
-	import { SelectOption } from './types'
+	import type { SelectOption } from './types'
 	import {
 		ensureElementInViewport,
 		getActionFromKey,
@@ -178,7 +178,7 @@
 			filteredOptions(): SelectOption[] {
 				if (this.internalSearch) {
 					return filterOptions(this.options, this.inputValue,  this.labelField, [], this.optionLabelForSearching)
-				} 
+				}
 				if (this.showSelected) {
 					return this.options
 				}
@@ -278,7 +278,7 @@
 						this.ignoreBlur = false
 						return
 					}
-	
+
 					this.updateMenuState(false, false)
 				}, 100)
 			},
