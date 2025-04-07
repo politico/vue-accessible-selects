@@ -19,7 +19,7 @@
     "start": "npm run storybook",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "build": "npm run type-check && vite build",
+    "build": "vite build && vue-tsc --project tsconfig.json",
     "type-check": "vue-tsc",
     "prepublishOnly": "npm test && npm run build",
     "shake": "agadoo dist/index.js",
@@ -79,7 +79,6 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rollup-plugin-copy": "^3.4.0",
-    "rollup-plugin-typescript2": "^0.35.0",
     "storybook": "^7.0.17",
     "typescript": "5.8.2",
     "vite": "^4.3.2",
@@ -89,5 +88,6 @@
   },
   "peerDependencies": {
     "vue": "3.x"
-  }
+  },
+  "packageManager": "yarn@1.22.1"
 }

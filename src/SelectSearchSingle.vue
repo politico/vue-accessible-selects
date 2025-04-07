@@ -13,7 +13,7 @@ import {
 	MenuActions,
 	uniqueId
 } from './shared'
-import { SelectOption } from './types'
+import type { SelectOption } from './types'
 
 export interface ISelectSearchSingle {
 	$refs?: {
@@ -168,7 +168,7 @@ export default defineComponent({
 				  }))
 				: filtered
 
-			
+
 
 			return highlighted
 		},
@@ -178,7 +178,7 @@ export default defineComponent({
 			}
 
 			const label = this.optionLabelForSearching ? this.optionLabelForSearching(this.value) : this.value?.[this.labelField] as string
-			
+
 			return label ?? this.inputValue
 		},
 		displayNoResultsMessage(): boolean {
