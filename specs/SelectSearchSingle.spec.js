@@ -49,6 +49,11 @@ describe("SelectSearchSingle", () => {
       expect(selectSearchSingle.emitted()['update:value'][0]).toEqual([{ label: 'Item Two', value: 'two' }])
     })
 
+    it('emits close event', async () => {
+      const selectSearchSingle = wrapper.findComponent(SelectSearchSingle)
+      expect(selectSearchSingle.emitted()['close'].length).toEqual(1)
+    })
+
 
     it('sets the parent component data property correctly, given v-model usage', async () => {
       expect(wrapper.vm['value']).toEqual({ label: 'Item Two', value: 'two' })

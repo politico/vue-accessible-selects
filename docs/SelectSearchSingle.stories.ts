@@ -19,7 +19,8 @@ type Story = StoryObj<typeof SelectSearchSingle>
 export const Primary: Story = {
 	render: args => ({
 		components: { SelectSearchSingle },
-		setup() {
+		emits: ['open', 'close'],
+		setup(props, { emit }) {
 			const currentValue: Ref<SelectOption | null> = ref({
 				value: 'option-two',
 				label: 'Option Two'
@@ -33,7 +34,16 @@ export const Primary: Story = {
 				currentValue.value = value
 			}
 
-			return { args, currentValue, clearValue, updateValue }
+			const handleOpen = () => {
+				emit('open')
+			}
+
+			const handleClose = () => {
+				emit('open')
+			}
+			
+
+			return { args, currentValue, clearValue, updateValue, handleOpen, handleClose }
 		},
 		template: `
 		<div class="wrapper">
@@ -42,6 +52,8 @@ export const Primary: Story = {
 				v-bind="args"
 				@searchChange="clearValue"
 				@update:value="updateValue"
+				@open="handleOpen"
+				@close="handleClose"
 			/>
 		</div>`
 	}),

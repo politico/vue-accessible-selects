@@ -49,7 +49,7 @@ export default defineComponent({
 		},
 		label: {
 			type: String,
-			required: true
+			default: ''
 		},
 		/**
 		 * Field name in the `options` array that should be used for displaying the label
@@ -58,10 +58,6 @@ export default defineComponent({
 		labelField: {
 			type: String as PropType<keyof SelectOption>,
 			default: 'label'
-		},
-		labelIsVisible: {
-			type: Boolean,
-			default: true
 		},
 		/** Generally, there's no need to set this via a prop - it will be set automatically when using v-model */
 		value: {
@@ -261,6 +257,7 @@ export default defineComponent({
 
 			if (this.open) {
 				this.open = false
+				this.emitMenuStateEvent()
 			}
 		},
 		handleClick() {
@@ -269,9 +266,15 @@ export default defineComponent({
 			}
 
 			this.open = !this.open
+			this.emitMenuStateEvent()
+		},
+		emitMenuStateEvent() {
+			this.open ? this.$emit('open') : this.$emit('close')
 		},
 		updateMenuState(open: boolean) {
 			this.open = open
+
+			this.emitMenuStateEvent()
 
 			this.$refs.inputRef?.focus()
 		},
@@ -398,7 +401,7 @@ export default defineComponent({
 		:class="{ disabled: isDisabledOrLoading, open }"
 	>
 		<slot name="label">
-			<label v-if="labelIsVisible" :id="`${htmlId}-label`" class="combo-label">
+			<label v-if="label" :id="`${htmlId}-label`" class="combo-label">
 				{{ label }}
 			</label>
 		</slot>
