@@ -79,7 +79,9 @@ To compile scss code you must use dart `sass` package  as it uses `sass:math` mo
 ```scss
 // In any .scss file
 // Simple, use default styles provided by lib
-@import '~@politico/vue-accessible-selects/styles';
+// Require `NodePackageImporter` importer for importing this way
+// https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+@use 'pkg:@politico/vue-accessible-selects/styles' as *;
 
 @include selects();
 @include select-single();

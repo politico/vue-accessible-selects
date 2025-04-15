@@ -100,7 +100,10 @@ export default Vue.extend({
 ```scss
 // In any .scss file
 // Simple, use default styles provided by lib
-@import '~@politico/vue-accessible-selects/styles';
+// Require `NodePackageImporter` importer for importing this way
+// https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+@use 'pkg:@politico/vue-accessible-selects/styles' as *;
+@use 'pkg:@politico/vue-accessible-selects/styles' as *;
 
 @include selects();
 @include select-single();
@@ -113,7 +116,10 @@ or
 ```scss
 // In any .scss file
 // Customized, using any of the optional SCSS vars provided, as well as targeting any specific classes
-@import '~@politico/vue-accessible-selects/styles';
+// Require `NodePackageImporter` importer for importing this way
+// https://sass-lang.com/documentation/js-api/classes/nodepackageimporter/
+@use 'pkg:@politico/vue-accessible-selects/styles' as *;
+@use 'pkg:@politico/vue-accessible-selects/styles' as *;
 
 @include selects(
 	$primary-background-color: white,
