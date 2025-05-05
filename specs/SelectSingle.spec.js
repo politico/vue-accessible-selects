@@ -114,6 +114,33 @@ describe('SelectSingle', () => {
 				await listbox.findAll('div[role=option]').at(1).trigger('click')
 				expect(myWrapper.find('div[role=combobox]').text()).toContain('Item Two')
 			})
+			it("doesn't have tabindex when hasFocusWhenDisabled=false and is disabled", async () => {
+				const myWrapper = mount({
+					data() { 
+						return { value: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" 
+										 placeholder="Select an option" :hasFocusWhenDisabled="false" :disabled="true"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+
+				expect(myWrapper.find(".combo-input[tabindex='0']").exists()).toBe(false)
+			})
+
+			it("has tabindex when hasFocusWhenDisabled=true and isn't disabled", async () => {
+				const myWrapper = mount({
+					data() { 
+						return { value: {}, options }},
+					template: `<div>
+									<SelectSingle :options="options" v-model:value="value" label="Sample SelectSingle" 
+										 placeholder="Select an option"/>
+								</div>`,
+					components: { SelectSingle }
+				})
+
+				expect(myWrapper.find(".combo-input[tabindex='0']").exists()).toBe(true)
+			})
 		})
 	})
 })

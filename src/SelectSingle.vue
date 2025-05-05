@@ -82,6 +82,10 @@
 				required: true,
 				type: Array as PropType<SelectOption[]>
 			},
+			hasFocusWhenDisabled: {
+				type: Boolean,
+				default: true
+			},
 			placeholder: {
 				type: String,
 				default: ''
@@ -307,9 +311,9 @@
 			:aria-labelledby="`${htmlId}-label`"
 			class="combo-input"
 			role="combobox"
-			tabindex="0"
 			@blur="handleBlur"
 			v-on="isDisabledOrLoading ? {} : { mousedown: handleClick, keydown: handleKeydown }"
+			v-bind="isDisabledOrLoading && !hasFocusWhenDisabled ? {} : { tabindex: 0 }"
 		>
 			<span :id="`${htmlId}-value`" ref="valueEl">
 				<!-- @slot Display the loading state via custom template code-->
