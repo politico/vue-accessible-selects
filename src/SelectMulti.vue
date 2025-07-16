@@ -400,7 +400,7 @@
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
 				:aria-labelledby="htmlId"
-				aria-roledescription="Extended select list box"
+				aria-roledescription="Extended multi-select list box"
 				class="combo-input"
 				:disabled="disabled"
 				role="combobox"
