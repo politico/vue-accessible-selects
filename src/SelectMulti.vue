@@ -45,7 +45,7 @@
 			prop: 'values',
 			event: 'change'
 		},
-		emits: ['update:values', 'searchChange', 'remove', 'select', 'update:open'],
+		emits: ['update:values', 'searchChange', 'remove', 'select', 'openChange'],
 		props: {
 			disabled: {
 				type: Boolean,
@@ -176,7 +176,7 @@
 				 * Emits an event whenever the dropdown's open state changes. 
 				 * The payload is a boolean: true when opened, false when closed.
 				 */
-				this.$emit('update:open', newOpenState)
+				this.$emit('openChange', newOpenState)
 			}
 		},
 		computed: {
