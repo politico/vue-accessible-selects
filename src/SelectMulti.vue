@@ -45,7 +45,7 @@
 			prop: 'values',
 			event: 'change'
 		},
-		emits: ['update:values', 'searchChange', 'remove', 'select'],
+		emits: ['update:values', 'searchChange', 'remove', 'select', 'openChange'],
 		props: {
 			disabled: {
 				type: Boolean,
@@ -161,16 +161,24 @@
 				notificationMessage: '',
 				open: false,
 			} as ComponentData
-        },
-        watch: {
-            loading(newLoadingState, oldLoadingState): void {
-                // In cases where we move from a loading state, to a resolved state...
-                if (newLoadingState === false && oldLoadingState === true) {
-                    //... we want to open the options to show the newly fetched items.
-                    this.updateMenuState(true)
-                }
-            }
-        },
+    },
+		watch: {
+			loading(newLoadingState, oldLoadingState): void {
+				// In cases where we move from a loading state, to a resolved state...
+				if (newLoadingState === false && oldLoadingState === true) {
+					//... we want to open the options to show the newly fetched items.
+					this.updateMenuState(true)
+				}
+			},
+			open(newOpenState, oldOpenState): void {
+				if (newOpenState === oldOpenState) return
+				/**
+				 * Emits an event whenever the dropdown's open state changes. 
+				 * The payload is a boolean: true when opened, false when closed.
+				 */
+				this.$emit('openChange', newOpenState)
+			}
+		},
 		computed: {
 			activeId(): string {
 				return this.open ? `${this.htmlId}-${this.activeIndex}` : ''

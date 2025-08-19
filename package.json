@@ -1,6 +1,6 @@
 {
   "name": "@politico/vue-accessible-selects",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "type": "module",
   "files": [
     "dist",
@@ -47,7 +47,8 @@
     "Evan Sanderson (https://github.com/EvanSanderson)",
     "Ivan Shtyrliaev (https://github.com/ee923925github)",
     "Tilovon Crite (https://github.com/tcrite1)",
-    "Caitlin Floyd (https://github.com/cafloyd)"
+    "Caitlin Floyd (https://github.com/cafloyd)",
+    "Denis Shulga (https://github.com/dennis-digital)"
   ],
   "license": "MIT",
   "bugs": {
