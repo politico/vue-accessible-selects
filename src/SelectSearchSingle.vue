@@ -401,7 +401,7 @@ export default defineComponent({
 		:class="{ disabled: isDisabledOrLoading, open }"
 	>
 		<slot name="label">
-			<label v-if="label" :id="`${htmlId}-label`" class="combo-label">
+			<label v-if="label" :id="`${htmlId}-label`" :for="`${htmlId}-input`" class="combo-label">
 				{{ label }}
 			</label>
 		</slot>
@@ -410,9 +410,10 @@ export default defineComponent({
 		</div>
 		<div class="combobox-wrapper">
 			<input
+				:id="`${htmlId}-input`"
 				ref="inputRef"
 				aria-autocomplete="list"
-				:aria-controls="`${htmlId}-listbox`"
+				:aria-controls="selectedIndex === -1 ? `${htmlId}-listbox` : undefined"
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
 				aria-roledescription="Extended select list box"
@@ -422,10 +423,10 @@ export default defineComponent({
 				type="text"
 				:value="displayedInputValue"
 				:placeholder="placeholderText"
-				:aria-placeholder="placeholderText"
 				:aria-activedescendant="activeDescendant"
 				:aria-disabled="isDisabledOrLoading"
 				:aria-label="ariaLabelValue"
+				:aria-labelledby="$slots.label || !label ? undefined : `${htmlId}-label`"
 				tabindex="0"
 				@blur="handleBlur"
 				@input="onInput"
@@ -464,10 +465,10 @@ export default defineComponent({
 								<!-- @slot Display individual options via custom template code -->
 								<slot name="option" :option="option">
 									<span v-html="option.highlightedLabel ?? option[labelField]" />
-									<span v-if="option.screenReaderLabel" class="sr-only">{{
-										option.screenReaderLabel
-									}}</span>
 								</slot>
+								<span v-if="option.screenReaderLabel" class="sr-only">{{
+									option.screenReaderLabel
+								}}</span>
 							</div>
 						</template>
 						<slot v-if="displayNoResultsMessage" name="no-results">

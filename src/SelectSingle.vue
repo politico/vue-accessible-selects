@@ -292,6 +292,7 @@
 			<label
 				v-if="labelIsVisible"
 				:id="`${htmlId}-label`"
+				:for="htmlId"
 				class="combo-label"
 			>
 				{{ label }}
@@ -308,7 +309,7 @@
 			:aria-expanded="open ? 'true' : 'false'"
 			aria-haspopup="listbox"
 			:aria-label="ariaLabelValue(value, labelField as keyof SelectOption)"
-			:aria-labelledby="`${htmlId}-label`"
+			:aria-labelledby="labelIsVisible ? `${htmlId}-label` : undefined"
 			class="combo-input"
 			role="combobox"
 			@blur="handleBlur"
@@ -355,8 +356,8 @@
 				<!-- @slot Display individual options via custom template code -->
 				<slot name="option" :option="option">
 					{{ option[labelField as keyof SelectOption] }}
-					<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
 				</slot>
+				<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
 			</div>
 		</div>
 	</div>
