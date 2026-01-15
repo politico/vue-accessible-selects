@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "outDir": "dist",
     "declaration": true,
+    "types": [],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

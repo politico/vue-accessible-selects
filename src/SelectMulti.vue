@@ -370,25 +370,24 @@
 <template>
 	<div class="vue-accessible-select-multi" :class="{ disabled, open }">
 		<slot name="label">
-			<label :id="htmlId" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
+			<label :id="htmlId" :for="`${htmlId}-input`" class="combo-label" :class="{ 'sr-only': !labelIsVisible }">
 				{{ label }}
 			</label>
 		</slot>
 		<ul
 			:id="`${htmlId}-selected`"
-			:aria-labelledby="htmlId"
+			:aria-labelledby="$slots.label ? undefined : htmlId"
 			class="selected-options"
 			:class="{ 'below-input': displayPillsBelowInput }"
 		>
-			<template v-for="(option, index) in selectedOptions" >
-				<li v-if="option[uniqueIdField as keyof SelectOption]" :key="(option[uniqueIdField as keyof SelectOption] as string)" >
+			<template v-for="(option, index) in selectedOptions" :key="(option[uniqueIdField as keyof SelectOption] as string)">
+				<li v-if="option[uniqueIdField as keyof SelectOption]">
 					<button
 						ref="selectedOptionPill"
 						class="selected-option-pill"
 						:disabled="disabled"
 						:aria-label="`remove ${option[labelField as keyof SelectOption]}`"
 						type="button"
-						:aria-describedby="`${htmlId}-selected-option-pills`"
 						@click="removeOptionAndHandleFocusShift(index)"
 					>
 						<!-- @slot Display the currently selected options via custom template code -->
@@ -401,13 +400,14 @@
 		</ul>
 		<div class="combo-wrapper">
 			<input
+				:id="`${htmlId}-input`"
 				ref="inputRef"
 				:aria-activedescendant="activeId"
 				aria-autocomplete="list"
-				:aria-controls="`${htmlId}-listbox`"
+				:aria-controls="open ? `${htmlId}-listbox` : undefined"
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
-				:aria-labelledby="htmlId"
+				:aria-labelledby="$slots.label ? undefined : htmlId"
 				aria-roledescription="Extended multi-select list box"
 				class="combo-input"
 				:disabled="disabled"
@@ -415,7 +415,6 @@
 				type="text"
 				:value="inputValue"
 				:placeholder="placeholder"
-				:aria-placeholder="placeholder"
 				@blur="onInputBlur"
 				@click="updateMenuState(true)"
 				@input="onInput"
