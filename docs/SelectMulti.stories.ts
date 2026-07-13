@@ -8,24 +8,20 @@ export default {
 	component: SelectMulti,
 };
 
-const Template = (args, { argTypes }) => ({
-	props: Object.keys(argTypes),
+// Storybook 7's Vue3 renderer no longer passes args to story components that
+// use the legacy `props: Object.keys(argTypes)` pattern — args must be exposed
+// via setup() and bound explicitly
+const Template = (args) => ({
 	components: { SelectMulti },
+	setup() {
+		return { args }
+	},
 	data() { return { selected: [] } },
 	template: `
 	<div class="wrapper">
 		<SelectMulti
+			v-bind="args"
 			v-model:values="selected"
-			:options="options"
-			:label="label"
-			:labelField="labelField"
-			:loading="loading"
-			:labelIsVisible="labelIsVisible"
-			:placeholder="placeholder"
-			:disabled="disabled"
-			:displayPillsBelowInput="displayPillsBelowInput"
-			:noResultsMessage="noResultsMessage"
-			:uniqueIdField="uniqueIdField"
 	  	/>
 	</div>`
 });
@@ -45,36 +41,29 @@ Primary.args = {
 };
 
 
-const WithCustomOptionsTemplate = (args, { argTypes }) => ({
-	props: Object.keys(argTypes),
+const WithCustomOptionsTemplate = (args) => ({
 	components: { SelectMulti },
-	data() {
-		return { values: [{}] }
+	setup() {
+		const getLabelForSearching = (option: SelectOption): string =>
+			`label: ${option[args.labelField || 'label']}, with value: ${option[args.uniqueIdField || 'value']}`
+
+		return { args, getLabelForSearching }
 	},
-	methods: {
-		getLabelForSearching(option: SelectOption): string {
-			return `label: ${option[this.labelField]}, with value: ${option[this.uniqueIdField]}`
-		}
+	data() {
+		return { values: [] }
 	},
 	template: `
 	<div class="wrapper">
 		<SelectMulti
-			v-model="values"
-			:options="options"
-			:label="label"
-			:loading="loading"
-			:labelIsVisible="labelIsVisible"
+			v-bind="args"
+			v-model:values="values"
 			:optionLabelForSearching="getLabelForSearching"
-			:placeholder="placeholder"
-			:disabled="disabled"
-			:displayPillsBelowInput="displayPillsBelowInput"
-			:noResultsMessage="noResultsMessage"
 		>
 				<template v-slot:selectedOption="{ option }" >
-					<strong>{{ option[labelField] }}</strong> <em>{{ option[uniqueIdField] }}</em>
+					<strong>{{ option[args.labelField || 'label'] }}</strong> <em>{{ option[args.uniqueIdField || 'value'] }}</em>
 				</template>
 				<template v-slot:option="{ option }" >
-					<strong>label: {{ option[labelField] }}</strong>, <em>with value: {{ option[uniqueIdField] }}</em>
+					<strong>label: {{ option[args.labelField || 'label'] }}</strong>, <em>with value: {{ option[args.uniqueIdField || 'value'] }}</em>
 				</template>
 				<template v-slot:input-icon>
 					PLUS

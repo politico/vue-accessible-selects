@@ -22,6 +22,7 @@
 		open: boolean
 		searchString: string
 		searchTimeout: number | null
+		showPanel: boolean
 	}
 
 	export interface ISelectSingle {
@@ -86,6 +87,25 @@
 				type: Boolean,
 				default: true
 			},
+			/**
+			 * When provided, an extra option row is appended after `options`.
+			 * Activating it opens the `panel` slot content inside the dropdown
+			 * (instead of selecting a value and closing), e.g. a date-range picker.
+			 * Row content can be customized via the `panelOption` slot.
+			 */
+			panelOption: {
+				type: Object as PropType<SelectOption | null>,
+				required: false,
+				default: null
+			},
+			/**
+			 * Marks the panel option row as the current selection (e.g. when a
+			 * custom range applied from the panel is the active filter)
+			 */
+			panelOptionSelected: {
+				type: Boolean,
+				default: false
+			},
 			placeholder: {
 				type: String,
 				default: ''
@@ -131,15 +151,27 @@
 				open: false,
 				searchString: '',
 				searchTimeout: null,
-				inputValue: ''
+				inputValue: '',
+				showPanel: false
 			}
 		},
 		computed: {
 			activeDescendant(): string {
+				// while the panel is shown, the option elements are not rendered,
+				// so the combobox must not reference a non-existent option id
+				if (this.showPanel) return ''
+
 				return this.open && this.activeIndex >= 0 ? `${this.htmlId}-item-${this.activeIndex}` : ''
 			},
+			hasPanelOption(): boolean {
+				return !!this.panelOption
+			},
 			isCurrentOptionDisabled(): boolean {
-				return this.options[this.activeIndex]?.disabled || false
+				return this.options?.[this.activeIndex]?.disabled || false
+			},
+			/** Index of the appended panel option row, one past the last regular option */
+			panelOptionIndex(): number {
+				return this.options?.length ?? 0
 			},
 			isDisabledOrLoading(): boolean {
 				return this.disabled || this.loading
@@ -158,14 +190,35 @@
 				this.activeIndex = newValue
 			}
 		},
+		mounted() {
+			// no-ops unless the panel is currently shown (see handleOutsideMousedown);
+			// registered unconditionally so a panelOption set after mount still works
+			document.addEventListener('mousedown', this.handleOutsideMousedown)
+		},
+		beforeUnmount() {
+			document.removeEventListener('mousedown', this.handleOutsideMousedown)
+		},
 		updated() {
 			if (this.open && this.$refs?.activeOptionRef?.[0 as keyof {}] && isScrollable(this.$refs.listboxEl as HTMLElement)) {
 				maintainScrollVisibility(this.$refs.activeOptionRef[0 as keyof {}], this.$refs.listboxEl as HTMLElement)
 			}
 		},
 		methods: {
-			ariaLabelValue(value: SelectOption, labelField: keyof SelectOption) {
-				return this.ariaLabel.length > 0 ? (this.ariaLabel || undefined) : (value.screenReaderLabel || (value[labelField as keyof SelectOption] as string) || undefined)			},
+			ariaLabelValue(value: SelectOption | null, labelField: keyof SelectOption) {
+				if (this.ariaLabel.length > 0) {
+					return this.ariaLabel || undefined
+				}
+
+				if (!value) {
+					return undefined
+				}
+
+				return (
+					value.screenReaderLabel ||
+					(value[labelField as keyof SelectOption] as string) ||
+					undefined
+				)
+			},
 			getSearchString(char: string) {
 				const multimatchTimeout = 500
 
@@ -203,6 +256,10 @@
 					return
 				}
 
+				// while the panel is shown, focus legitimately moves into the panel
+				// content; closing is handled by handleOutsideMousedown instead
+				if (this.showPanel) return
+
 				if (this.open) {
 					this.open = false
 					// this.updateMenuState(false, false);
@@ -210,16 +267,30 @@
 			},
 			handleClick() {
 				this.open = !this.open
+				if (!this.open) this.setPanelShown(false)
+			},
+			handleOutsideMousedown(event: MouseEvent) {
+				if (!this.open || !this.showPanel) return
+				if ((this.$el as HTMLElement).contains(event.target as Node)) return
+
+				this.open = false
+				this.setPanelShown(false)
 			},
 			updateMenuState(open: boolean, callFocus = true) {
 				this.open = open
+				if (!open) this.setPanelShown(false)
 				callFocus && (this.$refs.comboEl as any).focus()
 			},
 			handleKeydown(event: KeyboardEvent) {
 				const { key } = event
-				const max = this.options.length - 1
+				const optionsCount = this.options?.length ?? 0
+				const max = this.hasPanelOption ? optionsCount : optionsCount - 1
 
 				const action = getActionFromKey(event, this.open, this.isCurrentOptionDisabled)
+
+				// while the panel is shown the option list is not rendered, so only
+				// closing the dropdown (Escape) is meaningful on the combobox itself
+				if (this.showPanel && action !== MenuActions.Close) return
 
 				switch (action) {
 					case MenuActions.Next:
@@ -233,6 +304,9 @@
 					case MenuActions.CloseSelect:
 					case MenuActions.Space:
 						event.preventDefault()
+						if (this.hasPanelOption && this.activeIndex === this.panelOptionIndex) {
+							return this.openPanel()
+						}
 						this.selectOption(this.activeIndex)
 						this.updateMenuState(false, false)
 						break
@@ -261,6 +335,10 @@
 				event.stopPropagation()
 			},
 			onMenuMouseDown(event: MouseEvent) {
+				// while the panel is shown its content (inputs, buttons) needs real
+				// focus, so don't steal the mousedown like the option list does
+				if (this.showPanel) return
+
 				event.preventDefault()
 			},
 			onOptionChange(index: number) {
@@ -275,13 +353,34 @@
 				})
 			},
 			selectOption(index: number) {
-				const selected = this.options[index]
+				const selected = this.options?.[index]
+				if (!selected) return
+
 				this.inputValue = selected[this.labelField as keyof SelectOption] as string
 				/**
 				 * emit the most recently selected value,
 				 * *generally not necessary*, if state can be handled w/ v-model alone
 				 */
 				this.$emit('update:value', selected)
+			},
+			/** Close the whole dropdown from inside the panel (`closeMenu` slot prop) */
+			closeMenuFromPanel() {
+				this.updateMenuState(false)
+			},
+			openPanel() {
+				this.setPanelShown(true)
+				this.activeIndex = this.panelOptionIndex
+			},
+			setPanelShown(shown: boolean) {
+				if (this.showPanel === shown) return
+
+				this.showPanel = shown
+				this.$emit(shown ? 'panelOpened' : 'panelClosed')
+			},
+			/** Return from the panel to the option list (`showOptions` slot prop) */
+			showOptionsList() {
+				this.setPanelShown(false)
+				this.updateMenuState(true)
 			}
 		}
 	})
@@ -323,7 +422,7 @@
 				</slot>
 				<span v-else-if="isPlaceholderShown" class="combo-placeholder">{{ placeholder }}</span>
 				<!-- @slot Display the currently selected option via custom template code -->
-				<slot v-else name="selectedOption" :option="value">
+				<slot v-else-if="value" name="selectedOption" :option="value">
 					{{ prependLabel ? label + ': ' + value[labelField as keyof SelectOption] : value[labelField as keyof SelectOption] }}
 				</slot>
 			</span>
@@ -333,32 +432,65 @@
 			:id="`${htmlId}-listbox`"
 			ref="listboxEl"
 			class="combo-menu"
-			role="listbox"
+			:role="showPanel ? undefined : 'listbox'"
 			@mousedown="onMenuMouseDown"
 		>
-			<div
-				v-for="(option, index) in options"
-				:id="`${htmlId}-item-${index}`"
-				:key="option[uniqueIdField as keyof SelectOption]?.toString()"
-				class="combo-option"
-				:class="{
-					'option-selected': selectedIndex == index,
-					'option-current': index == activeIndex,
-					'option-disabled': option.disabled
-				}"
-				role="option"
-				:aria-disabled="option.disabled"
-				:aria-selected="index == selectedIndex ? 'true' : 'false'"
-				:aria-label="index === selectedIndex ? `${option.label} selected` : ''"
-				@click="handleOptionClick(index)"
-				@mousedown="onOptionMouseDown"
-			>
-				<!-- @slot Display individual options via custom template code -->
-				<slot name="option" :option="option">
-					{{ option[labelField as keyof SelectOption] }}
-				</slot>
-				<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
-			</div>
+			<!-- @slot Arbitrary dropdown panel content (e.g. a date-range picker), shown in place of the option list after the panel option is activated -->
+			<slot
+				v-if="showPanel"
+				name="panel"
+				:closeMenu="closeMenuFromPanel"
+				:showOptions="showOptionsList"
+			/>
+			<template v-else>
+				<div
+					v-for="(option, index) in options"
+					:id="`${htmlId}-item-${index}`"
+					:key="option[uniqueIdField as keyof SelectOption]?.toString()"
+					class="combo-option"
+					:class="{
+						'option-selected': selectedIndex == index,
+						'option-current': index == activeIndex,
+						'option-disabled': option.disabled
+					}"
+					role="option"
+					:aria-disabled="option.disabled"
+					:aria-selected="index == selectedIndex ? 'true' : 'false'"
+					:aria-label="index === selectedIndex ? `${option.label} selected` : ''"
+					@click="handleOptionClick(index)"
+					@mousedown="onOptionMouseDown"
+				>
+					<!-- @slot Display individual options via custom template code -->
+					<slot name="option" :option="option">
+						{{ option[labelField as keyof SelectOption] }}
+					</slot>
+					<span v-if="option.screenReaderLabel" class="sr-only">{{ option.screenReaderLabel }}</span>
+				</div>
+				<div
+					v-if="hasPanelOption && panelOption"
+					:id="`${htmlId}-item-${panelOptionIndex}`"
+					class="combo-option combo-option-panel"
+					:class="{
+						'option-selected': panelOptionSelected,
+						'option-current': activeIndex === panelOptionIndex
+					}"
+					role="option"
+					:aria-selected="panelOptionSelected ? 'true' : 'false'"
+					:aria-label="panelOption.screenReaderLabel || (panelOption[labelField as keyof SelectOption] as string)"
+					@click="openPanel"
+					@mousedown="onOptionMouseDown"
+				>
+					<!-- @slot Display the panel option row via custom template code -->
+					<slot
+						name="panelOption"
+						:option="panelOption"
+						:active="activeIndex === panelOptionIndex"
+						:selected="panelOptionSelected"
+					>
+						{{ panelOption[labelField as keyof SelectOption] }}
+					</slot>
+				</div>
+			</template>
 		</div>
 	</div>
 </template>
