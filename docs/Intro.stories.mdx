@@ -68,7 +68,7 @@ export default Vue.extend({
 ```html
 <!-- In component -->
 <SelectSingle
-	v-model="selectSingleValue"
+	v-model:value="selectSingleValue"
 	:options="sampleOptions"
 	label="My Single Select"
 	:labelIsVisible="true"
@@ -76,7 +76,7 @@ export default Vue.extend({
 />
 
 <SelectMulti
-	v-model="selectMultiValues"
+	v-model:values="selectMultiValues"
 	:options="sampleOptions"
 	label="My Multiple Select"
 	:labelIsVisible="true"

@@ -404,7 +404,7 @@
 				ref="inputRef"
 				:aria-activedescendant="activeId"
 				aria-autocomplete="list"
-				:aria-controls="open ? `${htmlId}-listbox` : undefined"
+				:aria-controls="`${htmlId}-listbox`"
 				:aria-expanded="`${open}`"
 				aria-haspopup="listbox"
 				:aria-labelledby="$slots.label ? undefined : htmlId"
