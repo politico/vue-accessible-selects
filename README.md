@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/@politico%2Fvue-accessible-selects.svg)](https://badge.fury.io/js/@politico%2Fvue-accessible-selects)
 
 **Description:** Select & Multi Select implementations for Vue, focused especially on implementing accessibility best practices
-- **Technology stack:** Vue 3, Typescript, Vite
+- **Technology stack:** Vue 3, TypeScript, Vite
 - **Demo:** [vue-accessible-selects.netlify.app/](vue-accessible-selects.netlify.app/)
 
 
@@ -73,7 +73,7 @@ Most-commonly externally-referenced classes:
 - Select multiple implementation: https://github.com/microsoft/sonder-ui/tree/master/src/components/multiselect
 
 ## WARNING! node-sass deprecated
-To compile scss code you must use dart `sass` package  as it uses `sass:math` module for divisions instead of slash https://sass-lang.com/documentation/breaking-changes/slash-div
+To compile scss code you must use dart `sass` package as it uses `sass:math` module for divisions instead of slash https://sass-lang.com/documentation/breaking-changes/slash-div
 
 `node-sass` is deprecated
 ```scss
@@ -88,4 +88,4 @@ To compile scss code you must use dart `sass` package  as it uses `sass:math` mo
 @include select-multi();
 ```
 
-for more detailed implementations, checkout the docs site
+for more detailed implementations, check out the docs site
